@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   Tema unico (dark). Tokens via CSS variables para permitir reajuste fino
+   sem tocar nos componentes.
+---------------------------------------------------------------------------- */
+@theme {
+  --color-background: #0a0b0d;
+  --color-foreground: #f4f2ee;
+  --color-card: #121419;
+  --color-muted: #161920;
+  --color-muted-foreground: #99a1b0;
+  --color-subtle-foreground: #6b7280;
+  --color-border: #22262e;
+  --color-border-strong: #333a45;
+  --color-accent: #8da2ff;
+  --color-accent-foreground: #0a0b0d;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Nao usar `scroll-behavior: smooth` aqui: o Lenis e quem suaviza o scroll
+       e os dois se conflitam. */
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 32%, transparent);
+    color: var(--color-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Container editorial de largura controlada, usado pelas secoes. */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 68rem;
+    padding-inline: 1.5rem;
+  }
+
+  @media (width >= 48rem) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Rotulo monoespacado para metadados/eyebrows (toque tecnico). */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-subtle-foreground);
+  }
+}
+
+/* Respeita quem prefere menos movimento (Lenis e Motion tambem checam isso). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

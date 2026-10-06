@@ -1,0 +1,71 @@
+{
+  "Metadata": {
+    "defaultTitle": "William Nakata — AI Automation Engineer & Full Stack Developer",
+    "titleTemplate": "%s · William Nakata",
+    "description": "Portfolio of William Nakata, AI Automation Engineer and Full Stack Developer specialized in multi-agent systems, RAG pipelines and scalable backends."
+  },
+  "Nav": {
+    "skipToContent": "Skip to content",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education",
+    "blog": "Blog",
+    "cv": "Download CV"
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "pt-BR": "Português (Brasil)"
+  },
+  "Hero": {
+    "headline": "AI Automation Engineer & Full Stack Developer",
+    "location": "Brazil · GMT-3",
+    "ctaProjects": "See projects",
+    "ctaBlog": "Read the blog",
+    "ctaContact": "Get in touch"
+  },
+  "Skills": {
+    "title": "Skills",
+    "aiAutomation": "AI & Automation",
+    "backendFrontend": "Backend & Frontend",
+    "dataCloudDevops": "Data, Cloud & DevOps"
+  },
+  "Sections": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education",
+    "certifications": "Certifications",
+    "languages": "Languages"
+  },
+  "Experience": {
+    "present": "Present"
+  },
+  "Education": {
+    "present": "Present"
+  },
+  "Projects": {
+    "typePersonal": "Personal",
+    "typeProfessional": "Professional",
+    "viewProject": "View project",
+    "sourceCode": "Source code",
+    "viewAll": "View all projects",
+    "empty": "No projects published yet."
+  },
+  "Blog": {
+    "readMore": "Read more",
+    "backToBlog": "Back to blog",
+    "related": "Related articles",
+    "publishedOn": "Published on {date}",
+    "empty": "No articles published yet."
+  },
+  "Common": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "Footer": {
+    "rights": "All rights reserved."
+  }
+}

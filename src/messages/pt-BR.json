@@ -1,0 +1,71 @@
+{
+  "Metadata": {
+    "defaultTitle": "William Nakata — Engenheiro de Automação de IA & Desenvolvedor Full Stack",
+    "titleTemplate": "%s · William Nakata",
+    "description": "Portfólio de William Nakata, Engenheiro de Automação de IA e Desenvolvedor Full Stack especializado em sistemas multi-agente, pipelines de RAG e backends escaláveis."
+  },
+  "Nav": {
+    "skipToContent": "Ir para o conteúdo",
+    "about": "Sobre",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "education": "Educação",
+    "blog": "Blog",
+    "cv": "Baixar currículo"
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma",
+    "en": "English",
+    "pt-BR": "Português (Brasil)"
+  },
+  "Hero": {
+    "headline": "Engenheiro de Automação de IA & Desenvolvedor Full Stack",
+    "location": "Brasil · GMT-3",
+    "ctaProjects": "Ver projetos",
+    "ctaBlog": "Ler o blog",
+    "ctaContact": "Entrar em contato"
+  },
+  "Skills": {
+    "title": "Competências",
+    "aiAutomation": "IA & Automação",
+    "backendFrontend": "Backend & Frontend",
+    "dataCloudDevops": "Dados, Cloud & DevOps"
+  },
+  "Sections": {
+    "about": "Sobre",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "education": "Educação",
+    "certifications": "Certificações",
+    "languages": "Idiomas"
+  },
+  "Experience": {
+    "present": "Atual"
+  },
+  "Education": {
+    "present": "Atual"
+  },
+  "Projects": {
+    "typePersonal": "Pessoal",
+    "typeProfessional": "Profissional",
+    "viewProject": "Ver projeto",
+    "sourceCode": "Código-fonte",
+    "viewAll": "Ver todos os projetos",
+    "empty": "Nenhum projeto publicado ainda."
+  },
+  "Blog": {
+    "readMore": "Ler mais",
+    "backToBlog": "Voltar ao blog",
+    "related": "Artigos relacionados",
+    "publishedOn": "Publicado em {date}",
+    "empty": "Nenhum artigo publicado ainda."
+  },
+  "Common": {
+    "notFoundTitle": "Página não encontrada",
+    "notFoundBody": "A página que você procura não existe ou foi movida.",
+    "backHome": "Voltar ao início"
+  },
+  "Footer": {
+    "rights": "Todos os direitos reservados."
+  }
+}
