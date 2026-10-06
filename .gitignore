@@ -37,6 +37,10 @@ yarn-error.log*
 # prisma generated client
 /src/generated/
 
+# local seed scaffolding (kept out of version control on purpose)
+/prisma/seed.ts
+/prisma/load-env.ts
+
 # vercel
 .vercel
 
