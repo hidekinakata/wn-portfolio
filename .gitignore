@@ -41,6 +41,9 @@ yarn-error.log*
 /prisma/seed.ts
 /prisma/load-env.ts
 
+# working plan document (kept out of version control on purpose)
+/PLAN.md
+
 # vercel
 .vercel
 
