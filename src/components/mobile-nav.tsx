@@ -1,9 +1,17 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Transition,
+} from "motion/react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
+import { LocalClock } from "@/components/local-clock";
 import { Link } from "@/i18n/navigation";
+import { setScrollLock } from "@/lib/scroll-lock";
 
 export type MobileNavItem = {
   key: string;
@@ -13,52 +21,205 @@ export type MobileNavItem = {
 
 type MobileNavProps = {
   items: readonly MobileNavItem[];
-  label?: string;
+  labels: {
+    menu: string;
+    close: string;
+    contact: string;
+    currently: string;
+    location: string;
+  };
 };
 
+const EASE_OUT: Transition["ease"] = [0.16, 1, 0.3, 1];
+const EASE_IN: Transition["ease"] = [0.7, 0, 0.84, 0];
+
+/* Duas laminas de cor (lavanda -> violeta) correm na frente do painel, como
+   no StaggeredMenu de referencia, mas com as cores do campo do hero. */
+const PRE_LAYERS = ["bg-lavender", "bg-violet"] as const;
+const LAYER_STEP = 0.07;
+const PANEL_DELAY = PRE_LAYERS.length * LAYER_STEP;
+
 /**
- * Navegacao compacta (mobile). O painel abre em corte seco — o vocabulario de
- * estados do console e aceso/apagado, nunca meio-termo.
+ * Menu compacto (abaixo de `md`): painel de tela cheia que entra pela direita
+ * atras de laminas escalonadas; os itens sobem girando em sequencia, com o
+ * indice do console acendendo ao lado. Trava o scroll, fecha com Esc e devolve
+ * o foco ao botao. Com reduced motion, abre em corte seco.
  */
-export function MobileNav({ items, label = "Menu" }: MobileNavProps) {
+export function MobileNav({ items, labels }: MobileNavProps) {
   const [open, setOpen] = useState(false);
+  const reducedMotion = useReducedMotion() ?? false;
+  const panelId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
+
+  const close = useCallback((options?: { restoreFocus?: boolean }) => {
+    // Destrava ja: o clique numa ancora precisa do Lenis livre para rolar.
+    setScrollLock(false);
+    setOpen(false);
+    if (options?.restoreFocus) toggleRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    setScrollLock(true);
+    firstLinkRef.current?.focus({ preventScroll: true });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close({ restoreFocus: true });
+    };
+    // Ao cruzar para o layout desktop o painel some; o estado acompanha.
+    const desktop = window.matchMedia("(min-width: 48rem)");
+    const onBreakpoint = () => {
+      if (desktop.matches) close();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", onBreakpoint);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", onBreakpoint);
+      setScrollLock(false);
+    };
+  }, [open, close]);
+
+  const slide = (delay: number, duration: number): Transition =>
+    reducedMotion ? { duration: 0 } : { duration, delay, ease: EASE_OUT };
+  const exit: Transition = reducedMotion
+    ? { duration: 0 }
+    : { duration: 0.32, ease: EASE_IN };
 
   return (
-    <div className="relative">
+    <>
       <button
+        ref={toggleRef}
         type="button"
         aria-expanded={open}
-        aria-label={label}
-        onClick={() => setOpen((value) => !value)}
-        className="flex size-9 items-center justify-center border border-border-strong text-foreground transition-none hover:border-flow hover:text-flow"
+        aria-controls={panelId}
+        aria-label={open ? labels.close : labels.menu}
+        onClick={() => (open ? close() : setOpen(true))}
+        className="group relative z-20 flex h-9 items-center gap-3 border border-border-strong pr-2.5 pl-3 text-foreground transition-none hover:border-lavender hover:text-lavender aria-expanded:border-lavender"
       >
-        {open ? (
-          <X aria-hidden="true" className="size-4" />
-        ) : (
-          <Menu aria-hidden="true" className="size-4" />
-        )}
+        {/* Rotulo que rola MENU -> FECHAR, como um contador mecanico. */}
+        <span
+          aria-hidden="true"
+          className="relative block h-[1em] overflow-hidden font-mono text-[0.65rem] leading-none tracking-[0.2em] uppercase"
+        >
+          <motion.span
+            className="flex flex-col"
+            animate={{ y: open ? "-50%" : "0%" }}
+            transition={slide(0, 0.45)}
+          >
+            <span className="block h-[1em]">{labels.menu}</span>
+            <span className="block h-[1em]">{labels.close}</span>
+          </motion.span>
+        </span>
+        {/* Cruz do console: "+" que gira ate "x". */}
+        <span aria-hidden="true" className="relative size-3.5">
+          <motion.span
+            className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-current"
+            animate={{ rotate: open ? 45 : 0 }}
+            transition={slide(0, 0.5)}
+          />
+          <motion.span
+            className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-current"
+            animate={{ rotate: open ? -45 : 90 }}
+            transition={slide(0, 0.5)}
+          />
+        </span>
       </button>
 
-      {open ? (
-        <nav
-          aria-label={label}
-          className="absolute right-0 top-[calc(100%+0.75rem)] w-56 border border-border-strong bg-card"
-        >
-          <ul className="flex flex-col">
-            {items.map(({ key, href, label: itemLabel }) => (
-              <li key={key}>
-                <Link
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className="block border-b border-border px-4 py-3 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase transition-none last:border-b-0 hover:bg-accent hover:text-foreground"
-                >
-                  {itemLabel}
-                </Link>
-              </li>
+      <AnimatePresence>
+        {open ? (
+          <div
+            key="mobile-nav"
+            className="fixed inset-0 z-10 overflow-hidden md:hidden"
+          >
+            {PRE_LAYERS.map((layer, index) => (
+              <motion.div
+                key={layer}
+                aria-hidden="true"
+                className={`absolute inset-0 ${layer}`}
+                initial={{ x: "100%" }}
+                animate={{ x: "0%" }}
+                exit={{ x: "100%", transition: exit }}
+                transition={slide(index * LAYER_STEP, 0.5)}
+              />
             ))}
-          </ul>
-        </nav>
-      ) : null}
-    </div>
+
+            <motion.nav
+              id={panelId}
+              aria-label={labels.menu}
+              data-lenis-prevent
+              className="absolute inset-0 flex flex-col overflow-y-auto bg-background px-6 pt-24 pb-8"
+              initial={{ x: "100%" }}
+              animate={{ x: "0%" }}
+              exit={{ x: "100%", transition: exit }}
+              transition={slide(PANEL_DELAY, 0.65)}
+            >
+              <div
+                aria-hidden="true"
+                className="hairline-grid pointer-events-none absolute inset-0 opacity-25"
+              />
+
+              <ol className="relative flex flex-col">
+                {items.map(({ key, href, label }, index) => (
+                  <li key={key} className="overflow-hidden border-b border-border">
+                    <Link
+                      ref={index === 0 ? firstLinkRef : undefined}
+                      href={href}
+                      onClick={() => close()}
+                      className="group flex items-start justify-between gap-6 py-3 text-foreground transition-none hover:text-lavender focus-visible:text-lavender"
+                    >
+                      <motion.span
+                        className="display block origin-bottom-left text-[clamp(2.75rem,14vw,4.5rem)] leading-[0.92]"
+                        initial={{ y: "110%", rotate: 6 }}
+                        animate={{ y: "0%", rotate: 0 }}
+                        transition={slide(PANEL_DELAY + 0.12 + index * 0.08, 0.9)}
+                      >
+                        {label}
+                      </motion.span>
+                      <motion.span
+                        className="pt-2 font-mono text-[0.7rem] tracking-[0.2em] text-violet tabular-nums group-hover:text-lavender"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={slide(PANEL_DELAY + 0.3 + index * 0.08, 0.4)}
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </motion.span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+
+              <motion.div
+                className="relative mt-auto flex flex-col gap-6 pt-12"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={slide(PANEL_DELAY + 0.45, 0.55)}
+              >
+                <div className="flex flex-col gap-2.5">
+                  <span className="hud-label text-foreground">{labels.currently}</span>
+                  <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <span className="font-mono text-[0.72rem] tracking-[0.22em] text-muted-foreground uppercase">
+                      {labels.location}
+                    </span>
+                    <LocalClock />
+                  </span>
+                </div>
+
+                <Link
+                  href="/#contact"
+                  onClick={() => close()}
+                  className="flex h-12 items-center justify-between border border-flare px-5 font-mono text-[0.7rem] tracking-[0.22em] text-flare uppercase transition-none hover:bg-flare hover:text-background"
+                >
+                  {labels.contact}
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </motion.div>
+            </motion.nav>
+          </div>
+        ) : null}
+      </AnimatePresence>
+    </>
   );
 }

@@ -14,7 +14,8 @@
     "blog": "Blog",
     "contact": "Contato",
     "cv": "Baixar currículo",
-    "menu": "Menu"
+    "menu": "Menu",
+    "close": "Fechar"
   },
   "LocaleSwitcher": {
     "label": "Idioma",

@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import GradualBlur from "@/components/GradualBlur";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { MobileNav } from "@/components/mobile-nav";
 import { Link } from "@/i18n/navigation";
@@ -22,39 +23,51 @@ type NavKey = "about" | "experience" | "projects" | "education" | "blog";
 export async function SiteHeader() {
   const t = await getTranslations("Nav");
   const hero = await getTranslations("Hero");
+  const status = await getTranslations("Status");
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-16 w-full max-w-[110rem] items-center justify-between gap-6 px-4 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* Sem fundo solido nem divisoria: o conteudo dissolve sob a barra num
+          desfoque progressivo que passa da altura dela. */}
+      <GradualBlur
+        target="parent"
+        position="top"
+        height="7rem"
+        strength={2}
+        divCount={5}
+        curve="bezier"
+        exponential
+        opacity={1}
+        zIndex={0}
+      />
+      <div className="relative z-10 mx-auto flex h-16 w-full max-w-[110rem] items-center justify-between gap-6 px-4 lg:px-8">
         <Link
           href="/"
-          className="group flex items-center gap-3"
+          className="group relative z-20 flex items-center gap-3"
           aria-label="William Nakata"
         >
           <span
             aria-hidden="true"
-            className="flex size-9 items-center justify-center border border-border-strong font-mono text-sm font-semibold text-foreground transition-none group-hover:border-flow group-hover:text-flow"
+            className="font-mono text-lg font-light tracking-[0.12em] text-foreground transition-none group-hover:text-lavender"
           >
             WN
           </span>
-          <span className="hidden flex-col gap-1 sm:flex">
-            <span className="font-mono text-[0.7rem] font-semibold tracking-[0.22em] text-foreground uppercase">
+          <span aria-hidden="true" className="hidden h-6 w-px bg-border-strong sm:block" />
+          <span className="hidden items-baseline gap-5 sm:flex">
+            <span className="font-mono text-[0.7rem] font-medium tracking-[0.26em] text-foreground uppercase">
               William Nakata
             </span>
-            <span className="hud-label hidden xl:block">{hero("headline")}</span>
+            <span className="hud-label hidden 2xl:block">{hero("headline")}</span>
           </span>
         </Link>
 
         <div
           aria-hidden="true"
-          className="mx-8 hidden h-px flex-1 bg-border lg:block"
-        />
-        <span
-          aria-hidden="true"
-          className="hidden font-mono text-xs text-border-strong lg:block"
+          className="relative mx-10 hidden h-px flex-1 bg-gradient-to-r from-transparent via-border-strong to-transparent lg:block"
         >
-          +
-        </span>
+          <span className="absolute top-1/2 left-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-subtle-foreground" />
+          <span className="absolute top-1/2 left-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-subtle-foreground" />
+        </div>
 
         <nav aria-label={t("menu")} className="hidden items-center gap-1 md:flex">
           <ul className="flex items-center gap-1">
@@ -72,14 +85,25 @@ export async function SiteHeader() {
           <LocaleSwitcher />
         </nav>
 
+        {/* O painel do MobileNav cobre a tela por baixo desta barra: marca e
+            controles ficam acima dele (z-20). */}
         <div className="flex items-center gap-2 md:hidden">
-          <LocaleSwitcher />
+          <div className="relative z-20">
+            <LocaleSwitcher />
+          </div>
           <MobileNav
             items={navItems.map(({ key, href }) => ({
               key,
               href,
               label: t(key),
             }))}
+            labels={{
+              menu: t("menu"),
+              close: t("close"),
+              contact: hero("ctaContact"),
+              currently: status("currently"),
+              location: status("value"),
+            }}
           />
         </div>
       </div>

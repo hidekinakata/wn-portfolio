@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+import { SCROLL_LOCK_EVENT } from "@/lib/scroll-lock";
+
 /**
  * Smooth scroll global via Lenis.
  *
@@ -58,10 +60,18 @@ export function SmoothScroll() {
       window.history.replaceState(null, "", `#${hash}`);
     };
 
+    const handleScrollLock = (event: Event) => {
+      if (!(event instanceof CustomEvent)) return;
+      if (event.detail === true) lenis.stop();
+      else lenis.start();
+    };
+
     document.addEventListener("click", handleClick);
+    window.addEventListener(SCROLL_LOCK_EVENT, handleScrollLock);
 
     return () => {
       document.removeEventListener("click", handleClick);
+      window.removeEventListener(SCROLL_LOCK_EVENT, handleScrollLock);
       cancelAnimationFrame(frame);
       lenis.destroy();
     };
