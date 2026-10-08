@@ -11,8 +11,8 @@ const shortLabel: Record<Locale, string> = {
 };
 
 /**
- * Alternador de idioma. Preserva o caminho atual (sem prefixo de locale) e
- * troca apenas o prefixo — o `Link` do next-intl cuida disso.
+ * Alternador de idioma em HUD. Preserva o caminho atual (sem prefixo de
+ * locale) e troca apenas o prefixo — o `Link` do next-intl cuida disso.
  */
 export function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
@@ -22,7 +22,7 @@ export function LocaleSwitcher() {
   return (
     <nav
       aria-label={t("label")}
-      className="flex items-center gap-1 font-mono text-xs"
+      className="ml-2 flex items-center gap-1 font-mono text-xs"
     >
       {routing.locales.map((value) => {
         const isActive = value === locale;
@@ -35,8 +35,8 @@ export function LocaleSwitcher() {
             aria-current={isActive ? "true" : undefined}
             className={
               isActive
-                ? "rounded-full border border-border-strong px-3 py-1 text-foreground"
-                : "rounded-full border border-transparent px-3 py-1 text-subtle-foreground transition-colors hover:text-foreground"
+                ? "flex size-8 items-center justify-center border border-flow text-flow"
+                : "flex size-8 items-center justify-center border border-border-strong text-subtle-foreground transition-none hover:border-subtle-foreground hover:text-foreground"
             }
           >
             <span aria-hidden="true">{shortLabel[value]}</span>

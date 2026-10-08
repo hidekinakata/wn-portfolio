@@ -1,10 +1,16 @@
 import { setRequestLocale } from "next-intl/server";
-
-import { Hero } from "@/components/hero";
-import { Skills } from "@/components/skills";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
+import { AboutSection } from "@/components/about";
+import { ContactSection } from "@/components/contact";
+import { EducationSection } from "@/components/education";
+import { ExperienceSection } from "@/components/experience";
+import { FeaturedProjects } from "@/components/featured-projects";
+import { Hero } from "@/components/hero";
+import { ProjectsSection } from "@/components/projects";
+import { SectionRail } from "@/components/section-rail";
 import { routing } from "@/i18n/routing";
 
 type Props = {
@@ -12,8 +18,9 @@ type Props = {
 };
 
 /**
- * Landing page unica: hero -> sobre -> experiencia -> projetos -> educacao.
- * As secoes ancoradas sao preenchidas com dados do banco na proxima fase.
+ * Landing unica: hero -> destaque -> sobre -> experiencia -> projetos ->
+ * educacao -> contato. O shell e estatico; as secoes driven-by-DB renderizam
+ * sob `Suspense`.
  */
 export default async function HomePage({ params }: Props) {
   const { locale: localeParam } = await params;
@@ -26,8 +33,37 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <>
+      <SectionRail />
       <Hero />
-      <Skills />
+      <Suspense fallback={<SectionFallback />}>
+        <FeaturedProjects />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <AboutSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ExperienceSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ProjectsSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <EducationSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ContactSection />
+      </Suspense>
     </>
+  );
+}
+
+/** Placeholder de altura estavel enquanto a secao carrega. */
+function SectionFallback() {
+  return (
+    <div
+      aria-busy="true"
+      className="min-h-[24rem] border-b border-border"
+      role="status"
+    />
   );
 }
