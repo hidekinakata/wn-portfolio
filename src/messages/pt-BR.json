@@ -6,12 +6,15 @@
   },
   "Nav": {
     "skipToContent": "Ir para o conteúdo",
+    "home": "Início",
     "about": "Sobre",
     "experience": "Experiência",
     "projects": "Projetos",
     "education": "Educação",
     "blog": "Blog",
-    "cv": "Baixar currículo"
+    "contact": "Contato",
+    "cv": "Baixar currículo",
+    "menu": "Menu"
   },
   "LocaleSwitcher": {
     "label": "Idioma",
@@ -19,17 +22,34 @@
     "pt-BR": "Português (Brasil)"
   },
   "Hero": {
+    "eyebrow": "Olá, eu sou",
+    "name": "William Nakata",
     "headline": "Engenheiro de Automação de IA & Desenvolvedor Full Stack",
     "location": "Brasil · GMT-3",
-    "ctaProjects": "Ver projetos",
+    "introLine1": "Desenho sistemas multi-agente e pipelines de RAG,",
+    "introLine2": "construo backends escaláveis de ponta a ponta,",
+    "introLine3": "e transformo ideias de IA em automação de produção.",
+    "ctaProjects": "Veja meu trabalho",
     "ctaBlog": "Ler o blog",
-    "ctaContact": "Entrar em contato"
+    "ctaContact": "Entrar em contato",
+    "scroll": "Role",
+    "explore": "Explore"
+  },
+  "Status": {
+    "currently": "Atualmente",
+    "value": "Brasil · GMT-3"
   },
   "Skills": {
     "title": "Competências",
     "aiAutomation": "IA & Automação",
     "backendFrontend": "Backend & Frontend",
     "dataCloudDevops": "Dados, Cloud & DevOps"
+  },
+  "Levels": {
+    "native": "Nativo",
+    "advanced": "Avançado",
+    "intermediate": "Intermediário",
+    "basic": "Básico"
   },
   "Sections": {
     "about": "Sobre",
@@ -38,6 +58,13 @@
     "education": "Educação",
     "certifications": "Certificações",
     "languages": "Idiomas"
+  },
+  "Featured": {
+    "label": "Projetos em destaque",
+    "viewAll": "Ver todos"
+  },
+  "Certifications": {
+    "verify": "Ver credencial"
   },
   "Experience": {
     "present": "Atual"
@@ -59,6 +86,13 @@
     "related": "Artigos relacionados",
     "publishedOn": "Publicado em {date}",
     "empty": "Nenhum artigo publicado ainda."
+  },
+  "Contact": {
+    "title": "Entrar em contato",
+    "body": "O caminho mais rápido para falar comigo:",
+    "email": "E-mail",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
   },
   "Common": {
     "notFoundTitle": "Página não encontrada",

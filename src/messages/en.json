@@ -6,12 +6,15 @@
   },
   "Nav": {
     "skipToContent": "Skip to content",
+    "home": "Home",
     "about": "About",
     "experience": "Experience",
     "projects": "Projects",
     "education": "Education",
     "blog": "Blog",
-    "cv": "Download CV"
+    "contact": "Contact",
+    "cv": "Download CV",
+    "menu": "Menu"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -19,17 +22,34 @@
     "pt-BR": "Português (Brasil)"
   },
   "Hero": {
+    "eyebrow": "Hi, I'm",
+    "name": "William Nakata",
     "headline": "AI Automation Engineer & Full Stack Developer",
     "location": "Brazil · GMT-3",
-    "ctaProjects": "See projects",
+    "introLine1": "I design multi-agent systems and RAG pipelines,",
+    "introLine2": "build scalable backends end to end,",
+    "introLine3": "and turn AI ideas into production automation.",
+    "ctaProjects": "View my work",
     "ctaBlog": "Read the blog",
-    "ctaContact": "Get in touch"
+    "ctaContact": "Get in touch",
+    "scroll": "Scroll",
+    "explore": "Explore"
+  },
+  "Status": {
+    "currently": "Currently",
+    "value": "Brazil · GMT-3"
   },
   "Skills": {
     "title": "Skills",
     "aiAutomation": "AI & Automation",
     "backendFrontend": "Backend & Frontend",
     "dataCloudDevops": "Data, Cloud & DevOps"
+  },
+  "Levels": {
+    "native": "Native",
+    "advanced": "Advanced",
+    "intermediate": "Intermediate",
+    "basic": "Basic"
   },
   "Sections": {
     "about": "About",
@@ -38,6 +58,13 @@
     "education": "Education",
     "certifications": "Certifications",
     "languages": "Languages"
+  },
+  "Featured": {
+    "label": "Featured projects",
+    "viewAll": "View all"
+  },
+  "Certifications": {
+    "verify": "View credential"
   },
   "Experience": {
     "present": "Present"
@@ -59,6 +86,13 @@
     "related": "Related articles",
     "publishedOn": "Published on {date}",
     "empty": "No articles published yet."
+  },
+  "Contact": {
+    "title": "Get in touch",
+    "body": "The fastest way to reach me:",
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
   },
   "Common": {
     "notFoundTitle": "Page not found",
