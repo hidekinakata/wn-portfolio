@@ -17,7 +17,7 @@ bilingual (en / pt-BR) landing + blog + projects, driven by Supabase Postgres th
 with an authenticated `/admin`. The block above is owned by Next.js — **everything below is ours,
 edit it freely**.
 
-Plan, decision log and phase status live in `PLAN.md` (untracked, local only). This file is about
+Plan, decision log and phase status live in `PLAN.md` or `PRODUCT.md` (untracked, local only). This file is about
 **how to work in this repo**, not what to build.
 
 ---

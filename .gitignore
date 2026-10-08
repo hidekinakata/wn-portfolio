@@ -22,6 +22,8 @@
 
 # misc
 .DS_Store
+Thumbs.db
+desktop.ini
 *.pem
 
 # debug
@@ -41,8 +43,13 @@ yarn-error.log*
 /prisma/seed.ts
 /prisma/load-env.ts
 
-# working plan document (kept out of version control on purpose)
+# working plan and product context documents (local only, kept out of
+# version control on purpose)
 /PLAN.md
+/PRODUCT.md
+
+# swc native cache (ERR_SWC_NATIVE_CACHE workaround, see AGENTS.md)
+/.cache/
 
 # vercel
 .vercel
@@ -53,3 +60,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design-tool state (kept out of version control on purpose)
+**/.impeccable/
