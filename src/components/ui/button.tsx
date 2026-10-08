@@ -19,9 +19,9 @@ const buttonVariants = cva(
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
         console:
-          "rounded-[2px] bg-flow font-mono text-[0.7rem] uppercase tracking-[0.18em] text-primary-foreground transition-none hover:bg-flow-light",
+          "rounded-[2px] border-violet bg-[color-mix(in_oklab,var(--color-violet)_24%,var(--color-background))] font-mono text-[0.7rem] uppercase tracking-[0.22em] text-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.14),inset_0_0_18px_rgb(123_108_255/0.35),0_12px_32px_-14px_rgb(123_108_255/0.9)] transition-none hover:border-lavender hover:bg-lavender hover:text-background",
         keyline:
-          "rounded-[2px] border border-flare bg-transparent font-mono text-[0.7rem] uppercase tracking-[0.18em] text-flare transition-none hover:bg-flare hover:text-background",
+          "rounded-[2px] border border-flare bg-background/40 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-flare transition-none hover:bg-flare hover:text-background",
       },
       size: {
         default:
@@ -35,7 +35,8 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-        console: "h-12 gap-2.5 rounded-[2px] px-7",
+        console:
+          "h-12 min-w-[13.5rem] justify-between gap-6 rounded-[2px] px-6",
       },
     },
     defaultVariants: {

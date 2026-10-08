@@ -52,7 +52,7 @@ export function SectionRail() {
   return (
     <nav
       aria-label={t("menu")}
-      className="fixed top-1/2 left-6 z-40 hidden -translate-y-1/2 flex-col gap-7 xl:flex"
+      className="fixed top-1/2 left-8 z-40 hidden -translate-y-1/2 flex-col gap-12 xl:flex"
     >
       {railSections.map(({ id, number, labelKey }) => {
         const isActive = id === activeId;
@@ -61,37 +61,35 @@ export function SectionRail() {
           <Link
             key={id}
             href={`/#${id}`}
-            className="group flex items-center gap-3"
+            className="group flex flex-col gap-2"
             aria-current={isActive ? "true" : undefined}
           >
             <span
               className={
                 isActive
-                  ? "size-1.5 rounded-full bg-flow"
-                  : "size-1.5 rounded-full bg-ghost transition-none group-hover:bg-subtle-foreground"
+                  ? "font-mono text-sm tracking-[0.2em] text-foreground"
+                  : "font-mono text-sm tracking-[0.2em] text-subtle-foreground transition-none group-hover:text-foreground"
+              }
+            >
+              {number}
+            </span>
+            <span
+              className={
+                isActive
+                  ? "hud-label text-[0.6rem] text-foreground"
+                  : "hud-label text-[0.6rem] transition-none group-hover:text-muted-foreground"
+              }
+            >
+              {t(labelKey)}
+            </span>
+            <span
+              className={
+                isActive
+                  ? "size-1.5 rounded-full bg-violet"
+                  : "size-1.5 rounded-full bg-transparent"
               }
               aria-hidden="true"
             />
-            <span className="flex flex-col gap-1">
-              <span
-                className={
-                  isActive
-                    ? "font-mono text-[0.65rem] tracking-[0.18em] text-flow"
-                    : "font-mono text-[0.65rem] tracking-[0.18em] text-ghost transition-none group-hover:text-subtle-foreground"
-                }
-              >
-                {number}
-              </span>
-              <span
-                className={
-                  isActive
-                    ? "hud-label text-foreground"
-                    : "hud-label transition-none group-hover:text-muted-foreground"
-                }
-              >
-                {t(labelKey)}
-              </span>
-            </span>
           </Link>
         );
       })}

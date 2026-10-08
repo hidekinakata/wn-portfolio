@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Geist, Geist_Mono } from "next/font/google";
+import { Big_Shoulders, Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
@@ -25,11 +25,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-/* Voz de display do console: grotesca condensada e pesada (nome, secoes). */
-const anton = Anton({
-  variable: "--font-anton",
-  weight: "400",
+/* Voz de display do console: grotesca industrial condensada e alta (nome,
+   secoes). Variavel com eixo optico, que vai para o corte display em tamanho
+   grande. */
+const bigShoulders = Big_Shoulders({
+  variable: "--font-big-shoulders",
   subsets: ["latin"],
+  axes: ["opsz"],
+  // O Next nao tem metricas de fallback para "Big Shoulders" (familia nova
+  // no Google Fonts) e avisaria a cada compilacao. O nome em display fica
+  // atras de um fallback condensado do sistema enquanto a fonte carrega.
+  adjustFontFallback: false,
+  fallback: ["Arial Narrow", "Roboto Condensed", "sans-serif"],
 });
 
 type Props = {
@@ -89,7 +96,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${anton.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bigShoulders.variable}`}
     >
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
         <NextIntlClientProvider messages={messages}>

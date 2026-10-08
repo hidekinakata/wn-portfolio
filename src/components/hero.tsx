@@ -2,14 +2,16 @@ import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { HeroField } from "@/components/hero-field";
-import { Reveal } from "@/components/reveal";
+import { LocalClock } from "@/components/local-clock";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
 /**
  * Hero da landing — primeiro viewport do console. O cargo (`headline`) e as
- * linhas de intro sao strings estaticas de traducao; o nome da marca e fixo
- * (uma linha, a adaptacao confirmada do brief).
+ * linhas de intro sao strings estaticas de traducao; o nome da marca e fixo.
+ * Renderizado no servidor e visivel desde o primeiro paint: o unico movimento
+ * autoral e o nome entrando em foco (CSS), os campos chegam depois. O
+ * marcador SCROLL / EXPLORE vive fora daqui (`ScrollMarker`, fixo na pagina).
  */
 export async function Hero() {
   const t = await getTranslations("Hero");
@@ -22,84 +24,53 @@ export async function Hero() {
     >
       <HeroField />
 
-      <div className="shell relative z-10 flex min-h-[100svh] flex-col justify-center pt-28 pb-32">
-        <Reveal>
-          <p className="hud-label text-flow-light">{t("eyebrow")}</p>
-        </Reveal>
+      <div className="shell relative z-10 flex min-h-[calc(100svh-5rem)] flex-col justify-center pt-28 pb-20">
+        <p className="font-mono text-[0.78rem] tracking-[0.34em] text-muted-foreground uppercase">
+          {t("eyebrow")}
+        </p>
 
-        <Reveal delay={0.06}>
-          <h1 className="display mt-6 whitespace-nowrap text-[clamp(3.25rem,12.5vw,11.5rem)] leading-[0.88]">
-            <span className="text-foreground">William</span>{" "}
-            <span className="text-flow">Nakata</span>
-          </h1>
-        </Reveal>
+        <h1 className="display mt-5">
+          <span className="hero-name hero-focus block whitespace-nowrap text-[clamp(3.5rem,10.5vw,10rem)] leading-[0.86] font-semibold">
+            William Nakata
+          </span>
+          <span className="hero-role hero-focus mt-1 block pt-[0.14em] max-w-[15em] text-[clamp(1.9rem,5.4vw,5.25rem)] leading-[0.94] font-semibold text-balance [animation-delay:140ms]">
+            {t("headline")}
+          </span>
+        </h1>
 
-        <Reveal delay={0.12}>
-          <p className="hud-label mt-8 text-foreground">{t("headline")}</p>
-        </Reveal>
+        <div className="mt-10 max-w-[44rem] font-mono text-[0.72rem] leading-[1.95] tracking-[0.16em] text-foreground/80 uppercase lg:tracking-[0.24em] lg:whitespace-nowrap">
+          {/* Tres linhas de console no desktop; no mobile viram um paragrafo corrido. */}
+          <p className="inline lg:block">{t("introLine1")} </p>
+          <p className="inline lg:block">{t("introLine2")} </p>
+          <p className="inline lg:block">{t("introLine3")}</p>
+        </div>
 
-        <Reveal delay={0.18}>
-          <div className="mt-8 max-w-[52ch] font-mono text-sm leading-7 text-muted-foreground">
-            <p>{t("introLine1")}</p>
-            <p>{t("introLine2")}</p>
-            <p>{t("introLine3")}</p>
-          </div>
-        </Reveal>
+        <div className="mt-10 flex flex-wrap items-center gap-4">
+          <Button asChild variant="console" size="console">
+            <Link href="/#projects">
+              {t("ctaProjects")}
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
+          <Button asChild variant="keyline" size="console">
+            <Link href="/#contact">
+              {t("ctaContact")}
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
+        </div>
 
-        <Reveal delay={0.24}>
-          <div className="mt-12 flex flex-wrap items-center gap-4">
-            <Button asChild variant="console" size="console">
-              <Link href="/#projects">
-                {t("ctaProjects")}
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="keyline" size="console">
-              <Link href="/#contact">
-                {t("ctaContact")}
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.3}>
-          <div className="mt-20 flex items-center gap-5">
-            <span className="hud-label text-subtle-foreground">
-              {status("currently")}
-            </span>
-            <span className="dot-leader flex-1" aria-hidden="true" />
-            <span className="font-mono text-sm tracking-[0.22em] text-foreground">
+        <div className="mt-16 flex flex-col gap-2.5">
+          <span className="hud-label text-foreground">{status("currently")}</span>
+          <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="font-mono text-[0.72rem] tracking-[0.22em] text-muted-foreground uppercase">
               {status("value")}
             </span>
-          </div>
-        </Reveal>
+            <span aria-hidden="true" className="hidden h-px w-6 bg-border-strong sm:block" />
+            <LocalClock />
+          </span>
+        </div>
       </div>
-
-      <ScrollMarker labels={{ scroll: t("scroll"), explore: t("explore") }} />
     </section>
-  );
-}
-
-/**
- * Marcador vertical SCROLL / EXPLORE do console. Os rotulos sao texto real;
- * os ticks sao chrome puro.
- */
-function ScrollMarker({ labels }: { labels: { scroll: string; explore: string } }) {
-  return (
-    <div
-      className="absolute top-1/2 right-8 hidden -translate-y-1/2 flex-col items-center gap-5 lg:flex"
-      aria-hidden="true"
-    >
-      <span className="hud-label">{labels.scroll}</span>
-      <span className="flex flex-col items-center gap-2">
-        <span className="size-2 rounded-full border border-flow" />
-        <span className="h-16 w-px bg-border-strong" />
-        <span className="size-1 rounded-full bg-border-strong" />
-        <span className="size-1 rounded-full bg-border-strong" />
-        <span className="size-1 rounded-full bg-border-strong" />
-      </span>
-      <span className="hud-label">{labels.explore}</span>
-    </div>
   );
 }
