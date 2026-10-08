@@ -10,6 +10,7 @@ import { ExperienceSection } from "@/components/experience";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { Hero } from "@/components/hero";
 import { ProjectsSection } from "@/components/projects";
+import { ScrollMarker } from "@/components/scroll-marker";
 import { SectionRail } from "@/components/section-rail";
 import { routing } from "@/i18n/routing";
 
@@ -34,6 +35,7 @@ export default async function HomePage({ params }: Props) {
   return (
     <>
       <SectionRail />
+      <ScrollMarker />
       <Hero />
       <Suspense fallback={<SectionFallback />}>
         <FeaturedProjects />
