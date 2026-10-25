@@ -44,6 +44,7 @@ export function HeroField() {
           bandWidth={6}
           transparent
           autoRotate={0}
+          tilt={!reducedMotion}
         />
       </div>
 

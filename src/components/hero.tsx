@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { HeroField } from "@/components/hero-field";
 import { LocalClock } from "@/components/local-clock";
+import { TiltPermission } from "@/components/tilt-permission";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -69,6 +70,9 @@ export async function Hero() {
             <span aria-hidden="true" className="hidden h-px w-6 bg-border-strong sm:block" />
             <LocalClock />
           </span>
+          <div className="lg:hidden">
+            <TiltPermission label={t("tiltEnable")} />
+          </div>
         </div>
       </div>
     </section>

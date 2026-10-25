@@ -20,9 +20,15 @@ type ColorBendsProps = {
   iterations?: number;
   intensity?: number;
   bandWidth?: number;
+  /** Em telas touch, usa a inclinacao do aparelho como ponteiro. */
+  tilt?: boolean;
 };
 
 const MAX_COLORS = 8 as const;
+/** Graus de inclinacao que levam o ponteiro de um lado ao outro. */
+const TILT_RANGE_DEG = 25;
+/** Quanto o neutro acompanha a postura atual a cada leitura. */
+const TILT_RECENTER = 0.004;
 
 const frag = `
 #define MAX_COLORS ${MAX_COLORS}
@@ -143,7 +149,8 @@ export default function ColorBends({
   noise = 0.15,
   iterations = 1,
   intensity = 1.5,
-  bandWidth = 6
+  bandWidth = 6,
+  tilt = false
 }: ColorBendsProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -350,6 +357,8 @@ export default function ColorBends({
     if (!material || !container) return;
 
     const handlePointerMove = (e: PointerEvent) => {
+      // Arraste de dedo e rolagem, nao mira: no touch quem guia e a inclinacao.
+      if (e.pointerType === 'touch') return;
       const rect = container.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
       const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
@@ -363,6 +372,46 @@ export default function ColorBends({
       window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
+
+  // Sem mouse (touch), a inclinacao do aparelho faz o papel do ponteiro.
+  useEffect(() => {
+    if (!tilt) return;
+    if (!window.matchMedia('(pointer: coarse)').matches) return;
+
+    let baseline: { beta: number; gamma: number } | null = null;
+
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.beta === null || e.gamma === null) return;
+      // O "neutro" e o angulo em que a pessoa segura o aparelho; ele deriva
+      // devagar para acompanhar quando ela muda de posicao.
+      if (!baseline) baseline = { beta: e.beta, gamma: e.gamma };
+      baseline.beta += (e.beta - baseline.beta) * TILT_RECENTER;
+      baseline.gamma += (e.gamma - baseline.gamma) * TILT_RECENTER;
+
+      const dBeta = e.beta - baseline.beta;
+      const dGamma = e.gamma - baseline.gamma;
+      // Em paisagem os eixos do aparelho giram em relacao a tela.
+      const angle = screen.orientation?.angle ?? 0;
+      const [dx, dy] =
+        angle === 90 ? [dBeta, -dGamma] : angle === 270 ? [-dBeta, dGamma] : [dGamma, -dBeta];
+
+      const clamp = (v: number) => Math.max(-1, Math.min(1, v / TILT_RANGE_DEG));
+      pointerTargetRef.current.set(clamp(dx), clamp(dy));
+    };
+
+    // Girar a tela troca os eixos: o neutro anterior deixa de valer.
+    const resetBaseline = () => {
+      baseline = null;
+      pointerTargetRef.current.set(0, 0);
+    };
+
+    window.addEventListener('deviceorientation', handleOrientation);
+    window.addEventListener('orientationchange', resetBaseline);
+    return () => {
+      window.removeEventListener('deviceorientation', handleOrientation);
+      window.removeEventListener('orientationchange', resetBaseline);
+    };
+  }, [tilt]);
 
   return (
     <div

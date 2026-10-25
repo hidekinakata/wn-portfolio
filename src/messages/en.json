@@ -34,7 +34,8 @@
     "ctaBlog": "Read the blog",
     "ctaContact": "Get in touch",
     "scroll": "Scroll",
-    "explore": "Explore"
+    "explore": "Explore",
+    "tiltEnable": "Enable tilt"
   },
   "Status": {
     "currently": "Currently",

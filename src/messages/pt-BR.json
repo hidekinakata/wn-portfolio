@@ -34,7 +34,8 @@
     "ctaBlog": "Ler o blog",
     "ctaContact": "Entrar em contato",
     "scroll": "Role",
-    "explore": "Explore"
+    "explore": "Explore",
+    "tiltEnable": "Ativar inclinação"
   },
   "Status": {
     "currently": "Atualmente",
