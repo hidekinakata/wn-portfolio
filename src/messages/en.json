@@ -43,6 +43,7 @@
   },
   "Skills": {
     "title": "Skills",
+    "readoutIdle": "{count} skills · {groups} groups",
     "aiAutomation": "AI & Automation",
     "backendFrontend": "Backend & Frontend",
     "dataCloudDevops": "Data, Cloud & DevOps"

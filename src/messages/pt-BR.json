@@ -43,6 +43,7 @@
   },
   "Skills": {
     "title": "Competências",
+    "readoutIdle": "{count} competências · {groups} grupos",
     "aiAutomation": "IA & Automação",
     "backendFrontend": "Backend & Frontend",
     "dataCloudDevops": "Dados, Cloud & DevOps"

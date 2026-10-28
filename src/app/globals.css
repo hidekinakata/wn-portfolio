@@ -378,6 +378,167 @@
     );
     height: 2px;
   }
+
+  /* ---- Sobre: estados apagado/aceso (cortes secos, nunca fade) ----------
+     O markup nasce aceso. `LitOnView` arma o painel (`data-lit="armed"`:
+     apagado, legivel) e, ao entrar na tela, liga (`data-lit="on"`): cada
+     tecla pisca e assenta, em cascata, via `animation-delay` inline. */
+
+  /* Tecla de skill: LED + nome em mono. */
+  .lit-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.75rem 0.5rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    color: var(--color-foreground);
+    animation-fill-mode: backwards;
+  }
+
+  .lit-chip::before {
+    content: "";
+    flex: none;
+    width: 0.375rem;
+    height: 0.375rem;
+    background-color: var(--color-flow-light);
+    animation-delay: inherit;
+    animation-fill-mode: backwards;
+  }
+
+  [data-lit="armed"] .lit-chip {
+    border-color: var(--color-border);
+    color: var(--color-subtle-foreground);
+  }
+
+  [data-lit="armed"] .lit-chip::before {
+    background-color: var(--color-ghost);
+    box-shadow: inset 0 0 0 1px var(--color-border-strong);
+  }
+
+  /* O atraso de cada tecla vem inline (`animationDelay`); a shorthand zera
+     fill-mode e delay, entao ambos sao reescritos depois dela. */
+  [data-lit="on"] .lit-chip {
+    animation: chip-on 0.5s step-end backwards;
+  }
+
+  [data-lit="on"] .lit-chip::before {
+    animation: led-on 0.5s step-end backwards;
+    animation-delay: inherit;
+  }
+
+  @media (hover: hover) {
+    .lit-chip:hover {
+      border-color: var(--color-flow-light);
+      background-color: color-mix(in oklab, var(--color-flow) 16%, transparent);
+    }
+
+    .lit-chip:hover::before {
+      background-color: var(--color-flare);
+    }
+  }
+
+  /* Segmento do medidor de nivel de idioma. */
+  .lit-seg {
+    display: block;
+    width: 1.5rem;
+    height: 0.375rem;
+    background-color: var(--color-ghost);
+    box-shadow: inset 0 0 0 1px var(--color-border-strong);
+    animation-fill-mode: backwards;
+  }
+
+  .lit-seg[data-filled="true"] {
+    background-color: var(--color-flow-light);
+    box-shadow: none;
+  }
+
+  [data-lit="armed"] .lit-seg[data-filled="true"] {
+    background-color: var(--color-ghost);
+    box-shadow: inset 0 0 0 1px var(--color-border-strong);
+  }
+
+  [data-lit="on"] .lit-seg[data-filled="true"] {
+    animation: seg-on 0.5s step-end backwards;
+  }
+
+  /* Palavra da bio acendendo ao ritmo da rolagem (ver `ScrollLitText`). */
+  .lit-word {
+    position: relative;
+    color: var(--color-foreground);
+  }
+
+  /* Apagada: ainda legivel (>= 4.5:1), so recuada. */
+  .lit-word[data-lit="unlit"] {
+    color: var(--color-subtle-foreground);
+  }
+
+  /* Cursor de leitura: um traco laranja na ultima palavra acesa. Absoluto, para
+     nao empurrar o texto enquanto anda. */
+  .lit-word[data-lit="edge"]::after {
+    content: "";
+    position: absolute;
+    top: 0.12em;
+    bottom: 0.08em;
+    right: -0.2em;
+    width: 2px;
+    background-color: var(--color-flare);
+    animation: caret-blink 1.05s step-end infinite;
+  }
+}
+
+/* Liga: apagado -> flash -> assentado. `step-end` = cortes secos. */
+@keyframes chip-on {
+  0% {
+    border-color: var(--color-border);
+    color: var(--color-subtle-foreground);
+    background-color: transparent;
+  }
+  1% {
+    border-color: var(--color-flow-light);
+    color: #fff;
+    background-color: color-mix(in oklab, var(--color-flow) 42%, transparent);
+  }
+  62% {
+    border-color: var(--color-border-strong);
+    color: var(--color-foreground);
+    background-color: transparent;
+  }
+}
+
+@keyframes led-on {
+  0% {
+    background-color: var(--color-ghost);
+  }
+  1% {
+    background-color: #fff;
+  }
+  62% {
+    background-color: var(--color-flow-light);
+  }
+}
+
+@keyframes seg-on {
+  0% {
+    background-color: var(--color-ghost);
+  }
+  1% {
+    background-color: #fff;
+  }
+  62% {
+    background-color: var(--color-flow-light);
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes hero-focus {
