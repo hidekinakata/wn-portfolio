@@ -46,8 +46,8 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
         <p
           className={
             variant === "full"
-              ? "mt-4 line-clamp-4 text-sm leading-7 text-muted-foreground"
-              : "mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground"
+              ? "mt-4 line-clamp-4 max-w-[72ch] text-sm leading-7 text-muted-foreground"
+              : "mt-3 line-clamp-2 max-w-[72ch] text-sm leading-6 text-muted-foreground"
           }
         >
           {project.description}
@@ -55,7 +55,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
       ) : null}
 
       {project.tags.length > 0 ? (
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <li
               key={tag}

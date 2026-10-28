@@ -25,7 +25,7 @@ export async function Hero() {
     >
       <HeroField />
 
-      <div className="shell relative z-10 flex min-h-[calc(100svh-5rem)] flex-col justify-center pt-28 pb-20">
+      <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-center pt-24 pb-14">
         <p className="font-mono text-[0.78rem] tracking-[0.34em] text-muted-foreground uppercase">
           {t("eyebrow")}
         </p>
@@ -61,7 +61,7 @@ export async function Hero() {
           </Button>
         </div>
 
-        <div className="mt-16 flex flex-col gap-2.5">
+        <div className="mt-12 flex flex-col gap-2.5">
           <span className="hud-label text-foreground">{status("currently")}</span>
           <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="font-mono text-[0.72rem] tracking-[0.22em] text-muted-foreground uppercase">

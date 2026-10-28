@@ -19,7 +19,7 @@ export async function FeaturedProjects() {
 
   return (
     <section className="border-b border-border">
-      <div className="shell py-14">
+      <div className="shell py-10">
         <div className="flex items-center justify-between gap-6">
           <p className="hud-label">{tFeatured("label")}</p>
           <Link
@@ -31,11 +31,11 @@ export async function FeaturedProjects() {
         </div>
 
         {featured.length === 0 ? (
-          <p className="mt-8 font-mono text-sm text-subtle-foreground">
+          <p className="mt-6 font-mono text-sm text-subtle-foreground">
             {tProjects("empty")}
           </p>
         ) : (
-          <div className="mt-8 grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(min(100%,17rem),1fr))]">
+          <div className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
             {featured.map((project) => (
               <ProjectCard
                 key={project.id}

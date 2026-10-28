@@ -22,7 +22,7 @@ export async function ProjectsSection() {
         </p>
       ) : (
         <Reveal>
-          <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(min(100%,20rem),1fr))]">
+          <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))]">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} variant="full" />
             ))}

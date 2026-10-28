@@ -21,12 +21,14 @@ export async function ContactSection() {
 
   return (
     <SectionShell id="contact" number="06" title={tContact("title")}>
-      <Reveal>
+      {/* Frase e links na mesma linha em paisagem: o fim do caminho cabe na
+          tela em vez de empilhar duas faixas. */}
+      <Reveal className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         <p className="font-mono text-sm text-muted-foreground">
           {tContact("body")}
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           {profile?.email ? (
             <Button asChild variant="keyline" size="console">
               <a href={`mailto:${profile.email}`}>

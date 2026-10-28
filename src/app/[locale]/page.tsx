@@ -64,7 +64,7 @@ function SectionFallback() {
   return (
     <div
       aria-busy="true"
-      className="min-h-[24rem] border-b border-border"
+      className="min-h-[16rem] border-b border-border"
       role="status"
     />
   );

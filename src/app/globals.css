@@ -242,7 +242,7 @@
   .shell {
     margin-inline: auto;
     width: 100%;
-    max-width: 80rem;
+    max-width: 90rem;
     padding-inline: 1.5rem;
   }
 
@@ -252,9 +252,11 @@
     }
   }
 
+  /* Os trilhos fixos (numerado a esquerda, SCROLL a direita) ocupam ~7rem de
+     cada borda; 9rem deixa folga e devolve ~190px de coluna util a 1440. */
   @media (width >= 80rem) {
     .shell {
-      padding-inline: 10rem;
+      padding-inline: 9rem;
     }
   }
 

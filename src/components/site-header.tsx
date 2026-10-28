@@ -52,24 +52,29 @@ export async function SiteHeader() {
           >
             WN
           </span>
-          <span aria-hidden="true" className="hidden h-6 w-px bg-border-strong sm:block" />
+          <span
+            aria-hidden="true"
+            className="hidden h-6 w-px bg-border-strong sm:block"
+          />
           <span className="hidden items-baseline gap-5 sm:flex">
             <span className="font-mono text-[0.7rem] font-medium tracking-[0.26em] text-foreground uppercase">
               William Nakata
             </span>
-            <span className="hud-label hidden 2xl:block">{hero("headline")}</span>
+            <span className="hud-label hidden 2xl:block">
+              {hero("headline")}
+            </span>
           </span>
         </Link>
 
         <div
           aria-hidden="true"
           className="relative mx-10 hidden h-px flex-1 bg-gradient-to-r from-transparent via-border-strong to-transparent lg:block"
-        >
-          <span className="absolute top-1/2 left-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-subtle-foreground" />
-          <span className="absolute top-1/2 left-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-subtle-foreground" />
-        </div>
+        ></div>
 
-        <nav aria-label={t("menu")} className="hidden items-center gap-1 md:flex">
+        <nav
+          aria-label={t("menu")}
+          className="hidden items-center gap-1 md:flex"
+        >
           <ul className="flex items-center gap-1">
             {navItems.map(({ key, href }) => (
               <li key={key}>
