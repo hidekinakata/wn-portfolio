@@ -12,7 +12,7 @@ const DotField = dynamic(() => import("@/components/DotField"), {
   ssr: false,
 });
 
-const BEND_COLORS = ["#ff5c7a", "#8a5cff", "#00ffd1"];
+const BEND_COLORS = ["#5b7cfa", "#7b6cff", "#ff7a2f"];
 
 /**
  * Campo do hero, em tres camadas: o fundo estatico (tambem o fallback sem
@@ -26,7 +26,7 @@ export function HeroField() {
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(138,92,255,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(255,92,122,0.10),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(123,108,255,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(255,122,47,0.10),transparent_60%)]" />
 
       <div className="hero-field-mask hero-field-fade absolute inset-0">
         <ColorBends
@@ -59,9 +59,9 @@ export function HeroField() {
           cursorRadius={500}
           cursorForce={0.1}
           bulgeOnly
-          gradientFrom="#A855F7"
-          gradientTo="#B497CF"
-          glowColor="#120F17"
+          gradientFrom="#7b6cff"
+          gradientTo="#b9b4ff"
+          glowColor="#0b0f1a"
         />
       </div>
 

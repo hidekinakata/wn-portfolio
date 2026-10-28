@@ -80,19 +80,19 @@
   color-scheme: dark;
 
   --background: #060810;
-  --foreground: #f2f1ec;
+  --foreground: #e8e4d7;
   --card: #0b0f1a;
-  --card-foreground: #f2f1ec;
+  --card-foreground: #e8e4d7;
   --popover: #0b0f1a;
-  --popover-foreground: #f2f1ec;
+  --popover-foreground: #e8e4d7;
   --primary: #5b7cfa;
   --primary-foreground: #04060c;
   --secondary: #10141f;
-  --secondary-foreground: #f2f1ec;
+  --secondary-foreground: #e8e4d7;
   --muted: #101623;
   --muted-foreground: #9aa6bd;
   --accent: #131a29;
-  --accent-foreground: #f2f1ec;
+  --accent-foreground: #e8e4d7;
   --destructive: #e5484d;
   --border: #1b2233;
   --input: #1b2233;
@@ -110,39 +110,39 @@
   --flow-light: #8da2ff;
   --flare: #ff7a2f;
   --flare-light: #ffa26b;
-  /* Violeta do campo do hero (ColorBends/DotField) e o lavanda do nome. */
+  /* Violeta do campo do hero (ColorBends/DotField) e o lavanda do cargo. */
   --violet: #7b6cff;
   --lavender: #b9b4ff;
-  /* Sinal de telemetria (o ciano do ColorBends): so o ticker do relogio. */
+  /* Sinal de telemetria (ciano): so o ticker do relogio. */
   --signal: #00ffd1;
 
   --radius: 0.125rem;
 
   --sidebar: #0b0f1a;
-  --sidebar-foreground: #f2f1ec;
+  --sidebar-foreground: #e8e4d7;
   --sidebar-primary: #5b7cfa;
   --sidebar-primary-foreground: #04060c;
   --sidebar-accent: #131a29;
-  --sidebar-accent-foreground: #f2f1ec;
+  --sidebar-accent-foreground: #e8e4d7;
   --sidebar-border: #1b2233;
   --sidebar-ring: #5b7cfa;
 }
 
 .dark {
   --background: #060810;
-  --foreground: #f2f1ec;
+  --foreground: #e8e4d7;
   --card: #0b0f1a;
-  --card-foreground: #f2f1ec;
+  --card-foreground: #e8e4d7;
   --popover: #0b0f1a;
-  --popover-foreground: #f2f1ec;
+  --popover-foreground: #e8e4d7;
   --primary: #5b7cfa;
   --primary-foreground: #04060c;
   --secondary: #10141f;
-  --secondary-foreground: #f2f1ec;
+  --secondary-foreground: #e8e4d7;
   --muted: #101623;
   --muted-foreground: #9aa6bd;
   --accent: #131a29;
-  --accent-foreground: #f2f1ec;
+  --accent-foreground: #e8e4d7;
   --destructive: #e5484d;
   --border: #1b2233;
   --input: #1b2233;
@@ -167,11 +167,11 @@
   --radius: 0.125rem;
 
   --sidebar: #0b0f1a;
-  --sidebar-foreground: #f2f1ec;
+  --sidebar-foreground: #e8e4d7;
   --sidebar-primary: #5b7cfa;
   --sidebar-primary-foreground: #04060c;
   --sidebar-accent: #131a29;
-  --sidebar-accent-foreground: #f2f1ec;
+  --sidebar-accent-foreground: #e8e4d7;
   --sidebar-border: #1b2233;
   --sidebar-ring: #5b7cfa;
 }
