@@ -282,29 +282,15 @@
     font-weight: 700;
   }
 
-  /* Nome do hero: luz branca descendo para o lavanda do campo. */
+  /* Nome do hero: bone-white chapado. Sem gradiente em texto — a hierarquia
+     vem do tamanho e do peso, nunca de transicao de tom. */
   .hero-name {
-    background-image: linear-gradient(
-      180deg,
-      #fbfaff 0%,
-      #e4e2ff 58%,
-      #c9c5ff 100%
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--color-foreground);
   }
 
-  /* Cargo: o mesmo gradiente, um tom abaixo, mergulhando no violeta. */
+  /* Cargo: lavanda chapado, um tom abaixo do nome. */
   .hero-role {
-    background-image: linear-gradient(
-      180deg,
-      var(--color-lavender) 0%,
-      color-mix(in oklab, var(--color-violet) 82%, var(--color-lavender)) 100%
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--color-lavender);
   }
 
   /* O unico momento autoral do hero: o nome entra em foco. Parte de um estado
