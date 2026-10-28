@@ -47,6 +47,7 @@ const nextConfig: NextConfig = {
     config.resolve.alias = alias;
     return config;
   },
+  allowedDevOrigins: ['192.168.18.110']
 };
 
 export default nextConfig;

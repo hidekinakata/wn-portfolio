@@ -63,3 +63,9 @@ next-env.d.ts
 
 # design-tool state (kept out of version control on purpose)
 **/.impeccable/
+
+# graphify knowledge graph, Obsidian vault state and agent tool state
+# (local only, rebuilt with `graphify update .`)
+/graphify-out/
+/.obsidian/
+/.opencode/

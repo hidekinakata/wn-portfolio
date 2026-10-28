@@ -8,6 +8,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## graphify
+
+This project has a graphify knowledge graph at graphify-out/.
+
+Rules:
+
+- Before answering architecture or codebase questions, read graphify-out/GRAPH_REPORT.md for god nodes and community structure
+- If graphify-out/wiki/index.md exists, navigate it instead of reading raw files
+- For cross-module "how does X relate to Y" questions, prefer `graphify query "<question>"`, `graphify path "<A>" "<B>"`, or `graphify explain "<concept>"` over grep — these traverse the graph's EXTRACTED + INFERRED edges instead of scanning files
+- After modifying code files in this session, run `graphify update .` to keep the graph current (AST-only, no API cost)
+
 ---
 
 # wn-portfolio — agent directives
@@ -26,7 +37,7 @@ Plan, decision log and phase status live in `PLAN.md` or `PRODUCT.md` (untracked
 
 1. **Commits are Conventional Commits, written in English.** Always. Types: `feat`, `fix`, `chore`,
    `docs`, `refactor`, `test`, `build`, `ci`, `perf`, `style`. Subject in imperative mood
-   (`add`, not `added`/`adds`). Wrap body at ~72 chars; explain *why*, not *what*.
+   (`add`, not `added`/`adds`). Wrap body at ~72 chars; explain _why_, not _what_.
    History is still unpushed, so amending/rewording is expected and encouraged.
 2. **`pnpm typecheck` and `pnpm lint` must both be clean before you commit.** No exceptions.
 3. **Verify UI work in a real browser**, at both `/en` and `/pt-BR`, before calling it done.
@@ -147,14 +158,14 @@ After any schema change, confirm `pnpm db:status` reports no drift before moving
 
 ## Skills — load these as relevant
 
-| Skill | Use for |
-|---|---|
-| `typescript-best-practices` | any `.ts`/`.tsx` writing or review |
-| `vercel-react-best-practices` | React/Next components, data fetching, performance |
-| `context7-mcp` | **any** library/framework API question — Next.js, Prisma, next-intl, Motion, Lenis, Zod, Shiki, Supabase. Use it even when you think you know the answer |
-| `impeccable` | UI/UX design review and polish (planned for the visual refinement phase) |
-| `agent-browser` | browser automation, exploratory testing, QA |
-| `find-skills` | discovering additional skills when a task needs one |
+| Skill                         | Use for                                                                                                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typescript-best-practices`   | any `.ts`/`.tsx` writing or review                                                                                                                       |
+| `vercel-react-best-practices` | React/Next components, data fetching, performance                                                                                                        |
+| `context7-mcp`                | **any** library/framework API question — Next.js, Prisma, next-intl, Motion, Lenis, Zod, Shiki, Supabase. Use it even when you think you know the answer |
+| `impeccable`                  | UI/UX design review and polish (planned for the visual refinement phase)                                                                                 |
+| `agent-browser`               | browser automation, exploratory testing, QA                                                                                                              |
+| `find-skills`                 | discovering additional skills when a task needs one                                                                                                      |
 
 When a task touches a library API, resolve the library ID and query its docs first — training data
 goes stale quickly, and this repo already depends on several fast-moving major versions.
@@ -170,5 +181,7 @@ These are ignored on purpose; do not force-add them:
 - `prisma/seed.ts`, `prisma/load-env.ts` (local scaffolding, deliberately untracked)
 - `PLAN.md` (local working plan)
 - `.openchamber/` (tool state)
+- `graphify-out/` (knowledge graph output, rebuilt with `graphify update .`)
+- `.obsidian/` (Obsidian vault state)
 
 Never print secret values in output — check for presence or length only.

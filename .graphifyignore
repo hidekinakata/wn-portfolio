@@ -1,0 +1,4 @@
+# Generated or tool-owned files that only add noise to the graph.
+src/generated/
+.opencode/
+.obsidian/
