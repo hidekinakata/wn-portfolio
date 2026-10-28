@@ -5,8 +5,10 @@ import { Link } from "@/i18n/navigation";
 import { getProjects } from "@/lib/queries/projects";
 
 /**
- * Faixa de projetos em destaque no fim do primeiro viewport (a dobra do
- * brief). Sem campo `featured` no banco, destaque = os quatro mais recentes.
+ * Faixa de projetos em destaque logo apos o hero. No desktop o hero ocupa o
+ * viewport inteiro e ela vive apos a dobra; abaixo de lg espreita a dobra
+ * como pista de scroll. Sem campo `featured` no banco, destaque = os quatro
+ * mais recentes.
  */
 export async function FeaturedProjects() {
   const locale = await getLocale();

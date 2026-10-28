@@ -13,6 +13,12 @@ import { Link } from "@/i18n/navigation";
  * Renderizado no servidor e visivel desde o primeiro paint: o unico movimento
  * autoral e o nome entrando em foco (CSS), os campos chegam depois. O
  * marcador SCROLL / EXPLORE vive fora daqui (`ScrollMarker`, fixo na pagina).
+ *
+ * Altura: no desktop (lg+) o hero ocupa o viewport inteiro (100svh) e o
+ * FeaturedProjects so aparece apos a dobra — a composicao de tela cheia pede
+ * o campo de particulas sem cortes. Abaixo de lg o min-h deixa a faixa de
+ * destaque espreitar a dobra de proposito: sem o rail nem o SCROLL marker
+ * (ambos lg+), e ela o unico sinal de que ha conteudo abaixo.
  */
 export async function Hero() {
   const t = await getTranslations("Hero");
@@ -25,7 +31,7 @@ export async function Hero() {
     >
       <HeroField />
 
-      <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-center pt-24 pb-14">
+      <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-center pt-24 pb-14 lg:min-h-svh lg:pb-24">
         <p className="font-mono text-[0.78rem] tracking-[0.34em] text-muted-foreground uppercase">
           {t("eyebrow")}
         </p>
