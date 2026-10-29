@@ -8,9 +8,12 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { BootScreen } from "@/components/boot-screen";
+import { RouteTransition } from "@/components/route-transition";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { BOOT_INIT_SCRIPT } from "@/lib/boot";
 import { routing } from "@/i18n/routing";
 
 import "../globals.css";
@@ -92,14 +95,23 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const hero = await getTranslations({ locale, namespace: "Hero" });
 
   return (
     <html
       lang={locale}
+      // O script inline do boot marca `data-boot` no `<html>` antes da
+      // hidratacao; sem isto o React acusaria mismatch de atributos.
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${bigShoulders.variable}`}
     >
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
+        {/* Antes de qualquer conteudo: marca `data-boot` no `<html>` antes do
+            overlay de loading pintar (ver `src/lib/boot.ts`). */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_INIT_SCRIPT }} />
         <NextIntlClientProvider messages={messages}>
+          <BootScreen role={hero("headline")} />
+          <RouteTransition />
           <SmoothScroll />
           <SiteHeader />
           <main id="main" className="flex-1">

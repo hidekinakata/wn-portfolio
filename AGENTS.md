@@ -164,6 +164,17 @@ truth for it**. Never declare your own easing, duration or stagger — import th
 - Documented exceptions, not to be copied: the springs in `scroll-marker.tsx` are follow
   physics, not choreography; `GradualBlur.tsx` is vendored material.
 
+The intro (`src/components/boot-screen.tsx` — first visit per session, gate in
+`src/lib/boot.ts`) and the route transition (`src/components/route-transition.tsx`) share one
+curtain (`brand-curtain.tsx`: lavender → violet → panel, as in the mobile menu) carrying the
+brand lockup (`brand-lockup.tsx`: WN | William Nakata, plus the roles on the intro). Intro: the
+dark screen is on screen at first paint; logo, name and role enter in sequence, hold, leave in
+sequence, and only then the curtain exits to the left. Route transition: the curtain enters from
+the right and leaves through the opposite side (`leave()` in `motion.ts`). A locale switch
+reloads the page (the root layout changes), so the new page arrives with the curtain already
+closed (`wn:switch` in `boot.ts`). No system/boot chrome. Any new motion surface extends the
+same grammar.
+
 ---
 
 ## Verification workflow

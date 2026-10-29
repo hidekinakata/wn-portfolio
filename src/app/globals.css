@@ -461,6 +461,39 @@
     color: var(--color-foreground);
   }
 
+  /* ---- Tela de boot (loading) ------------------------------------------ */
+  /* Renderizada sempre, so aparece quando o script inline de
+     `src/lib/boot.ts` marca `data-boot="on"` no `<html>` (primeira visita da
+     sessao). Sem JS o atributo nunca existe e o overlay nunca aparece. */
+  #boot-screen {
+    display: none;
+  }
+
+  html[data-boot="on"] #boot-screen {
+    display: block;
+  }
+
+  /* Troca de idioma: a cortina da pagina anterior nao leva o cargo (estaria
+     no idioma errado), entao a da pagina nova tambem nao, senao ele
+     apareceria de repente. */
+  html[data-boot-kind="switch"] [data-brand-item] {
+    /* Na troca de idioma as pecas ja estao no lugar (a pagina anterior as
+       mostrava): sem entrada nem saida, so a cortina sai. */
+    transform: none !important;
+  }
+
+  html[data-boot-kind="switch"] [data-brand-role] {
+    /* Esta regra vive numa layer: sem !important a utilidade `.block` vence. */
+    display: none !important;
+  }
+
+  /* A estreia do hero espera as laminas do boot sairem: as animacoes ficam
+     pausadas em t=0 e correm do zero quando `data-boot` volta a "off". */
+  html[data-boot="on"] .hero-focus,
+  html[data-boot="on"] .hero-field-fade {
+    animation-play-state: paused;
+  }
+
   /* Apagada: ainda legivel (>= 4.5:1), so recuada. */
   .lit-word[data-lit="unlit"] {
     color: var(--color-subtle-foreground);
