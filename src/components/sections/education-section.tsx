@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { EntryDescription } from "@/components/entry-description";
-import { LitOnView } from "@/components/lit-on-view";
-import { Reveal } from "@/components/reveal";
-import { SectionShell } from "@/components/section";
+import { EntryDescription } from "@/components/sections/shared/entry-description";
+import { LitOnView } from "@/components/motion/lit-on-view";
+import { Reveal } from "@/components/motion/reveal";
+import { SectionShell } from "@/components/sections/shared/section-shell";
 import { formatMonthYear } from "@/lib/dates";
 import { getEducationBundle } from "@/lib/queries/education";
 

@@ -1,8 +1,8 @@
 import { ArrowUpRight, Download } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { Reveal } from "@/components/reveal";
-import { SectionShell } from "@/components/section";
+import { Reveal } from "@/components/motion/reveal";
+import { SectionShell } from "@/components/sections/shared/section-shell";
 import { Button } from "@/components/ui/button";
 import { getProfile } from "@/lib/queries/profile";
 

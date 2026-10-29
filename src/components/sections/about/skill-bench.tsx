@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { LitOnView } from "@/components/lit-on-view";
+import { LitOnView } from "@/components/motion/lit-on-view";
 
 type SkillBenchGroup = {
   key: string;

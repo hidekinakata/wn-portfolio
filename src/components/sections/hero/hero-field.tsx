@@ -4,7 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 type FieldLayer = {
-  DotField: typeof import("@/components/DotField").default;
+  DotField: typeof import("@/components/effects/dot-field").default;
 };
 
 /**
@@ -22,7 +22,7 @@ export function HeroField() {
      aparece ja na metade do fade. */
   useEffect(() => {
     let alive = true;
-    void import("@/components/DotField").then((dots) => {
+    void import("@/components/effects/dot-field").then((dots) => {
       if (alive) {
         setLayer({ DotField: dots.default });
       }

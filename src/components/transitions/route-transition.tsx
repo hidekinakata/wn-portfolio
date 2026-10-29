@@ -8,8 +8,8 @@ import {
   BrandCurtain,
   CURTAIN_MS,
   type CurtainPhase,
-} from "@/components/brand-curtain";
-import { BrandLockup } from "@/components/brand-lockup";
+} from "@/components/transitions/brand-curtain";
+import { BrandLockup } from "@/components/transitions/brand-lockup";
 import { usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { SWITCH_STORAGE_KEY } from "@/lib/boot";

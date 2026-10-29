@@ -1,9 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { LitOnView } from "@/components/lit-on-view";
-import { ScrollLitText } from "@/components/scroll-lit-text";
-import { SectionShell } from "@/components/section";
-import { SkillBench } from "@/components/skill-bench";
+import { LitOnView } from "@/components/motion/lit-on-view";
+import { ScrollLitText } from "@/components/motion/scroll-lit-text";
+import { SectionShell } from "@/components/sections/shared/section-shell";
+import { SkillBench } from "@/components/sections/about/skill-bench";
 import type { LanguageLevel } from "@/generated/prisma/enums";
 import { getLanguages } from "@/lib/queries/education";
 import { getProfile } from "@/lib/queries/profile";

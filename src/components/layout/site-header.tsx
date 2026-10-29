@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 
-import GradualBlur from "@/components/GradualBlur";
-import { LocaleSwitcher } from "@/components/locale-switcher";
-import { MobileNav } from "@/components/mobile-nav";
-import { NavLinks } from "@/components/nav-links";
+import GradualBlur from "@/components/effects/gradual-blur";
+import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
+import { MobileNav } from "@/components/navigation/mobile-nav";
+import { NavLinks } from "@/components/navigation/nav-links";
 import { Link } from "@/i18n/navigation";
 
 const navItems = [

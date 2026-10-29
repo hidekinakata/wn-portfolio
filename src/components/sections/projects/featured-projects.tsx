@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { LitOnView } from "@/components/lit-on-view";
-import { ProjectCard } from "@/components/project-card";
+import { LitOnView } from "@/components/motion/lit-on-view";
+import { ProjectCard } from "@/components/sections/projects/project-card";
 import { Link } from "@/i18n/navigation";
 import { getProjects } from "@/lib/queries/projects";
 

@@ -1,8 +1,8 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { ProjectCard } from "@/components/project-card";
-import { LitOnView } from "@/components/lit-on-view";
-import { SectionShell } from "@/components/section";
+import { ProjectCard } from "@/components/sections/projects/project-card";
+import { LitOnView } from "@/components/motion/lit-on-view";
+import { SectionShell } from "@/components/sections/shared/section-shell";
 import { getProjects } from "@/lib/queries/projects";
 
 /** Grade completa de projetos (todos os publicados, sem campo `featured`). */

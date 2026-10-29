@@ -65,6 +65,20 @@ Plan, decision log and phase status live in `PLAN.md` or `PRODUCT.md` (untracked
 - Design tokens (dark-only theme) live in `src/app/globals.css` under `@theme`. Tune tokens there,
   not one-off colours in components.
 
+### Component organization
+
+- Files and folders use `kebab-case`; components and types use `PascalCase`, functions and
+  variables use `camelCase`.
+- `src/components/ui/`: generic UI primitives; keep the shadcn alias pointing here.
+- `layout/`: site header, footer and shared layout readouts.
+- `navigation/`: menus, locale switching and section navigation/progress.
+- `transitions/`: intro, route transitions and their shared brand curtain/lockup.
+- `motion/`: reusable animation wrappers, text motion and smooth scrolling.
+- `effects/`: visual effects, keeping vendored implementations intact.
+- `sections/`: landing content, with feature-specific children colocated in `hero/`, `about/`
+  and `projects/`; `sections/shared/` holds components shared by multiple sections.
+- Import components directly from their files; do not add barrel exports or compatibility shims.
+
 ---
 
 ## TypeScript
@@ -145,7 +159,7 @@ environment issue first.
 
 ## Motion — the mobile menu sets the standard
 
-Every animation on this site follows the motion language of `src/components/mobile-nav.tsx`:
+Every animation on this site follows the motion language of `src/components/navigation/mobile-nav.tsx`:
 its quality and type are the reference, and **`src/lib/motion.ts` is the single source of
 truth for it**. Never declare your own easing, duration or stagger — import the tokens.
 
@@ -164,10 +178,10 @@ truth for it**. Never declare your own easing, duration or stagger — import th
 - CSS `@keyframes` take their curves from `EASE_OUT_CSS` / `EASE_IN_CSS` in `src/lib/motion.ts`
   (see the entrance keyframes in `src/app/globals.css`).
 - Documented exceptions, not to be copied: the springs in `scroll-marker.tsx` are follow
-  physics, not choreography; `GradualBlur.tsx` is vendored material.
+  physics, not choreography; `effects/gradual-blur.tsx` is vendored material.
 
-The intro (`src/components/boot-screen.tsx` — first visit per session, gate in
-`src/lib/boot.ts`) and the route transition (`src/components/route-transition.tsx`) share one
+The intro (`src/components/transitions/boot-screen.tsx` — first visit per session, gate in
+`src/lib/boot.ts`) and the route transition (`src/components/transitions/route-transition.tsx`) share one
 curtain (`brand-curtain.tsx`: lavender → violet → panel, as in the mobile menu) carrying the
 brand lockup (`brand-lockup.tsx`: WN | William Nakata, plus the roles on the intro). Intro: the
 dark screen is on screen at first paint; logo, name and role enter in sequence, hold, leave in

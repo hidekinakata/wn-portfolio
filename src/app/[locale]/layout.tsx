@@ -8,11 +8,11 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { BootScreen } from "@/components/boot-screen";
-import { RouteTransition } from "@/components/route-transition";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { SmoothScroll } from "@/components/smooth-scroll";
+import { BootScreen } from "@/components/transitions/boot-screen";
+import { RouteTransition } from "@/components/transitions/route-transition";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { BOOT_INIT_SCRIPT } from "@/lib/boot";
 import { routing } from "@/i18n/routing";
 

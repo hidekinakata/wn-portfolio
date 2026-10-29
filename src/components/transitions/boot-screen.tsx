@@ -3,8 +3,8 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { BrandCurtain, CURTAIN_MS } from "@/components/brand-curtain";
-import { BrandLockup } from "@/components/brand-lockup";
+import { BrandCurtain, CURTAIN_MS } from "@/components/transitions/brand-curtain";
+import { BrandLockup } from "@/components/transitions/brand-lockup";
 import { BOOT_STORAGE_KEY } from "@/lib/boot";
 import { DURATION, leave, slide } from "@/lib/motion";
 

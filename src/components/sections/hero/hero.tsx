@@ -1,10 +1,10 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { HeroField } from "@/components/hero-field";
-import { LocalClock } from "@/components/local-clock";
-import { MaskedText } from "@/components/masked-text";
-import { TiltPermission } from "@/components/tilt-permission";
+import { HeroField } from "@/components/sections/hero/hero-field";
+import { LocalClock } from "@/components/layout/local-clock";
+import { MaskedText } from "@/components/motion/masked-text";
+import { TiltPermission } from "@/components/sections/hero/tilt-permission";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { CHAR_STEP, LAYER_STEP } from "@/lib/motion";

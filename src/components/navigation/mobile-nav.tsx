@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
-import { LocalClock } from "@/components/local-clock";
+import { LocalClock } from "@/components/layout/local-clock";
 import { Link } from "@/i18n/navigation";
 import { cut, DURATION, LAYER_STEP, slide } from "@/lib/motion";
 import { setScrollLock } from "@/lib/scroll-lock";

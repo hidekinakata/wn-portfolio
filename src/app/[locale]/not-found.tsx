@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { MaskedText } from "@/components/masked-text";
+import { MaskedText } from "@/components/motion/masked-text";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { LAYER_STEP } from "@/lib/motion";

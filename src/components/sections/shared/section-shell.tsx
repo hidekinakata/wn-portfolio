@@ -1,5 +1,5 @@
-import { LitOnView } from "@/components/lit-on-view";
-import { MaskedText } from "@/components/masked-text";
+import { LitOnView } from "@/components/motion/lit-on-view";
+import { MaskedText } from "@/components/motion/masked-text";
 import { CHAR_STEP } from "@/lib/motion";
 
 type SectionShellProps = {

@@ -3,15 +3,15 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import { AboutSection } from "@/components/about";
-import { ContactSection } from "@/components/contact";
-import { EducationSection } from "@/components/education";
-import { ExperienceSection } from "@/components/experience";
-import { FeaturedProjects } from "@/components/featured-projects";
-import { Hero } from "@/components/hero";
-import { ProjectsSection } from "@/components/projects";
-import { ScrollMarker } from "@/components/scroll-marker";
-import { SectionRail } from "@/components/section-rail";
+import { AboutSection } from "@/components/sections/about/about-section";
+import { ContactSection } from "@/components/sections/contact-section";
+import { EducationSection } from "@/components/sections/education-section";
+import { ExperienceSection } from "@/components/sections/experience-section";
+import { FeaturedProjects } from "@/components/sections/projects/featured-projects";
+import { Hero } from "@/components/sections/hero/hero";
+import { ProjectsSection } from "@/components/sections/projects/projects-section";
+import { ScrollMarker } from "@/components/navigation/scroll-marker";
+import { SectionRail } from "@/components/navigation/section-rail";
 import { routing } from "@/i18n/routing";
 
 type Props = {

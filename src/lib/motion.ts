@@ -2,7 +2,7 @@
  * Padrao de movimento do console — fonte unica de verdade.
  *
  * A referencia de qualidade e tipo das animacoes deste site e o menu mobile
- * (`src/components/mobile-nav.tsx`): entradas em ease-out exponencial com
+ * (`src/components/navigation/mobile-nav.tsx`): entradas em ease-out exponencial com
  * atrasos escalonados, laminas de cor empilhadas com `LAYER_STEP`, saidas em
  * corte curto ease-in, uma unica natureza suave (tudo assenta em ease-out,
  * sem piscar) e hover em corte seco (`transition-none`), sem fade. `prefers-reduced-motion` vira corte
