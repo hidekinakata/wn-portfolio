@@ -32,6 +32,9 @@ type MobileNavProps = {
    sao exatamente a gramatica dele. */
 const PRE_LAYERS = ["bg-lavender", "bg-violet"] as const;
 const PANEL_DELAY = PRE_LAYERS.length * LAYER_STEP;
+/* O rodape comeca quando o ultimo titulo ja esta subindo. */
+const FOOTER_DELAY = PANEL_DELAY + 0.4;
+const FOOTER_STEP = 0.08;
 
 /**
  * Menu compacto (abaixo de `md`): painel de tela cheia que entra pela direita
@@ -45,6 +48,17 @@ export function MobileNav({ items, labels }: MobileNavProps) {
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+
+  // Sobe da mascara no degrau `step` do rodape.
+  const footerRise = (step: number) => ({
+    initial: { y: "120%" },
+    animate: { y: "0%" },
+    transition: slide({
+      delay: FOOTER_DELAY + step * FOOTER_STEP,
+      duration: DURATION.block,
+      reduced: reducedMotion,
+    }),
+  });
 
   const close = useCallback((options?: { restoreFocus?: boolean }) => {
     // Destrava ja: o clique numa ancora precisa do Lenis livre para rolar.
@@ -168,7 +182,9 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                     >
                       <motion.span
                         className="display block origin-bottom-left text-[clamp(2.75rem,14vw,4.5rem)] leading-[0.92]"
-                        initial={{ y: "110%", rotate: 6 }}
+                        // 150%: a mascara (<li>) inclui o py-3 do link, entao 110%
+                        // deixava uma fatia do titulo visivel enquanto espera o delay.
+                        initial={{ y: "150%", rotate: 6 }}
                         animate={{ y: "0%", rotate: 0 }}
                         transition={slide({
                           delay: PANEL_DELAY + 0.12 + index * 0.08,
@@ -195,35 +211,67 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                 ))}
               </ol>
 
-              <motion.div
-                className="relative mt-auto flex flex-col gap-6 pt-12"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={slide({
-                  delay: PANEL_DELAY + 0.45,
-                  duration: DURATION.block,
-                  reduced: reducedMotion,
-                })}
-              >
+              {/* Rodape em cascata, como a lista: rotulo, local e relogio sobem
+                  de mascaras proprias; o botao de contato abre da esquerda para
+                  a direita e a seta assenta por ultimo. */}
+              <div className="relative mt-auto flex flex-col gap-6 pt-12">
                 <div className="flex flex-col gap-2.5">
-                  <span className="hud-label text-foreground">{labels.currently}</span>
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      className="hud-label block text-foreground"
+                      {...footerRise(0)}
+                    >
+                      {labels.currently}
+                    </motion.span>
+                  </span>
                   <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <span className="font-mono text-[0.72rem] tracking-[0.22em] text-muted-foreground uppercase">
-                      {labels.location}
+                    <span className="block overflow-hidden">
+                      <motion.span
+                        className="block font-mono text-[0.72rem] tracking-[0.22em] text-muted-foreground uppercase"
+                        {...footerRise(1)}
+                      >
+                        {labels.location}
+                      </motion.span>
                     </span>
-                    <LocalClock />
+                    <span className="block overflow-hidden">
+                      <motion.span className="block" {...footerRise(2)}>
+                        <LocalClock />
+                      </motion.span>
+                    </span>
                   </span>
                 </div>
 
-                <Link
-                  href="/#contact"
-                  onClick={() => close()}
-                  className="flex h-12 items-center justify-between border border-flare px-5 font-mono text-[0.7rem] tracking-[0.22em] text-flare uppercase transition-none hover:bg-flare hover:text-background"
+                <motion.div
+                  initial={{ clipPath: "inset(0 100% 0 0)" }}
+                  animate={{ clipPath: "inset(0 0% 0 0)" }}
+                  transition={slide({
+                    delay: FOOTER_DELAY + 3 * FOOTER_STEP,
+                    duration: DURATION.panel,
+                    reduced: reducedMotion,
+                  })}
                 >
-                  {labels.contact}
-                  <ArrowRight aria-hidden="true" className="size-4" />
-                </Link>
-              </motion.div>
+                  <Link
+                    href="/#contact"
+                    onClick={() => close()}
+                    className="flex h-12 items-center justify-between border border-flare px-5 font-mono text-[0.7rem] tracking-[0.22em] text-flare uppercase transition-none hover:bg-flare hover:text-background"
+                  >
+                    {labels.contact}
+                    <motion.span
+                      aria-hidden="true"
+                      className="flex"
+                      initial={{ x: -28 }}
+                      animate={{ x: 0 }}
+                      transition={slide({
+                        delay: FOOTER_DELAY + 3 * FOOTER_STEP + 0.15,
+                        duration: DURATION.block,
+                        reduced: reducedMotion,
+                      })}
+                    >
+                      <ArrowRight className="size-4" />
+                    </motion.span>
+                  </Link>
+                </motion.div>
+              </div>
             </motion.nav>
           </div>
         ) : null}
