@@ -293,6 +293,79 @@
     color: var(--color-lavender);
   }
 
+  /* Nome escalonado: WILLIAM a esquerda, NAKATA empurrado a direita, o cargo
+     no vao ao lado dele. Abaixo de lg empilha, com NAKATA alinhado a direita. */
+  .hero-line {
+    font-size: calc(clamp(4rem, min(22vw, 24svh), 8.5rem) * 1.05);
+  }
+
+  .hero-line-b {
+    text-align: right;
+  }
+
+  .hero-stage .hero-role {
+    margin-top: 1rem;
+    font-size: clamp(1.6rem, 6vw, 2.6rem);
+  }
+
+  /* Intro a esquerda, CTAs a direita; fecha numa linha de status. */
+  .hero-lower {
+    margin-top: 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.6rem 2.5rem;
+  }
+
+  .hero-foot {
+    position: relative;
+    margin-top: 1.8rem;
+    padding-top: 1rem;
+  }
+
+  .hero-foot::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: var(--color-border-strong);
+    transform-origin: right;
+    animation: chrome-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+  }
+
+  @media (width >= 64rem) {
+    .hero-line {
+      font-size: calc(clamp(4rem, min(16vw, 28svh), 16rem) * 1.05);
+    }
+
+    .hero-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+
+    .hero-line-a {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .hero-line-b {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .hero-stage .hero-role {
+      grid-column: 1;
+      grid-row: 2;
+      margin-top: 0;
+      padding-right: 2rem;
+      padding-bottom: 0.5em;
+      font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+    }
+  }
+
   /* Mascara de cada palavra (`MaskedText`): corta so por baixo, deixando
      acentos e a inclinacao respirarem para cima e para os lados. */
   .mask-line {
