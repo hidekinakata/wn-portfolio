@@ -17,6 +17,13 @@
     "menu": "Menu",
     "close": "Close"
   },
+  "NotFound": {
+    "eyebrow": "Error 404",
+    "title": "Page not found",
+    "description": "The address you followed does not exist or has moved.",
+    "home": "Back home",
+    "blog": "Read the blog"
+  },
   "LocaleSwitcher": {
     "label": "Language",
     "en": "English",

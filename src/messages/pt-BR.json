@@ -17,6 +17,13 @@
     "menu": "Menu",
     "close": "Fechar"
   },
+  "NotFound": {
+    "eyebrow": "Erro 404",
+    "title": "Página não encontrada",
+    "description": "O endereço que você seguiu não existe ou foi movido.",
+    "home": "Voltar ao início",
+    "blog": "Ler o blog"
+  },
   "LocaleSwitcher": {
     "label": "Idioma",
     "en": "English",
