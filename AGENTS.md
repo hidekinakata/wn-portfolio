@@ -35,19 +35,23 @@ Plan, decision log and phase status live in `PLAN.md` or `PRODUCT.md` (untracked
 
 ## Non-negotiables
 
-1. **Commits are Conventional Commits, written in English.** Always. Types: `feat`, `fix`, `chore`,
+1. **Commits are made only when explicitly requested by the user.** Never commit
+   proactively — stage and leave the working tree ready, then ask or wait for the word.
+2. **Commits are Conventional Commits, written in English.** Always. Types: `feat`, `fix`, `chore`,
    `docs`, `refactor`, `test`, `build`, `ci`, `perf`, `style`. Subject in imperative mood
    (`add`, not `added`/`adds`). Wrap body at ~72 chars; explain _why_, not _what_.
    History is still unpushed, so amending/rewording is expected and encouraged.
-2. **`pnpm typecheck` and `pnpm lint` must both be clean before you commit.** No exceptions.
-3. **Verify UI work in a real browser**, at both `/en` and `/pt-BR`, before calling it done.
+3. **`pnpm typecheck` and `pnpm lint` must both be clean before you commit.** No exceptions.
+4. **Verify UI work in a real browser**, at both `/en` and `/pt-BR`, before calling it done.
    Do not describe what you expect to render — open it and look. Check the browser console for
    errors while you are there.
-4. **Read the bundled Next.js docs before writing Next.js code.** `node_modules/next/dist/docs/`.
+5. **Read the bundled Next.js docs before writing Next.js code.** `node_modules/next/dist/docs/`.
    This project is on Next 16, which differs materially from what you may assume.
-5. **Do not touch the `nextjs-agent-rules` block above.** `next dev` rewrites it.
-6. Prefer small, verifiable steps. When something is blocked (missing credentials, missing data),
+6. **Do not touch the `nextjs-agent-rules` block above.** `next dev` rewrites it.
+7. Prefer small, verifiable steps. When something is blocked (missing credentials, missing data),
    say so plainly instead of working around it with stubs or hardcoded values.
+8. **Be concise — in both changes and reasoning.** Touch only what the task needs, explain only
+   what matters, and answer directly and objectively. No filler, no restating the obvious.
 
 ---
 
