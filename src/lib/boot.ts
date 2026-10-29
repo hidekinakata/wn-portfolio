@@ -25,21 +25,24 @@ export const BOOT_INIT_SCRIPT = `
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var switching = sessionStorage.getItem("${SWITCH_STORAGE_KEY}");
     sessionStorage.removeItem("${SWITCH_STORAGE_KEY}");
-    if (
-      !reduced &&
-      (switching || !sessionStorage.getItem("${BOOT_STORAGE_KEY}"))
-    ) {
+    if (reduced) {
+      root.dataset.boot = "off";
+      return;
+    }
+    if (switching || !sessionStorage.getItem("${BOOT_STORAGE_KEY}")) {
       root.dataset.boot = "on";
       root.dataset.bootKind = switching ? "switch" : "first";
-      // Cinto de seguranca caso o React nunca hidrate: folga para a abertura
-      // inteira (~2s) caber ate num dispositivo lento. O fim normal e o
-      // proprio componente (boot-screen.tsx) quem fecha.
-      setTimeout(function () {
-        root.dataset.boot = "off";
-      }, 6000);
     } else {
-      root.dataset.boot = "off";
+      // Recarga na mesma sessao: sem abertura, mas a estreia do hero espera a
+      // hidratacao (BootScreen) para nao nascer pela metade.
+      root.dataset.boot = "wait";
     }
+    // Cinto de seguranca caso o React nunca hidrate: folga para a abertura
+    // inteira (~2s) caber ate num dispositivo lento. O fim normal e o
+    // proprio componente (boot-screen.tsx) quem fecha.
+    setTimeout(function () {
+      root.dataset.boot = "off";
+    }, 6000);
   } catch (e) {
     document.documentElement.dataset.boot = "off";
   }

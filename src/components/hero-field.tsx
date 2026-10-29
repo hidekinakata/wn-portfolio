@@ -1,16 +1,12 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
-/* WebGL (three) e canvas ficam fora do bundle inicial e do SSR: o texto do
-   hero pinta primeiro, o campo entra por cima do fundo estatico. */
-const ColorBends = dynamic(() => import("@/components/ColorBends"), {
-  ssr: false,
-});
-const DotField = dynamic(() => import("@/components/DotField"), {
-  ssr: false,
-});
+type FieldLayers = {
+  ColorBends: typeof import("@/components/ColorBends").default;
+  DotField: typeof import("@/components/DotField").default;
+};
 
 const BEND_COLORS = ["#5b7cfa", "#7b6cff", "#ff7a2f"];
 
@@ -23,11 +19,51 @@ const BEND_COLORS = ["#5b7cfa", "#7b6cff", "#ff7a2f"];
  */
 export function HeroField() {
   const reducedMotion = useReducedMotion() ?? false;
+  const [layers, setLayers] = useState<FieldLayers | null>(null);
+
+  /* WebGL (three) e canvas ficam fora do bundle inicial e do SSR: o texto do
+     hero pinta primeiro. As camadas so entram depois de carregadas, e a
+     estreia (`hero-field-fade`) nasce junto com elas — assim o campo nunca
+     aparece ja na metade do fade. */
+  useEffect(() => {
+    let alive = true;
+    void Promise.all([
+      import("@/components/ColorBends"),
+      import("@/components/DotField"),
+    ]).then(([bends, dots]) => {
+      if (alive) {
+        setLayers({ ColorBends: bends.default, DotField: dots.default });
+      }
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(123,108,255,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(255,122,47,0.10),transparent_60%)]" />
 
+      {layers ? (
+        <HeroLayers layers={layers} reducedMotion={reducedMotion} />
+      ) : null}
+
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+    </div>
+  );
+}
+
+type HeroLayersProps = {
+  layers: FieldLayers;
+  reducedMotion: boolean;
+};
+
+function HeroLayers({
+  layers: { ColorBends, DotField },
+  reducedMotion,
+}: HeroLayersProps) {
+  return (
+    <>
       <div className="hero-field-mask hero-field-fade absolute inset-0">
         <ColorBends
           colors={BEND_COLORS}
@@ -64,8 +100,6 @@ export function HeroField() {
           glowColor="#0b0f1a"
         />
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-    </div>
+    </>
   );
 }

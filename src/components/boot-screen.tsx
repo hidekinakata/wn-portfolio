@@ -56,6 +56,23 @@ export function BootScreen({ role }: BootScreenProps) {
       document.documentElement.dataset.boot = "off";
     };
 
+    if (document.documentElement.dataset.boot === "wait") {
+      // Sem abertura: libera a estreia so depois da hidratacao, das fontes e
+      // de dois quadros pintados — as animacoes correm do zero, nunca
+      // "alcancam" o tempo perdido pelo main thread ocupado.
+      let frame = 0;
+      let cancelled = false;
+      void document.fonts.ready.then(() => {
+        if (cancelled) return;
+        frame = requestAnimationFrame(() => {
+          frame = requestAnimationFrame(finish);
+        });
+      });
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(frame);
+      };
+    }
     if (document.documentElement.dataset.boot !== "on") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       finish();
