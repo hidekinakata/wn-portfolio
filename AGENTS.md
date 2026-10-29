@@ -153,8 +153,10 @@ truth for it**. Never declare your own easing, duration or stagger — import th
   colour blades stack `LAYER_STEP` (0.07s) apart, like the mobile menu's panel.
 - **Exits** are short hard cuts on `EASE_IN` (expo in) via `cut({ ... })` (~0.32s) — never a
   slow fade.
-- **Data snaps, never tweens**: counters, readouts and status values appear in discrete steps
-  (instant swap / `step-end`), with tabular numerals.
+- **One nature: smooth settle.** Everything that enters, lights up or draws does it on `EASE_OUT`
+  (rise, scale, mask, line draw, colour settle). No flashes, flicker, blink or `step-end`
+  sequences — nothing "pisca". Live readouts (clock, scroll percentage) just update, with
+  tabular numerals.
 - **Hovers are hard cuts**: `transition-none` plus an instant colour change. No CSS fades on
   interactive chrome.
 - **`prefers-reduced-motion`** means duration 0 or no animation at all (`useReducedMotion()`;
