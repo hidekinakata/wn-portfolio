@@ -560,30 +560,77 @@
     }
   }
 
-  /* Placa de identidade do Sobre: a imagem abre da esquerda para a direita e
-     os cantos lavanda assentam depois. */
-  .lit-tick {
-    position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-color: var(--color-lavender);
-    transform-origin: top left;
+  /* Sobre: abertura com o retrato sangrando para a esquerda sob o titulo.
+     Abaixo de lg o retrato vira faixa no topo, esmaecendo para o fundo. */
+  .about-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
   }
 
-  [data-lit="armed"] .lit-plate-img {
-    clip-path: inset(0 100% 0 0);
+  .about-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
-  [data-lit="armed"] .lit-tick {
-    transform: scale(0);
+  .about-hero-portrait {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent);
   }
 
-  [data-lit="on"] .lit-plate-img {
-    transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  .about-hero-lead {
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
   }
 
-  [data-lit="on"] .lit-tick {
-    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+  .about-hero-caption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .about-hero {
+      display: block;
+      min-height: 34rem;
+    }
+
+    .about-hero-portrait {
+      position: absolute;
+      inset: 0 0 0 auto;
+      width: 52%;
+      aspect-ratio: auto;
+      -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, #000 48%),
+        linear-gradient(to bottom, #000 66%, transparent 100%);
+      mask-image:
+        linear-gradient(to right, transparent 0%, #000 48%),
+        linear-gradient(to bottom, #000 66%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
+    .about-hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 62%;
+      padding-top: 1rem;
+    }
+
+    .about-hero-caption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      align-items: flex-end;
+      text-align: right;
+    }
   }
 
   /* Segmento do medidor de nivel de idioma. */

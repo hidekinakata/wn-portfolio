@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { LitOnView } from "@/components/motion/lit-on-view";
-import { IdentityPlate } from "@/components/sections/about/identity-plate";
 import { SectionShell } from "@/components/sections/shared/section-shell";
 import { SkillBench } from "@/components/sections/about/skill-bench";
 import type { LanguageLevel } from "@/generated/prisma/enums";
@@ -13,6 +13,8 @@ import {
   splitLabel,
   stripLeadingPictograph,
 } from "@/lib/text";
+
+import portrait from "../../../../public/avatar/portrait.jpg";
 
 /** Segmentos do medidor por nivel: a ordem do enum, de basico a nativo. */
 const METER_SEGMENTS = 4;
@@ -60,99 +62,108 @@ export async function AboutSection() {
 
   return (
     <SectionShell id="about" number="02" title={tSections("about")}>
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
-        {/* Bio num grid de calha: a placa ocupa a coluna de 10rem e o texto
-            corre na coluna ao lado, cuja largura ja e a medida de leitura,
-            entao as linhas enchem a coluna em vez de deixar um vao a direita.
-            Os rotulos das frentes caem na mesma calha: um eixo so. */}
-        <div className="grid content-start gap-y-10 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8 lg:col-span-7">
-          <IdentityPlate
-            alt={tSections("portraitAlt")}
-            name="William Nakata"
-            role={tHero("headline")}
-            location={tStatus("value")}
-          />
-
-          {opening ? (
-            <div>
-              <p className="text-[clamp(1.5rem,2.3vw,2.125rem)] leading-[1.18] font-light tracking-[-0.02em] text-balance text-foreground">
+      <div className="about-stack">
+        <div className="about-hero">
+          <div className="about-hero-portrait">
+            <Image
+              src={portrait}
+              alt={tSections("portraitAlt")}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover object-[50%_18%]"
+            />
+          </div>
+          <div className="about-hero-copy">
+            {opening ? (
+              <p className="about-hero-lead font-light text-balance text-foreground">
                 {opening.first}
               </p>
-              {opening.rest ? (
-                <p className="mt-6 text-base leading-[1.75] text-pretty text-muted-foreground lg:text-[1.0625rem]">
-                  {opening.rest}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-
-          {items.length > 0 ? (
-            <dl className="border-b border-border sm:col-span-2">
-              {items.map((item) => (
-                <div
-                  key={item.body}
-                  className="grid gap-2.5 border-t border-border py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8"
-                >
-                  {item.label ? (
-                    <dt className="hud-label pt-[0.4em] leading-[1.5] text-foreground">
-                      {item.label}
-                    </dt>
-                  ) : null}
-                  <dd
-                    className={`text-[0.9375rem] leading-[1.7] text-pretty text-muted-foreground ${
-                      item.label ? "" : "sm:col-start-2"
-                    }`}
-                  >
-                    {item.body}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
+            ) : null}
+            {opening?.rest ? (
+              <p className="mt-8 max-w-[52ch] text-base leading-[1.75] text-pretty text-muted-foreground lg:text-[1.0625rem]">
+                {opening.rest}
+              </p>
+            ) : null}
+          </div>
+          <div className="about-hero-caption">
+            <p className="hud-label text-foreground">William Nakata</p>
+            <p className="font-mono text-[0.72rem] leading-relaxed tracking-[0.16em] text-muted-foreground uppercase">
+              {tHero("headline")}
+            </p>
+            <p className="hud-label text-subtle-foreground">
+              {tStatus("value")}
+            </p>
+          </div>
         </div>
 
-        {/* Coluna de evidencia: skills primeiro (o que o recrutador procura),
-            idiomas fecham. Em paisagem fica ao lado da bio, nao abaixo dela. */}
-        <div className="flex flex-col gap-10 lg:col-span-5">
-          <SkillBench
-            title={tSkills("title")}
-            idleReadout={tSkills("readoutIdle", {
-              count: skillCount,
-              groups: groups.length,
-            })}
-            groups={groups}
-          />
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
+          <div className="lg:col-span-7">
+            {items.length > 0 ? (
+              <dl className="border-b border-border">
+                {items.map((item) => (
+                  <div
+                    key={item.body}
+                    className="grid gap-2.5 border-t border-border py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8"
+                  >
+                    {item.label ? (
+                      <dt className="hud-label pt-[0.4em] leading-[1.5] text-foreground">
+                        {item.label}
+                      </dt>
+                    ) : null}
+                    <dd
+                      className={`text-[0.9375rem] leading-[1.7] text-pretty text-muted-foreground ${
+                        item.label ? "" : "sm:col-start-2"
+                      }`}
+                    >
+                      {item.body}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+          </div>
 
-          <LitOnView>
-            <p className="hud-label border-t border-border-strong pt-4">
-              {tSections("languages")}
-            </p>
-            <ul className="mt-4 flex flex-col">
-              {languages.map((language) => (
-                <li
-                  key={language.id}
-                  className="grid grid-cols-[minmax(0,1fr)_auto_7.5rem] items-center gap-5 border-t border-border py-3.5 last:border-b"
-                >
-                  <span className="font-mono text-sm tracking-[0.12em] text-foreground uppercase">
-                    {language.name}
-                  </span>
-                  <span aria-hidden="true" className="flex gap-1">
-                    {Array.from({ length: METER_SEGMENTS }, (_, index) => (
-                      <span
-                        key={index}
-                        className="lit-seg"
-                        data-filled={index < levelSegments[language.levelKey]}
-                        style={{ animationDelay: `${index * 110}ms` }}
-                      />
-                    ))}
-                  </span>
-                  <span className="hud-label text-right text-subtle-foreground">
-                    {tLevels(language.levelKey)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </LitOnView>
+          <div className="flex flex-col gap-10 lg:col-span-5">
+            <SkillBench
+              title={tSkills("title")}
+              idleReadout={tSkills("readoutIdle", {
+                count: skillCount,
+                groups: groups.length,
+              })}
+              groups={groups}
+            />
+
+            <LitOnView>
+              <p className="hud-label border-t border-border-strong pt-4">
+                {tSections("languages")}
+              </p>
+              <ul className="mt-4 flex flex-col">
+                {languages.map((language) => (
+                  <li
+                    key={language.id}
+                    className="grid grid-cols-[minmax(0,1fr)_auto_7.5rem] items-center gap-5 border-t border-border py-3.5 last:border-b"
+                  >
+                    <span className="font-mono text-sm tracking-[0.12em] text-foreground uppercase">
+                      {language.name}
+                    </span>
+                    <span aria-hidden="true" className="flex gap-1">
+                      {Array.from({ length: METER_SEGMENTS }, (_, index) => (
+                        <span
+                          key={index}
+                          className="lit-seg"
+                          data-filled={index < levelSegments[language.levelKey]}
+                          style={{ animationDelay: `${index * 110}ms` }}
+                        />
+                      ))}
+                    </span>
+                    <span className="hud-label text-right text-subtle-foreground">
+                      {tLevels(language.levelKey)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </LitOnView>
+          </div>
         </div>
       </div>
     </SectionShell>
