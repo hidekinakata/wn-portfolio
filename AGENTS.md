@@ -143,6 +143,29 @@ environment issue first.
 
 ---
 
+## Motion — the mobile menu sets the standard
+
+Every animation on this site follows the motion language of `src/components/mobile-nav.tsx`:
+its quality and type are the reference, and **`src/lib/motion.ts` is the single source of
+truth for it**. Never declare your own easing, duration or stagger — import the tokens.
+
+- **Entrances** are staggered layer/block moves on `EASE_OUT` (expo out) via `slide({ ... })`;
+  colour blades stack `LAYER_STEP` (0.07s) apart, like the mobile menu's panel.
+- **Exits** are short hard cuts on `EASE_IN` (expo in) via `cut({ ... })` (~0.32s) — never a
+  slow fade.
+- **Data snaps, never tweens**: counters, readouts and status values appear in discrete steps
+  (instant swap / `step-end`), with tabular numerals.
+- **Hovers are hard cuts**: `transition-none` plus an instant colour change. No CSS fades on
+  interactive chrome.
+- **`prefers-reduced-motion`** means duration 0 or no animation at all (`useReducedMotion()`;
+  overlays such as the boot and transition screens do not render). No exceptions.
+- CSS `@keyframes` take their curves from `EASE_OUT_CSS` / `EASE_IN_CSS` in `src/lib/motion.ts`
+  (see the entrance keyframes in `src/app/globals.css`).
+- Documented exceptions, not to be copied: the springs in `scroll-marker.tsx` are follow
+  physics, not choreography; `GradualBlur.tsx` is vendored material.
+
+---
+
 ## Verification workflow
 
 ```bash

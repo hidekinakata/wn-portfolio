@@ -1,16 +1,12 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import { LocalClock } from "@/components/local-clock";
 import { Link } from "@/i18n/navigation";
+import { cut, DURATION, LAYER_STEP, slide } from "@/lib/motion";
 import { setScrollLock } from "@/lib/scroll-lock";
 
 export type MobileNavItem = {
@@ -30,13 +26,11 @@ type MobileNavProps = {
   };
 };
 
-const EASE_OUT: Transition["ease"] = [0.16, 1, 0.3, 1];
-const EASE_IN: Transition["ease"] = [0.7, 0, 0.84, 0];
-
 /* Duas laminas de cor (lavanda -> violeta) correm na frente do painel, como
-   no StaggeredMenu de referencia, mas com as cores do campo do hero. */
+   no StaggeredMenu de referencia, mas com as cores do campo do hero. Este
+   menu e a referencia de movimento do site: os tokens em `@/lib/motion`
+   sao exatamente a gramatica dele. */
 const PRE_LAYERS = ["bg-lavender", "bg-violet"] as const;
-const LAYER_STEP = 0.07;
 const PANEL_DELAY = PRE_LAYERS.length * LAYER_STEP;
 
 /**
@@ -82,12 +76,6 @@ export function MobileNav({ items, labels }: MobileNavProps) {
     };
   }, [open, close]);
 
-  const slide = (delay: number, duration: number): Transition =>
-    reducedMotion ? { duration: 0 } : { duration, delay, ease: EASE_OUT };
-  const exit: Transition = reducedMotion
-    ? { duration: 0 }
-    : { duration: 0.32, ease: EASE_IN };
-
   return (
     <>
       <button
@@ -107,7 +95,7 @@ export function MobileNav({ items, labels }: MobileNavProps) {
           <motion.span
             className="flex flex-col"
             animate={{ y: open ? "-50%" : "0%" }}
-            transition={slide(0, 0.45)}
+            transition={slide({ duration: DURATION.micro, reduced: reducedMotion })}
           >
             <span className="block h-[1em]">{labels.menu}</span>
             <span className="block h-[1em]">{labels.close}</span>
@@ -118,12 +106,12 @@ export function MobileNav({ items, labels }: MobileNavProps) {
           <motion.span
             className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-current"
             animate={{ rotate: open ? 45 : 0 }}
-            transition={slide(0, 0.5)}
+            transition={slide({ duration: DURATION.layer, reduced: reducedMotion })}
           />
           <motion.span
             className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-current"
             animate={{ rotate: open ? -45 : 90 }}
-            transition={slide(0, 0.5)}
+            transition={slide({ duration: DURATION.layer, reduced: reducedMotion })}
           />
         </span>
       </button>
@@ -141,8 +129,12 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                 className={`absolute inset-0 ${layer}`}
                 initial={{ x: "100%" }}
                 animate={{ x: "0%" }}
-                exit={{ x: "100%", transition: exit }}
-                transition={slide(index * LAYER_STEP, 0.5)}
+                exit={{ x: "100%", transition: cut({ reduced: reducedMotion }) }}
+                transition={slide({
+                  delay: index * LAYER_STEP,
+                  duration: DURATION.layer,
+                  reduced: reducedMotion,
+                })}
               />
             ))}
 
@@ -153,8 +145,12 @@ export function MobileNav({ items, labels }: MobileNavProps) {
               className="absolute inset-0 flex flex-col overflow-y-auto bg-background px-6 pt-24 pb-8"
               initial={{ x: "100%" }}
               animate={{ x: "0%" }}
-              exit={{ x: "100%", transition: exit }}
-              transition={slide(PANEL_DELAY, 0.65)}
+              exit={{ x: "100%", transition: cut({ reduced: reducedMotion }) }}
+              transition={slide({
+                delay: PANEL_DELAY,
+                duration: DURATION.panel,
+                reduced: reducedMotion,
+              })}
             >
               <div
                 aria-hidden="true"
@@ -174,7 +170,11 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                         className="display block origin-bottom-left text-[clamp(2.75rem,14vw,4.5rem)] leading-[0.92]"
                         initial={{ y: "110%", rotate: 6 }}
                         animate={{ y: "0%", rotate: 0 }}
-                        transition={slide(PANEL_DELAY + 0.12 + index * 0.08, 0.9)}
+                        transition={slide({
+                          delay: PANEL_DELAY + 0.12 + index * 0.08,
+                          duration: DURATION.display,
+                          reduced: reducedMotion,
+                        })}
                       >
                         {label}
                       </motion.span>
@@ -182,7 +182,11 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                         className="pt-2 font-mono text-[0.7rem] tracking-[0.2em] text-violet tabular-nums group-hover:text-lavender"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={slide(PANEL_DELAY + 0.3 + index * 0.08, 0.4)}
+                        transition={slide({
+                          delay: PANEL_DELAY + 0.3 + index * 0.08,
+                          duration: DURATION.label,
+                          reduced: reducedMotion,
+                        })}
                       >
                         {String(index + 1).padStart(2, "0")}
                       </motion.span>
@@ -195,7 +199,11 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                 className="relative mt-auto flex flex-col gap-6 pt-12"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={slide(PANEL_DELAY + 0.45, 0.55)}
+                transition={slide({
+                  delay: PANEL_DELAY + 0.45,
+                  duration: DURATION.block,
+                  reduced: reducedMotion,
+                })}
               >
                 <div className="flex flex-col gap-2.5">
                   <span className="hud-label text-foreground">{labels.currently}</span>
