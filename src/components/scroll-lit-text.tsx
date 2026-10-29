@@ -3,10 +3,29 @@
 import { useReducedMotion, useScroll } from "motion/react";
 import { Fragment, useLayoutEffect, useRef } from "react";
 
+type LitItem = { label: string | null; body: string };
+
 type ScrollLitTextProps = {
-  paragraphs: readonly string[];
+  /** Frase de abertura, em corpo grande. */
+  lead: string;
+  /** Detalhes em lista, com o rotulo destacado como na experiencia. */
+  items: readonly LitItem[];
   className?: string;
 };
+
+/** Palavras como `<span>` acendiveis; os espacos ficam como texto real. */
+function LitWords({ text }: { text: string }) {
+  return text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word, index) => (
+      <Fragment key={index}>
+        <span data-word="" className="lit-word">
+          {word}
+        </span>{" "}
+      </Fragment>
+    ));
+}
 
 type WordState = "lit" | "unlit" | "edge";
 
@@ -86,9 +105,9 @@ function paintWords({
  * Texto que acende palavra por palavra conforme a leitura avanca na tela,
  * como um console ligando. O texto continua sendo texto real (selecionavel,
  * lido por leitor de tela, completo sem JS): so a cor de cada palavra muda,
- * em cortes secos — nunca em fade. Sem animacao com `prefers-reduced-motion`.
+ * assentando em ease-out. Sem animacao com `prefers-reduced-motion`.
  */
-export function ScrollLitText({ paragraphs, className }: ScrollLitTextProps) {
+export function ScrollLitText({ lead, items, className }: ScrollLitTextProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
@@ -120,20 +139,27 @@ export function ScrollLitText({ paragraphs, className }: ScrollLitTextProps) {
 
   return (
     <div ref={rootRef} className={className}>
-      {paragraphs.map((paragraph, paragraphIndex) => (
-        <p key={paragraphIndex} className={paragraphIndex > 0 ? "mt-[0.9em]" : undefined}>
-          {paragraph
-            .split(/\s+/)
-            .filter(Boolean)
-            .map((word, wordIndex) => (
-              <Fragment key={wordIndex}>
-                <span data-word="" className="lit-word">
-                  {word}
-                </span>{" "}
-              </Fragment>
-            ))}
-        </p>
-      ))}
+      <p className="max-w-[40ch] text-[clamp(1.4rem,2.5vw,2.25rem)] leading-[1.3] tracking-[-0.012em] text-pretty text-foreground">
+        <LitWords text={lead} />
+      </p>
+
+      {items.length > 0 ? (
+        <ul className="mt-8 flex max-w-[62ch] flex-col gap-3.5 text-muted-foreground">
+          {items.map((item) => (
+            <li
+              key={item.body}
+              className="relative pl-4 leading-7 before:absolute before:top-[0.72em] before:left-0 before:size-1 before:bg-flow-light"
+            >
+              {item.label ? (
+                <span className="font-medium text-foreground">
+                  <LitWords text={`${item.label}:`} />
+                </span>
+              ) : null}
+              <LitWords text={item.body} />
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }

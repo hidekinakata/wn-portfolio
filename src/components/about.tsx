@@ -8,6 +8,7 @@ import type { LanguageLevel } from "@/generated/prisma/enums";
 import { getLanguages } from "@/lib/queries/education";
 import { getProfile } from "@/lib/queries/profile";
 import { skillGroups } from "@/lib/skills";
+import { splitLabel, stripLeadingPictograph } from "@/lib/text";
 
 /** Segmentos do medidor por nivel: a ordem do enum, de basico a nativo. */
 const METER_SEGMENTS = 4;
@@ -33,12 +34,12 @@ export async function AboutSection() {
     getLanguages(locale),
   ]);
 
-  const paragraphs = profile?.bio
-    ? profile.bio
-        .split(/\n+/)
-        .map((paragraph) => paragraph.trim())
-        .filter(Boolean)
-    : [];
+  // Primeiro paragrafo abre em corpo grande; os demais viram itens com rotulo.
+  const [lead, ...details] = (profile?.bio ?? "")
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+  const items = details.map((detail) => splitLabel(stripLeadingPictograph(detail)));
 
   const groups = skillGroups.map((group) => ({
     key: group.key,
@@ -50,11 +51,8 @@ export async function AboutSection() {
   return (
     <SectionShell id="about" number="02" title={tSections("about")}>
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
-        {paragraphs.length > 0 ? (
-          <ScrollLitText
-            paragraphs={paragraphs}
-            className="max-w-[40ch] text-[clamp(1.4rem,2.5vw,2.25rem)] leading-[1.3] tracking-[-0.012em] text-pretty lg:col-span-7 [&>p:not(:first-child)]:mt-3.5 [&>p:nth-child(2)]:mt-7 [&>p:not(:first-child)]:max-w-[62ch] [&>p:not(:first-child)]:text-base [&>p:not(:first-child)]:leading-7 [&>p:not(:first-child)]:tracking-normal"
-          />
+        {lead ? (
+          <ScrollLitText lead={lead} items={items} className="lg:col-span-7" />
         ) : null}
 
         {/* Coluna de evidencia: skills primeiro (o que o recrutador procura),

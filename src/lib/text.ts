@@ -31,6 +31,17 @@ export function parseBullets(text: string): BulletedText {
   return { lead: lead ?? null, items };
 }
 
+/** Emoji no inicio do texto (com seletores de variacao e juncoes), mais o espaco. */
+const LEADING_PICTOGRAPH = /^(?:\p{Extended_Pictographic}[️‍]*)+\s*/u;
+
+/**
+ * Textos do banco usam emoji como marcador de item ("🚀 Backend: ...").
+ * A UI desenha o proprio marcador, entao o emoji sai.
+ */
+export function stripLeadingPictograph(text: string): string {
+  return text.replace(LEADING_PICTOGRAPH, "");
+}
+
 /**
  * Separa o rotulo curto antes de ":" ("AI Engineering: Led ...") do resto,
  * para destacar o rotulo. Sem rotulo curto e sem ponto, devolve tudo no corpo.

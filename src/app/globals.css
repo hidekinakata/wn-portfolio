@@ -581,10 +581,11 @@
     animation: blade-wipe 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
 
-  /* Palavra da bio acendendo ao ritmo da rolagem (ver `ScrollLitText`). */
+  /* Palavra da bio acendendo ao ritmo da rolagem (ver `ScrollLitText`).
+     Acesa, herda o tom do bloco: abertura e rotulos claros, detalhes muted. */
   .lit-word {
     position: relative;
-    color: var(--color-foreground);
+    color: inherit;
     transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
