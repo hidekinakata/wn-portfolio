@@ -677,10 +677,10 @@
 /* Lamina varrendo da esquerda; a margem negativa preserva sombras. */
 @keyframes blade-wipe {
   from {
-    clip-path: inset(-1rem calc(100% + 1rem) -1rem -1rem);
+    clip-path: inset(-3rem calc(100% + 3rem) -3rem -3rem);
   }
   to {
-    clip-path: inset(-1rem -1rem -1rem -1rem);
+    clip-path: inset(-3rem -3rem -3rem -3rem);
   }
 }
 
