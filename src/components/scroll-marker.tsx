@@ -130,13 +130,13 @@ export function ScrollMarker() {
 
   return (
     <div
-      className="chrome-rise fixed top-1/2 right-8 z-40 hidden -translate-y-1/2 flex-col items-center gap-4 [animation-delay:0.3s] lg:flex"
+      className="chrome-rise fixed top-1/2 right-8 z-40 hidden -translate-y-1/2 flex-col items-center gap-4 [animation-delay:0.2s] lg:flex"
       aria-hidden="true"
     >
       <span className="hud-label text-foreground">{t("scroll")}</span>
 
       <span ref={trackRef} className="relative h-56 w-3">
-        <span className="chrome-draw-y absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border-strong [animation-delay:0.38s]" />
+        <span className="chrome-draw-y absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border-strong [animation-delay:0.26s]" />
         <motion.span
           className="absolute inset-x-0 top-0 mx-auto h-full w-px origin-top bg-gradient-to-b from-lavender/20 to-lavender"
           style={{ scaleY: reducedMotion ? scrollYProgress : smooth }}

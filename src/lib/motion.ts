@@ -27,7 +27,7 @@ export const EASE_IN_CSS = "cubic-bezier(0.7, 0, 0.84, 0)";
 export const LAYER_STEP = 0.07;
 
 /** Escalonamento entre letras que sobem da mascara (nome, titulos). */
-export const CHAR_STEP = 0.035;
+export const CHAR_STEP = 0.028;
 
 export const DURATION = {
   /** Corte de saida (tambem o corte seco de hover). */

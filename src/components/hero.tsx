@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import { CHAR_STEP, LAYER_STEP } from "@/lib/motion";
 
 /** Partitura da estreia, em segundos: nome, cargo, depois o corpo. */
-const AT = { name: 0.12, role: 0.45, body: 0.85 } as const;
+const AT = { name: 0.06, role: 0.3, body: 0.55 } as const;
 
 /**
  * Hero da landing — primeiro viewport do console. O cargo (`headline`) e as

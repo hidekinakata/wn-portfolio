@@ -20,6 +20,8 @@ interface DotFieldProps {
   dotSpacing?: number;
   cursorRadius?: number;
   cursorForce?: number;
+  /** Multiplicador positivo do retorno: 1 = atual, 2 = mais rapido, 0.5 = mais lento. */
+  returnSpeed?: number;
   bulgeOnly?: boolean;
   bulgeStrength?: number;
   glowRadius?: number;
@@ -36,6 +38,7 @@ const DotField = memo(({
   dotSpacing = 14,
   cursorRadius = 500,
   cursorForce = 0.1,
+  returnSpeed = 1,
   bulgeOnly = true,
   bulgeStrength = 67,
   glowRadius = 160,
@@ -55,8 +58,9 @@ const DotField = memo(({
   const sizeRef = useRef({ w: 0, h: 0, offsetX: 0, offsetY: 0 });
   const glowOpacity = useRef(0);
   const engagement = useRef(0);
-  const propsRef = useRef<Record<string, unknown>>({});
-  propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
+  const frameProps = { dotRadius, dotSpacing, cursorRadius, cursorForce, returnSpeed, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
+  const propsRef = useRef(frameProps);
+  propsRef.current = frameProps;
   const rebuildRef = useRef<(() => void) | null>(null);
   const glowIdRef = useRef(`dot-field-glow-${Math.random().toString(36).slice(2, 9)}`);
 
@@ -97,7 +101,7 @@ const DotField = memo(({
 
     function buildDots(w: number, h: number) {
       const p = propsRef.current;
-      const step = (p.dotRadius as number) + (p.dotSpacing as number);
+      const step = p.dotRadius + p.dotSpacing;
       const cols = Math.floor(w / step);
       const rows = Math.floor(h / step);
       const padX = (w % step) / 2;
@@ -146,7 +150,13 @@ const DotField = memo(({
       const t = frameCount * 0.02;
 
       const targetEngagement = Math.min(m.speed / 5, 1);
-      engagement.current += (targetEngagement - engagement.current) * 0.06;
+      const releasing = targetEngagement < engagement.current;
+      const recoverySpeed = Number.isFinite(p.returnSpeed) && p.returnSpeed > 0 ? p.returnSpeed : 1;
+      // Escala o decaimento sem alterar o movimento de entrada nem gerar overshoot.
+      const returnBlend = 1 - Math.pow(0.9, recoverySpeed);
+      const engagementBlend = releasing ? 1 - Math.pow(0.94, recoverySpeed) : 0.06;
+      const bulgeBlend = releasing ? 1 - Math.pow(0.85, recoverySpeed) : 0.15;
+      engagement.current += (targetEngagement - engagement.current) * engagementBlend;
       if (engagement.current < 0.001) engagement.current = 0;
       const eng = engagement.current;
 
@@ -161,14 +171,14 @@ const DotField = memo(({
       ctx!.clearRect(0, 0, w, h);
 
       const grad = ctx!.createLinearGradient(0, 0, w, h);
-      grad.addColorStop(0, p.gradientFrom as string);
-      grad.addColorStop(1, p.gradientTo as string);
+      grad.addColorStop(0, p.gradientFrom);
+      grad.addColorStop(1, p.gradientTo);
       ctx!.fillStyle = grad;
 
-      const cr = p.cursorRadius as number;
+      const cr = p.cursorRadius;
       const crSq = cr * cr;
-      const rad = (p.dotRadius as number) / 2;
-      const isBulge = p.bulgeOnly as boolean;
+      const rad = p.dotRadius / 2;
+      const isBulge = p.bulgeOnly;
 
       ctx!.beginPath();
 
@@ -177,40 +187,42 @@ const DotField = memo(({
         const dx = m.x - d.ax;
         const dy = m.y - d.ay;
         const distSq = dx * dx + dy * dy;
+        const interacting = distSq < crSq && eng > 0.01;
 
-        if (distSq < crSq && eng > 0.01) {
+        if (interacting) {
           const dist = Math.sqrt(distSq);
           if (isBulge) {
             const t = 1 - dist / cr;
-            const push = t * t * (p.bulgeStrength as number) * eng;
+            const push = t * t * p.bulgeStrength * eng;
             const angle = Math.atan2(dy, dx);
-            d.sx += (d.ax - Math.cos(angle) * push - d.sx) * 0.15;
-            d.sy += (d.ay - Math.sin(angle) * push - d.sy) * 0.15;
+            d.sx += (d.ax - Math.cos(angle) * push - d.sx) * bulgeBlend;
+            d.sy += (d.ay - Math.sin(angle) * push - d.sy) * bulgeBlend;
           } else {
             const angle = Math.atan2(dy, dx);
-            const move = (500 / dist) * (m.speed * (p.cursorForce as number));
+            const move = (500 / dist) * (m.speed * p.cursorForce);
             d.vx += Math.cos(angle) * -move;
             d.vy += Math.sin(angle) * -move;
           }
         } else if (isBulge) {
-          d.sx += (d.ax - d.sx) * 0.1;
-          d.sy += (d.ay - d.sy) * 0.1;
+          d.sx += (d.ax - d.sx) * returnBlend;
+          d.sy += (d.ay - d.sy) * returnBlend;
         }
 
         if (!isBulge) {
-          d.vx *= 0.9;
-          d.vy *= 0.9;
+          const blend = releasing || !interacting ? returnBlend : 0.1;
+          d.vx *= 1 - blend;
+          d.vy *= 1 - blend;
           d.x = d.ax + d.vx;
           d.y = d.ay + d.vy;
-          d.sx += (d.x - d.sx) * 0.1;
-          d.sy += (d.y - d.sy) * 0.1;
+          d.sx += (d.x - d.sx) * blend;
+          d.sy += (d.y - d.sy) * blend;
         }
 
         let drawX = d.sx;
         let drawY = d.sy;
-        if ((p.waveAmplitude as number) > 0) {
-          drawY += Math.sin(d.ax * 0.03 + t) * (p.waveAmplitude as number);
-          drawX += Math.cos(d.ay * 0.03 + t * 0.7) * (p.waveAmplitude as number) * 0.5;
+        if (p.waveAmplitude > 0) {
+          drawY += Math.sin(d.ax * 0.03 + t) * p.waveAmplitude;
+          drawX += Math.cos(d.ay * 0.03 + t * 0.7) * p.waveAmplitude * 0.5;
         }
 
         if (p.sparkle) {

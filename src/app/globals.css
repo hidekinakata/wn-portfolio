@@ -110,7 +110,7 @@
   --flow-light: #8da2ff;
   --flare: #ff7a2f;
   --flare-light: #ffa26b;
-  /* Violeta do campo do hero (ColorBends/DotField) e o lavanda do cargo. */
+  /* Violeta do campo de dots do hero e o lavanda do cargo. */
   --violet: #7b6cff;
   --lavender: #b9b4ff;
   /* Sinal de telemetria (ciano): so o ticker do relogio. */
@@ -306,13 +306,13 @@
   .hero-char {
     display: inline-block;
     transform-origin: top left;
-    animation: mask-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: mask-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* CTAs entram como laminas da cortina: varrem da esquerda para a direita.
      A margem negativa do recorte deixa o brilho do botao respirar. */
   .hero-wipe {
-    animation: blade-wipe 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: blade-wipe 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* Natureza unica do movimento: tudo assenta em ease-out expo, sem piscar.
@@ -320,18 +320,18 @@
      a cada `--i` x LAYER_STEP (0.07s). */
   .hero-rise,
   .chrome-rise {
-    animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1)
-      calc(0.05s + var(--i, 0) * 0.07s) both;
+    animation: hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1)
+      calc(var(--i, 0) * 0.07s) both;
   }
 
   /* Filetes do chrome (barra, trilho do scroll): correm da origem. */
   .chrome-draw {
-    animation: chrome-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    animation: chrome-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
   }
 
   .chrome-draw-y {
     transform-origin: top;
-    animation: chrome-draw-y 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    animation: chrome-draw-y 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
   }
 
   /* Filete laranja do item ativo da barra: entra correndo da esquerda
@@ -374,18 +374,10 @@
 
   /* Campos do hero: entram depois do texto, sem competir com ele. */
   .hero-field-fade {
-    animation: hero-field-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    animation: hero-field-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
 
-  /* Mascaras: a coluna de texto fica escura, o fluxo ocupa a direita. */
-  .hero-field-mask {
-    mask-image: radial-gradient(
-      120% 75% at 90% 10%,
-      black 0%,
-      transparent 78%
-    );
-  }
-
+  /* Mascara dos dots: a coluna de texto fica escura. */
   .hero-dots-mask {
     opacity: 0.4;
     mask-image: radial-gradient(
@@ -396,15 +388,6 @@
   }
 
   @media (width >= 64rem) {
-    .hero-field-mask {
-      mask-image: linear-gradient(
-        102deg,
-        transparent 24%,
-        rgb(0 0 0 / 0.55) 46%,
-        black 72%
-      );
-    }
-
     .hero-dots-mask {
       opacity: 0.5;
       mask-image: radial-gradient(
