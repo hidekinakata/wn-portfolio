@@ -67,7 +67,8 @@
     "projects": "Projects",
     "education": "Education",
     "certifications": "Certifications",
-    "languages": "Languages"
+    "languages": "Languages",
+    "portraitAlt": "Illustrated portrait of William Nakata"
   },
   "Featured": {
     "label": "Featured projects",

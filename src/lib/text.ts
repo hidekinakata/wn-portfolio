@@ -42,11 +42,34 @@ export function stripLeadingPictograph(text: string): string {
   return text.replace(LEADING_PICTOGRAPH, "");
 }
 
+/** Fim de frase seguido de espaco e maiuscula (".NET" nao corta: falta o espaco). */
+const SENTENCE_END = /^(.+?[.!?])\s+(?=\p{Lu})/u;
+
+/**
+ * Separa a primeira frase do resto do paragrafo, para a abertura virar uma
+ * afirmacao curta e o resto voltar a corpo de leitura. Sem segunda frase,
+ * devolve tudo como `first`.
+ */
+export function splitFirstSentence(text: string): {
+  first: string;
+  rest: string | null;
+} {
+  const match = SENTENCE_END.exec(text);
+  const first = match?.[1];
+  if (!match || !first) return { first: text, rest: null };
+
+  const rest = text.slice(match[0].length).trim();
+  return { first, rest: rest || null };
+}
+
 /**
  * Separa o rotulo curto antes de ":" ("AI Engineering: Led ...") do resto,
  * para destacar o rotulo. Sem rotulo curto e sem ponto, devolve tudo no corpo.
  */
-export function splitLabel(item: string): { label: string | null; body: string } {
+export function splitLabel(item: string): {
+  label: string | null;
+  body: string;
+} {
   const colon = item.indexOf(": ");
   if (colon < 3 || colon > 52) return { label: null, body: item };
 

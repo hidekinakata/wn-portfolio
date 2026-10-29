@@ -487,6 +487,32 @@
     }
   }
 
+  /* Placa de identidade do Sobre: a imagem abre da esquerda para a direita e
+     os cantos lavanda assentam depois. */
+  .lit-tick {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-color: var(--color-lavender);
+    transform-origin: top left;
+  }
+
+  [data-lit="armed"] .lit-plate-img {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  [data-lit="armed"] .lit-tick {
+    transform: scale(0);
+  }
+
+  [data-lit="on"] .lit-plate-img {
+    transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-lit="on"] .lit-tick {
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+  }
+
   /* Segmento do medidor de nivel de idioma. */
   .lit-seg {
     display: block;
@@ -564,14 +590,6 @@
     animation: blade-wipe 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
 
-  /* Palavra da bio acendendo ao ritmo da rolagem (ver `ScrollLitText`).
-     Acesa, herda o tom do bloco: abertura e rotulos claros, detalhes muted. */
-  .lit-word {
-    position: relative;
-    color: inherit;
-    transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
   /* ---- Tela de boot (loading) ------------------------------------------ */
   /* Renderizada sempre, so aparece quando o script inline de
      `src/lib/boot.ts` marca `data-boot="on"` no `<html>` (primeira visita da
@@ -608,23 +626,6 @@
   html:is([data-boot="on"], [data-boot="wait"]) .chrome-draw-y,
   html:is([data-boot="on"], [data-boot="wait"]) .hero-field-fade {
     animation-play-state: paused;
-  }
-
-  /* Apagada: ainda legivel (>= 4.5:1), so recuada. */
-  .lit-word[data-lit="unlit"] {
-    color: var(--color-subtle-foreground);
-  }
-
-  /* Cursor de leitura: um traco laranja fixo (sem piscar) na ultima palavra
-     acesa. Absoluto, para nao empurrar o texto enquanto anda. */
-  .lit-word[data-lit="edge"]::after {
-    content: "";
-    position: absolute;
-    top: 0.12em;
-    bottom: 0.08em;
-    right: -0.2em;
-    width: 2px;
-    background-color: var(--color-flare);
   }
 }
 

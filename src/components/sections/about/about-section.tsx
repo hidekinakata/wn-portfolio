@@ -1,14 +1,18 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { LitOnView } from "@/components/motion/lit-on-view";
-import { ScrollLitText } from "@/components/motion/scroll-lit-text";
+import { IdentityPlate } from "@/components/sections/about/identity-plate";
 import { SectionShell } from "@/components/sections/shared/section-shell";
 import { SkillBench } from "@/components/sections/about/skill-bench";
 import type { LanguageLevel } from "@/generated/prisma/enums";
 import { getLanguages } from "@/lib/queries/education";
 import { getProfile } from "@/lib/queries/profile";
 import { skillGroups } from "@/lib/skills";
-import { splitLabel, stripLeadingPictograph } from "@/lib/text";
+import {
+  splitFirstSentence,
+  splitLabel,
+  stripLeadingPictograph,
+} from "@/lib/text";
 
 /** Segmentos do medidor por nivel: a ordem do enum, de basico a nativo. */
 const METER_SEGMENTS = 4;
@@ -20,26 +24,32 @@ const levelSegments = {
 } satisfies Record<LanguageLevel, number>;
 
 /**
- * Sobre: bio do perfil (banco) que acende conforme a leitura, idiomas com
+ * Sobre: placa de identidade e bio do perfil (banco), idiomas com
  * medidor de nivel e a bancada de competencias (strings proprias do
  * curriculo). Os grupos de skills nao traduzem nomes proprios.
  */
 export async function AboutSection() {
   const locale = await getLocale();
-  const [tSections, tSkills, tLevels, profile, languages] = await Promise.all([
-    getTranslations("Sections"),
-    getTranslations("Skills"),
-    getTranslations("Levels"),
-    getProfile(locale),
-    getLanguages(locale),
-  ]);
+  const [tSections, tHero, tStatus, tSkills, tLevels, profile, languages] =
+    await Promise.all([
+      getTranslations("Sections"),
+      getTranslations("Hero"),
+      getTranslations("Status"),
+      getTranslations("Skills"),
+      getTranslations("Levels"),
+      getProfile(locale),
+      getLanguages(locale),
+    ]);
 
   // Primeiro paragrafo abre em corpo grande; os demais viram itens com rotulo.
   const [lead, ...details] = (profile?.bio ?? "")
     .split(/\n+/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
-  const items = details.map((detail) => splitLabel(stripLeadingPictograph(detail)));
+  const opening = lead ? splitFirstSentence(lead) : null;
+  const items = details.map((detail) =>
+    splitLabel(stripLeadingPictograph(detail))
+  );
 
   const groups = skillGroups.map((group) => ({
     key: group.key,
@@ -51,9 +61,55 @@ export async function AboutSection() {
   return (
     <SectionShell id="about" number="02" title={tSections("about")}>
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
-        {lead ? (
-          <ScrollLitText lead={lead} items={items} className="lg:col-span-7" />
-        ) : null}
+        {/* Bio num grid de calha: a placa ocupa a coluna de 10rem e o texto
+            corre na coluna ao lado, cuja largura ja e a medida de leitura,
+            entao as linhas enchem a coluna em vez de deixar um vao a direita.
+            Os rotulos das frentes caem na mesma calha: um eixo so. */}
+        <div className="grid content-start gap-y-10 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8 lg:col-span-7">
+          <IdentityPlate
+            alt={tSections("portraitAlt")}
+            name="William Nakata"
+            role={tHero("headline")}
+            location={tStatus("value")}
+          />
+
+          {opening ? (
+            <div>
+              <p className="text-[clamp(1.5rem,2.3vw,2.125rem)] leading-[1.18] font-light tracking-[-0.02em] text-balance text-foreground">
+                {opening.first}
+              </p>
+              {opening.rest ? (
+                <p className="mt-6 text-base leading-[1.75] text-pretty text-muted-foreground lg:text-[1.0625rem]">
+                  {opening.rest}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+
+          {items.length > 0 ? (
+            <dl className="border-b border-border sm:col-span-2">
+              {items.map((item) => (
+                <div
+                  key={item.body}
+                  className="grid gap-2.5 border-t border-border py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8"
+                >
+                  {item.label ? (
+                    <dt className="hud-label pt-[0.4em] leading-[1.5] text-foreground">
+                      {item.label}
+                    </dt>
+                  ) : null}
+                  <dd
+                    className={`text-[0.9375rem] leading-[1.7] text-pretty text-muted-foreground ${
+                      item.label ? "" : "sm:col-start-2"
+                    }`}
+                  >
+                    {item.body}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+        </div>
 
         {/* Coluna de evidencia: skills primeiro (o que o recrutador procura),
             idiomas fecham. Em paisagem fica ao lado da bio, nao abaixo dela. */}
