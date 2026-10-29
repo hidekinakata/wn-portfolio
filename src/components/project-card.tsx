@@ -7,6 +7,8 @@ type ProjectCardProps = {
   project: ProjectItem;
   /** `compact` para a faixa de destaque; `full` para a grade de projetos. */
   variant: "compact" | "full";
+  /** Posicao na lista: escalona a entrada (`LAYER_STEP` por cartao). */
+  index?: number;
 };
 
 /**
@@ -14,7 +16,7 @@ type ProjectCardProps = {
  * pagina de detalhe ainda — o link so existe quando o projeto tem URL real
  * (site ou repositorio).
  */
-export function ProjectCard({ project, variant }: ProjectCardProps) {
+export function ProjectCard({ project, variant, index = 0 }: ProjectCardProps) {
   const t = useTranslations("Projects");
 
   const href = project.link ?? project.github;
@@ -71,8 +73,9 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
 
   const frameClass =
     variant === "full"
-      ? "flex h-full flex-col justify-between border border-border bg-card/50 p-7 transition-none hover:border-flow"
-      : "flex h-full flex-col justify-between border border-border bg-card/50 p-6 transition-none hover:border-flow";
+      ? "card-in flex h-full flex-col justify-between border border-border bg-card/50 p-7 transition-none hover:border-flow"
+      : "card-in flex h-full flex-col justify-between border border-border bg-card/50 p-6 transition-none hover:border-flow";
+  const delay = { animationDelay: `${index * 70}ms` };
 
   return href ? (
     <a
@@ -80,11 +83,14 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
       target="_blank"
       rel="noreferrer"
       className={frameClass}
+      style={delay}
       aria-label={`${project.title} — ${t("viewProject")}`}
     >
       {body}
     </a>
   ) : (
-    <article className={frameClass}>{body}</article>
+    <article className={frameClass} style={delay}>
+      {body}
+    </article>
   );
 }

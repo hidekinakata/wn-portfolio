@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { ProjectCard } from "@/components/project-card";
-import { Reveal } from "@/components/reveal";
+import { LitOnView } from "@/components/lit-on-view";
 import { SectionShell } from "@/components/section";
 import { getProjects } from "@/lib/queries/projects";
 
@@ -21,13 +21,16 @@ export async function ProjectsSection() {
           {tProjects("empty")}
         </p>
       ) : (
-        <Reveal>
-          <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))]">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} variant="full" />
-            ))}
-          </div>
-        </Reveal>
+        <LitOnView className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))]">
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              variant="full"
+              index={index}
+            />
+          ))}
+        </LitOnView>
       )}
     </SectionShell>
   );

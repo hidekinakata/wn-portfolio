@@ -4,8 +4,8 @@
  * A referencia de qualidade e tipo das animacoes deste site e o menu mobile
  * (`src/components/mobile-nav.tsx`): entradas em ease-out exponencial com
  * atrasos escalonados, laminas de cor empilhadas com `LAYER_STEP`, saidas em
- * corte curto ease-in, dados que "snapam" (nunca fazem tween) e hover em corte
- * seco (`transition-none`), sem fade. `prefers-reduced-motion` vira corte
+ * corte curto ease-in, uma unica natureza suave (tudo assenta em ease-out,
+ * sem piscar) e hover em corte seco (`transition-none`), sem fade. `prefers-reduced-motion` vira corte
  * instantaneo (duracao zero) ou simplesmente nao anima.
  *
  * Todo componente animado (Motion ou CSS) consome estes tokens — nunca declara
@@ -25,6 +25,9 @@ export const EASE_IN_CSS = "cubic-bezier(0.7, 0, 0.84, 0)";
 
 /** Escalonamento entre laminas/blocos, em segundos. */
 export const LAYER_STEP = 0.07;
+
+/** Escalonamento entre letras que sobem da mascara (nome, titulos). */
+export const CHAR_STEP = 0.035;
 
 export const DURATION = {
   /** Corte de saida (tambem o corte seco de hover). */

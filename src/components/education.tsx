@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { EntryDescription } from "@/components/entry-description";
+import { LitOnView } from "@/components/lit-on-view";
 import { Reveal } from "@/components/reveal";
 import { SectionShell } from "@/components/section";
 import { formatMonthYear } from "@/lib/dates";
@@ -56,39 +57,42 @@ export async function EducationSection() {
 
       <div className="mt-6 border-t border-border-strong pt-6">
         <p className="hud-label">{tSections("certifications")}</p>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {bundle.certifications.map((certification) => {
-            const issuedYear = certification.issuedAt
-              ? formatMonthYear(certification.issuedAt, locale)
-              : null;
+        <LitOnView className="mt-5">
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {bundle.certifications.map((certification, index) => {
+              const issuedYear = certification.issuedAt
+                ? formatMonthYear(certification.issuedAt, locale)
+                : null;
 
-            return (
-              <li
-                key={certification.id}
-                className="border border-border bg-card/50 p-4 transition-none hover:border-flow"
-              >
-                <p className="font-mono text-sm font-semibold tracking-[0.08em] text-foreground uppercase">
-                  {certification.name}
-                </p>
-                <p className="mt-2 font-mono text-xs text-subtle-foreground">
-                  {certification.issuer}
-                  {issuedYear ? ` · ${issuedYear}` : ""}
-                </p>
-                {certification.url ? (
-                  <a
-                    href={certification.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.18em] text-flare uppercase transition-none hover:text-flare-light"
-                  >
-                    {tCertifications("verify")}
-                    <ArrowUpRight aria-hidden="true" className="size-3.5" />
-                  </a>
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li
+                  key={certification.id}
+                  className="card-in border border-border bg-card/50 p-4 transition-none hover:border-flow"
+                  style={{ animationDelay: `${index * 70}ms` }}
+                >
+                  <p className="font-mono text-sm font-semibold tracking-[0.08em] text-foreground uppercase">
+                    {certification.name}
+                  </p>
+                  <p className="mt-2 font-mono text-xs text-subtle-foreground">
+                    {certification.issuer}
+                    {issuedYear ? ` · ${issuedYear}` : ""}
+                  </p>
+                  {certification.url ? (
+                    <a
+                      href={certification.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.18em] text-flare uppercase transition-none hover:text-flare-light"
+                    >
+                      {tCertifications("verify")}
+                      <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                    </a>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </LitOnView>
       </div>
     </SectionShell>
   );

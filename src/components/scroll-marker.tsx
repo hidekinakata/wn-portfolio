@@ -123,20 +123,20 @@ export function ScrollMarker() {
   // O rastro so aparece quando ha trilho percorrido acima do cursor.
   const trailOpacity = useTransform(scrollYProgress, [0, 0.18], [0, 1]);
 
-  // Leitura de dados: snap direto, sem tween (instrumento de sete segmentos).
+  // Leitura de dados: atualiza direto, com numerais tabulares.
   const percent = useTransform(scrollYProgress, (value) =>
     String(Math.round(value * 100)).padStart(3, "0"),
   );
 
   return (
     <div
-      className="fixed top-1/2 right-8 z-40 hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex"
+      className="chrome-rise fixed top-1/2 right-8 z-40 hidden -translate-y-1/2 flex-col items-center gap-4 [animation-delay:0.3s] lg:flex"
       aria-hidden="true"
     >
       <span className="hud-label text-foreground">{t("scroll")}</span>
 
       <span ref={trackRef} className="relative h-56 w-3">
-        <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border-strong" />
+        <span className="chrome-draw-y absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border-strong [animation-delay:0.38s]" />
         <motion.span
           className="absolute inset-x-0 top-0 mx-auto h-full w-px origin-top bg-gradient-to-b from-lavender/20 to-lavender"
           style={{ scaleY: reducedMotion ? scrollYProgress : smooth }}

@@ -1,13 +1,15 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { MaskedText } from "@/components/masked-text";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { LAYER_STEP } from "@/lib/motion";
 
 /**
- * 404 do console: o codigo em tipo display ocupa o viewport, com a mesma
- * entrada em foco do hero. Serve tanto para `notFound()` quanto para
- * caminhos sem rota (via `[...rest]/page.tsx`).
+ * 404 do console: o codigo em tipo display ocupa o viewport, subindo de
+ * dentro da mascara com o mesmo gesto do nome no hero. Serve tanto para
+ * `notFound()` quanto para caminhos sem rota (via `[...rest]/page.tsx`).
  */
 export default async function NotFound() {
   const t = await getTranslations("NotFound");
@@ -26,12 +28,30 @@ export default async function NotFound() {
         <h1 className="display mt-5">
           <span
             aria-hidden="true"
-            className="hero-focus block text-[clamp(9rem,34vw,30rem)] leading-[0.8] font-semibold text-lavender"
+            className="block text-[clamp(9rem,34vw,30rem)] leading-[0.8] font-semibold text-lavender"
           >
-            404
+            {/* Pecas decorativas: o titulo abaixo e o texto acessivel. */}
+            <span className="mask-line">
+              {Array.from("404").map((char, index) => (
+                <span
+                  key={index}
+                  className="hero-char"
+                  style={{ animationDelay: `${0.1 + index * LAYER_STEP}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
           </span>
-          <span className="hero-focus mt-3 block text-[clamp(1.9rem,5.4vw,4.5rem)] leading-[0.94] font-semibold text-balance [animation-delay:140ms]">
-            {t("title")}
+          <span className="mt-3 block text-[clamp(1.9rem,5.4vw,4.5rem)] leading-[0.94] font-semibold text-balance">
+            <MaskedText
+              text={t("title")}
+              split="word"
+              pieceClassName="hero-char"
+              delay={0.4}
+              step={LAYER_STEP}
+              timing="animation"
+            />
           </span>
         </h1>
 

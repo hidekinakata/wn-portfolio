@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { LitOnView } from "@/components/lit-on-view";
 import { ProjectCard } from "@/components/project-card";
 import { Link } from "@/i18n/navigation";
 import { getProjects } from "@/lib/queries/projects";
@@ -37,15 +38,16 @@ export async function FeaturedProjects() {
             {tProjects("empty")}
           </p>
         ) : (
-          <div className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
-            {featured.map((project) => (
+          <LitOnView className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
+            {featured.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 project={project}
                 variant="compact"
+                index={index}
               />
             ))}
-          </div>
+          </LitOnView>
         )}
       </div>
     </section>
