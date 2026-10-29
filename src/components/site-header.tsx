@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import GradualBlur from "@/components/GradualBlur";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { MobileNav } from "@/components/mobile-nav";
+import { NavLinks } from "@/components/nav-links";
 import { Link } from "@/i18n/navigation";
 
 const navItems = [
@@ -43,7 +44,7 @@ export async function SiteHeader() {
       <div className="relative z-10 mx-auto flex h-16 w-full max-w-[110rem] items-center justify-between gap-6 px-4 lg:px-8">
         <Link
           href="/"
-          className="group relative z-20 flex items-center gap-3"
+          className="chrome-rise group relative z-20 flex items-center gap-3"
           aria-label="William Nakata"
         >
           <span
@@ -68,26 +69,26 @@ export async function SiteHeader() {
 
         <div
           aria-hidden="true"
-          className="relative mx-10 hidden h-px flex-1 bg-gradient-to-r from-transparent via-border-strong to-transparent lg:block"
+          className="chrome-draw relative mx-10 hidden h-px flex-1 bg-gradient-to-r from-transparent via-border-strong to-transparent lg:block"
         ></div>
 
         <nav
           aria-label={t("menu")}
           className="hidden items-center gap-1 md:flex"
         >
-          <ul className="flex items-center gap-1">
-            {navItems.map(({ key, href }) => (
-              <li key={key}>
-                <Link
-                  href={href}
-                  className="block px-3 py-2 font-mono text-[0.65rem] tracking-[0.18em] text-muted-foreground uppercase transition-none hover:bg-accent hover:text-foreground"
-                >
-                  {t(key)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <LocaleSwitcher />
+          <NavLinks
+            items={navItems.map(({ key, href }) => ({
+              key,
+              href,
+              label: t(key),
+            }))}
+          />
+          <div
+            className="chrome-rise"
+            style={{ animationDelay: `${0.12 + navItems.length * 0.07}s` }}
+          >
+            <LocaleSwitcher />
+          </div>
         </nav>
 
         {/* O painel do MobileNav cobre a tela por baixo desta barra: marca e

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
+import { useActiveSection } from "@/lib/use-active-section";
 
 type RailSection = {
   id: string;
@@ -19,6 +19,8 @@ const railSections: readonly RailSection[] = [
   { id: "education", number: "05", labelKey: "education" },
 ];
 
+const RAIL_IDS = railSections.map(({ id }) => id);
+
 /**
  * Trilho numerado do console: posicao atual da leitura. Os numeros carregam
  * informacao real (a sequencia das secoes), o item ativo e "aceso" e os
@@ -26,48 +28,30 @@ const railSections: readonly RailSection[] = [
  */
 export function SectionRail() {
   const t = useTranslations("Nav");
-  const [activeId, setActiveId] = useState<string>("home");
-
-  useEffect(() => {
-    const sections = railSections
-      .map(({ id }) => document.getElementById(id))
-      .filter((element): element is HTMLElement => element !== null);
-
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActiveId(visible.target.id);
-      },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.25, 0.5] },
-    );
-
-    for (const section of sections) observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+  const activeId = useActiveSection({ ids: RAIL_IDS }) ?? "home";
 
   return (
     <nav
       aria-label={t("menu")}
       className="fixed top-1/2 left-8 z-40 hidden -translate-y-1/2 flex-col gap-12 xl:flex"
     >
-      {railSections.map(({ id, number, labelKey }) => {
+      {railSections.map(({ id, number, labelKey }, index) => {
         const isActive = id === activeId;
 
         return (
           <Link
             key={id}
             href={`/#${id}`}
-            className="group flex flex-col gap-2"
+            className="chrome-rise group flex flex-col gap-2"
+            style={{ animationDelay: `${0.3 + index * 0.07}s` }}
+            data-active={isActive}
             aria-current={isActive ? "true" : undefined}
           >
+            {/* Ao virar ativo, a cor assenta (`rail-text`); ao sair, corta. */}
             <span
               className={
                 isActive
-                  ? "font-mono text-sm tracking-[0.2em] text-foreground"
+                  ? "rail-text font-mono text-sm tracking-[0.2em] text-foreground"
                   : "font-mono text-sm tracking-[0.2em] text-subtle-foreground transition-none group-hover:text-foreground"
               }
             >
@@ -76,20 +60,13 @@ export function SectionRail() {
             <span
               className={
                 isActive
-                  ? "hud-label text-[0.6rem] text-foreground"
+                  ? "rail-text hud-label text-[0.6rem] text-foreground"
                   : "hud-label text-[0.6rem] transition-none group-hover:text-muted-foreground"
               }
             >
               {t(labelKey)}
             </span>
-            <span
-              className={
-                isActive
-                  ? "size-1.5 rounded-full bg-violet"
-                  : "size-1.5 rounded-full bg-transparent"
-              }
-              aria-hidden="true"
-            />
+            <span className="rail-dot" aria-hidden="true" />
           </Link>
         );
       })}
