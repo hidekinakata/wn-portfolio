@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { ArticleGlyph } from "@/components/blog/article-glyph";
 import { ReadingMeter } from "@/components/blog/reading-meter";
 import { MaskedText } from "@/components/motion/masked-text";
+import { HeroField } from "@/components/sections/hero/hero-field";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import type { ArticleCard } from "@/lib/blog";
@@ -32,8 +33,8 @@ export async function BlogMasthead({ lead }: BlogMastheadProps) {
       id="top"
       className="relative isolate overflow-hidden border-b border-border"
     >
+      <HeroField />
       <div className="absolute inset-0 z-0" aria-hidden="true">
-        <div className="hero-field-fade absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(123,108,255,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(255,122,47,0.10),transparent_60%)]" />
         <ArticleGlyph
           seed={lead?.slug ?? "idle"}
           size="lg"
@@ -41,7 +42,6 @@ export async function BlogMasthead({ lead }: BlogMastheadProps) {
           delay={0.3}
           className="glyph-boot blog-glyph"
         />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
       </div>
 
       <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-end gap-10 pt-28 pb-10 lg:min-h-svh lg:pb-12">
