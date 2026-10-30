@@ -103,6 +103,8 @@
     "minutes": "{count} min",
     "readMore": "Read more",
     "backToBlog": "Back to blog",
+    "contents": "In this article",
+    "note": "Note",
     "related": "Related articles",
     "publishedOn": "Published on {date}",
     "empty": "No articles published yet."
