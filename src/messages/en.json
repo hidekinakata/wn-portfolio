@@ -92,6 +92,15 @@
     "empty": "No projects published yet."
   },
   "Blog": {
+    "title": "Blog",
+    "description": "Articles on AI automation, multi-agent systems and scalable backends.",
+    "latest": "Latest",
+    "readArticle": "Read article",
+    "index": "Articles",
+    "filterLabel": "Filter by tag",
+    "filterAll": "All",
+    "showing": "{count, plural, one {# article shown} other {# articles shown}}",
+    "minutes": "{count} min",
     "readMore": "Read more",
     "backToBlog": "Back to blog",
     "related": "Related articles",

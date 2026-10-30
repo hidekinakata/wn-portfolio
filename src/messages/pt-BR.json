@@ -92,6 +92,15 @@
     "empty": "Nenhum projeto publicado ainda."
   },
   "Blog": {
+    "title": "Blog",
+    "description": "Artigos sobre automação com IA, sistemas multiagente e backends escaláveis.",
+    "latest": "Mais recente",
+    "readArticle": "Ler artigo",
+    "index": "Artigos",
+    "filterLabel": "Filtrar por tag",
+    "filterAll": "Todos",
+    "showing": "{count, plural, one {# artigo exibido} other {# artigos exibidos}}",
+    "minutes": "{count} min",
     "readMore": "Ler mais",
     "backToBlog": "Voltar ao blog",
     "related": "Artigos relacionados",
