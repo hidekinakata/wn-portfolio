@@ -14,7 +14,7 @@ import {
   stripLeadingPictograph,
 } from "@/lib/text";
 
-import portrait from "../../../../public/avatar/portrait.jpg";
+import portrait from "../../../../public/avatar/portrait-cutout.png";
 
 /** Segmentos do medidor por nivel: a ordem do enum, de basico a nativo. */
 const METER_SEGMENTS = 4;

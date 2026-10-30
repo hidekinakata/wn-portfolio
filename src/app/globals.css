@@ -606,14 +606,8 @@
       inset: 0 0 0 auto;
       width: 52%;
       aspect-ratio: auto;
-      -webkit-mask-image:
-        linear-gradient(to right, transparent 0%, #000 48%),
-        linear-gradient(to bottom, #000 66%, transparent 100%);
-      mask-image:
-        linear-gradient(to right, transparent 0%, #000 48%),
-        linear-gradient(to bottom, #000 66%, transparent 100%);
-      -webkit-mask-composite: source-in;
-      mask-composite: intersect;
+      -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
     }
 
     .about-hero-copy {
