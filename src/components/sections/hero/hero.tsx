@@ -27,7 +27,7 @@ const bebasNeue = Bebas_Neue({
  * Composicao: no desktop o nome e escalonado — WILLIAM a esquerda, NAKATA
  * empurrado a direita — e o cargo ocupa o vao ao lado de NAKATA, de modo que
  * o proprio nome preenche o lado direito. Abaixo de lg tudo empilha, com
- * NAKATA alinhado a direita. Regras em `.hero-stage` (globals.css).
+ * NAKATA alinhado a direita.
  *
  * Altura: no desktop (lg+) o hero ocupa o viewport inteiro (100svh) e o
  * FeaturedProjects so aparece apos a dobra. Abaixo de lg o min-h deixa a faixa de
@@ -55,10 +55,10 @@ export async function Hero() {
         </p>
 
         <h1
-          className="hero-stage display mt-5"
+          className="display mt-5 font-normal [font-synthesis:none] lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-baseline-last"
           style={{ fontFamily: bebasNeue.style.fontFamily }}
         >
-          <span className="hero-name hero-line hero-line-a block whitespace-nowrap leading-[0.86]">
+          <span className="hero-line block whitespace-nowrap leading-[0.86] text-foreground lg:col-span-full lg:row-start-1">
             <MaskedText
               text="William"
               split="char"
@@ -68,7 +68,7 @@ export async function Hero() {
               timing="animation"
             />
           </span>{" "}
-          <span className="hero-name hero-line hero-line-b block whitespace-nowrap leading-[0.86]">
+          <span className="hero-line block text-right whitespace-nowrap leading-[0.86] text-foreground lg:col-start-2 lg:row-start-2">
             <MaskedText
               text="Nakata"
               split="char"
@@ -78,7 +78,7 @@ export async function Hero() {
               timing="animation"
             />
           </span>{" "}
-          <span className="hero-role block max-w-[14em] leading-none text-balance">
+          <span className="hero-role mt-4 block max-w-[14em] leading-none tracking-normal text-balance text-violet lg:col-start-1 lg:row-start-2 lg:mt-0 lg:pr-8">
             <MaskedText
               text={t("headline")}
               split="word"
@@ -90,19 +90,19 @@ export async function Hero() {
           </span>
         </h1>
 
-        <div className="hero-lower">
+        <div className="mt-[1.8rem] grid grid-cols-1 items-end gap-x-10 gap-y-[1.6rem] lg:grid-cols-[minmax(0,1fr)_auto]">
           <div
-            className="hero-intro hero-rise min-w-0 max-w-[34rem] font-mono text-sm leading-[1.8] tracking-[0.06em] text-foreground/80 uppercase"
+            className="hero-rise @container/hero-intro min-w-0 max-w-[34rem] font-mono text-sm leading-[1.8] tracking-[0.06em] text-pretty text-foreground/80 uppercase"
             style={{ animationDelay: `${AT.body}s` }}
           >
             {/* As tres frases so se separam quando a coluna tem largura suficiente. */}
-            <p>{t("introLine1")} </p>
-            <p>{t("introLine2")} </p>
-            <p>{t("introLine3")}</p>
+            <p className="inline @lg/hero-intro:block">{t("introLine1")} </p>
+            <p className="inline @lg/hero-intro:block">{t("introLine2")} </p>
+            <p className="inline @lg/hero-intro:block">{t("introLine3")}</p>
           </div>
 
           {/* Os CTAs entram como laminas da cortina: varrem da esquerda. */}
-          <div className="hero-actions">
+          <div className="grid grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2 sm:gap-4">
             <Button
               asChild
               variant="console"
@@ -131,7 +131,7 @@ export async function Hero() {
         </div>
 
         <div
-          className="hero-foot hero-rise flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
+          className="hero-foot hero-rise relative mt-[1.8rem] flex flex-col gap-3 pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
           style={{ animationDelay: `${AT.body + 3 * LAYER_STEP}s` }}
         >
           <span className="hud-label text-foreground">{status("currently")}</span>

@@ -93,7 +93,7 @@ export function ArticleIndex({ articles }: ArticleIndexProps) {
               onPress={() => setActiveTag(null)}
             >
               {t("filterAll")}
-              <span className="tag-key-count">{articles.length}</span>
+              <span className="text-subtle-foreground tabular-nums">{articles.length}</span>
             </TagKeyButton>
             {tagKeys.map((tag) => (
               <TagKeyButton
@@ -102,7 +102,7 @@ export function ArticleIndex({ articles }: ArticleIndexProps) {
                 onPress={() => setActiveTag(tag.slug)}
               >
                 {tag.name}
-                <span className="tag-key-count">{tag.count}</span>
+                <span className="text-subtle-foreground tabular-nums">{tag.count}</span>
               </TagKeyButton>
             ))}
           </div>
@@ -137,7 +137,7 @@ function TagKeyButton({ pressed, onPress, children }: TagKeyButtonProps) {
       type="button"
       aria-pressed={pressed}
       onClick={onPress}
-      className="tag-key"
+      className="tag-key inline-flex items-center gap-2.5 rounded-lg border py-2 pr-3 pl-2.5 font-mono text-xs leading-[1.2] tracking-[0.08em] uppercase"
     >
       {children}
     </button>

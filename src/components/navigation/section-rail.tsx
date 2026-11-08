@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
+import { LAYER_STEP } from "@/lib/motion";
 import { useActiveSection } from "@/lib/use-active-section";
 
 type RailSection = {
@@ -43,7 +44,7 @@ export function SectionRail() {
             key={id}
             href={`/#${id}`}
             className="chrome-rise group flex flex-col gap-2"
-            style={{ animationDelay: `${0.3 + index * 0.07}s` }}
+            style={{ animationDelay: `${0.3 + index * LAYER_STEP}s` }}
             data-active={isActive}
             aria-current={isActive ? "true" : undefined}
           >

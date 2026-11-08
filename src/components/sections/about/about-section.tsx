@@ -62,9 +62,9 @@ export async function AboutSection() {
 
   return (
     <SectionShell id="about" number="02" title={tSections("about")}>
-      <div className="about-stack">
-        <div className="about-hero">
-          <div className="about-hero-portrait">
+      <div className="flex flex-col gap-16">
+        <div className="relative flex flex-col gap-8 lg:block lg:min-h-[34rem]">
+          <div className="relative aspect-4/3 overflow-hidden [mask-image:linear-gradient(to_bottom,#000_62%,transparent)] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[52%] lg:[mask-image:linear-gradient(to_bottom,#000_66%,transparent_100%)]">
             <Image
               src={portrait}
               alt={tSections("portraitAlt")}
@@ -73,9 +73,9 @@ export async function AboutSection() {
               className="object-cover object-[50%_18%]"
             />
           </div>
-          <div className="about-hero-copy">
+          <div className="lg:relative lg:z-1 lg:max-w-[62%] lg:pt-4">
             {opening ? (
-              <p className="about-hero-lead font-light text-balance text-foreground">
+              <p className="text-[clamp(2rem,4vw,3.6rem)] leading-[1.05] font-light tracking-[-0.035em] text-balance text-foreground">
                 {opening.first}
               </p>
             ) : null}
@@ -85,7 +85,7 @@ export async function AboutSection() {
               </p>
             ) : null}
           </div>
-          <div className="about-hero-caption">
+          <div className="flex flex-col gap-2 lg:absolute lg:right-0 lg:bottom-0 lg:z-1 lg:items-end lg:text-right">
             <p className="hud-label text-foreground">William Nakata</p>
             <p className="font-mono text-[0.72rem] leading-relaxed tracking-[0.16em] text-muted-foreground uppercase">
               {tHero("headline")}

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { LAYER_STEP } from "@/lib/motion";
 import type { ProjectItem } from "@/lib/queries/projects";
 
 type ProjectCardProps = {
@@ -29,11 +30,11 @@ export function ProjectCard({ project, variant, index = 0 }: ProjectCardProps) {
         <div className="min-w-0">
           <p className="hud-label text-subtle-foreground">{typeLabel}</p>
           <h3
-            className={
+            className={`mt-3 font-mono font-semibold text-foreground uppercase ${
               variant === "full"
-                ? "mt-3 font-mono text-lg font-semibold tracking-[0.08em] text-foreground uppercase"
-                : "mt-3 font-mono text-sm font-semibold tracking-[0.12em] text-foreground uppercase"
-            }
+                ? "text-lg tracking-[0.08em]"
+                : "text-sm tracking-[0.12em]"
+            }`}
           >
             {project.title}
           </h3>
@@ -46,11 +47,11 @@ export function ProjectCard({ project, variant, index = 0 }: ProjectCardProps) {
 
       {project.description ? (
         <p
-          className={
+          className={`max-w-[72ch] text-sm text-muted-foreground ${
             variant === "full"
-              ? "mt-4 line-clamp-4 max-w-[72ch] text-sm leading-7 text-muted-foreground"
-              : "mt-3 line-clamp-2 max-w-[72ch] text-sm leading-6 text-muted-foreground"
-          }
+              ? "mt-4 line-clamp-4 leading-7"
+              : "mt-3 line-clamp-2 leading-6"
+          }`}
         >
           {project.description}
         </p>
@@ -71,11 +72,8 @@ export function ProjectCard({ project, variant, index = 0 }: ProjectCardProps) {
     </>
   );
 
-  const frameClass =
-    variant === "full"
-      ? "card-in flex h-full flex-col justify-between border border-border bg-card/50 p-7 transition-none hover:border-flow"
-      : "card-in flex h-full flex-col justify-between border border-border bg-card/50 p-6 transition-none hover:border-flow";
-  const delay = { animationDelay: `${index * 70}ms` };
+  const frameClass = `card-in flex h-full flex-col justify-between border border-border bg-card/50 transition-none hover:border-flow ${variant === "full" ? "p-7" : "p-6"}`;
+  const delay = { animationDelay: `${index * LAYER_STEP}s` };
 
   return href ? (
     <a

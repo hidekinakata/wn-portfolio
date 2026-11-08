@@ -1,5 +1,6 @@
 "use client";
 
+import { inView } from "motion";
 import { useLayoutEffect, useRef } from "react";
 
 type LitOnViewProps = {
@@ -27,18 +28,16 @@ export function LitOnView({ children, className }: LitOnViewProps) {
 
     element.dataset.lit = "armed";
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+    const stop = inView(
+      element,
+      () => {
         element.dataset.lit = "on";
-        observer.disconnect();
       },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
+      { margin: "0px 0px -12% 0px", amount: 0.15 },
     );
-    observer.observe(element);
 
     return () => {
-      observer.disconnect();
+      stop();
       delete element.dataset.lit;
     };
   }, []);

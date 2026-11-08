@@ -54,7 +54,7 @@ export async function ArticleHeader({ article }: ArticleHeaderProps) {
           >
             {article.number}
           </p>
-          <h1 className="display hero-name mt-4 max-w-[16ch] text-[clamp(3rem,9vw,8rem)] leading-[0.88] font-extrabold text-balance">
+          <h1 className="display mt-4 max-w-[16ch] text-[clamp(3rem,9vw,8rem)] leading-[0.88] font-extrabold text-balance text-foreground">
             <MaskedText
               text={article.title}
               split="char"

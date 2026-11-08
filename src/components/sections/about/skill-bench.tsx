@@ -51,7 +51,7 @@ export function SkillBench({ title, idleReadout, groups }: SkillBenchProps) {
               <h3 className="font-mono text-xs tracking-[0.18em] text-flow uppercase">
                 {group.label}
               </h3>
-              <p className="hud-label font-mono tabular-nums">
+              <p className="hud-label tabular-nums">
                 {String(group.items.length).padStart(2, "0")}
               </p>
             </div>
@@ -60,7 +60,7 @@ export function SkillBench({ title, idleReadout, groups }: SkillBenchProps) {
               {group.items.map((item, index) => (
                 <li
                   key={item}
-                  className="lit-chip"
+                  className="lit-chip relative inline-flex items-center gap-2.5 rounded-lg border py-2 pr-3 pl-2.5 font-mono text-[0.8125rem] leading-[1.2] tracking-[0.04em]"
                   style={{ animationDelay: `${index * CASCADE_MS}ms` }}
                   onPointerEnter={() => setActive({ group: group.label, item })}
                 >

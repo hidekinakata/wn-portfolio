@@ -46,7 +46,7 @@ export async function BlogMasthead({ lead }: BlogMastheadProps) {
 
       <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-end gap-10 pt-28 pb-10 lg:min-h-svh lg:pb-12">
         <div>
-          <h1 className="display blog-title hero-name font-extrabold">
+          <h1 className="display text-[min(44vw,46svh)] leading-[0.82] font-extrabold text-foreground">
             <MaskedText
               text={t("title")}
               split="char"
@@ -78,13 +78,13 @@ async function LeadStrip({ lead }: { lead: ArticleCard }) {
     <Link
       href={`/blog/${lead.slug}`}
       aria-labelledby="blog-lead-title"
-      className="blog-lead hero-rise group"
+      className="hero-rise group grid items-end gap-x-10 gap-y-5 border-t border-border-strong pt-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_auto]"
       style={{ animationDelay: `${AT.lead}s` }}
     >
       <div className="min-w-0">
         <h2
           id="blog-lead-title"
-          className="blog-lead-title display text-[clamp(1.9rem,3.1vw,2.9rem)] leading-[0.94] font-semibold text-balance"
+          className="display text-[clamp(1.9rem,3.1vw,2.9rem)] leading-[0.94] font-semibold text-balance text-foreground group-hover:text-lavender group-focus-visible:text-lavender"
         >
           {lead.title}
         </h2>

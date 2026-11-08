@@ -5,6 +5,7 @@ import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { MobileNav } from "@/components/navigation/mobile-nav";
 import { NavLinks } from "@/components/navigation/nav-links";
 import { Link } from "@/i18n/navigation";
+import { LAYER_STEP } from "@/lib/motion";
 
 const navItems = [
   { key: "about", href: "/#about" },
@@ -85,7 +86,7 @@ export async function SiteHeader() {
           />
           <div
             className="chrome-rise"
-            style={{ animationDelay: `${0.12 + navItems.length * 0.07}s` }}
+            style={{ animationDelay: `${0.12 + navItems.length * LAYER_STEP}s` }}
           >
             <LocaleSwitcher />
           </div>

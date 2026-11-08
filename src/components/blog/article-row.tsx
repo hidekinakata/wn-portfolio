@@ -64,7 +64,7 @@ export function ArticleRow({ article, index }: ArticleRowProps) {
             />
             <ArrowUpRight
               aria-hidden="true"
-              className="article-arrow ml-[0.12em] inline size-[0.5em] align-[0.12em] stroke-[2.25]"
+              className="invisible ml-[0.12em] inline size-[0.5em] align-[0.12em] stroke-[2.25] text-foreground group-hover:visible group-focus-visible:visible"
             />
           </h3>
 
@@ -114,7 +114,7 @@ export function ArticleRow({ article, index }: ArticleRowProps) {
             seed={article.slug}
             size="sm"
             delay={base + 0.1}
-            className="article-glyph [grid-area:glyph]"
+            className="size-14 justify-self-end border border-border [grid-area:glyph] group-hover:border-violet group-focus-visible:border-violet lg:size-22"
           />
         </Link>
       </LitOnView>

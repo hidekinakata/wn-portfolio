@@ -12,6 +12,7 @@
  * easing, duracao ou stagger proprios. Ver AGENTS.md, secao "Motion".
  */
 import type { Transition } from "motion/react";
+import type { CSSProperties } from "react";
 
 /** Entrada: expo ease-out. */
 export const EASE_OUT: Transition["ease"] = [0.16, 1, 0.3, 1];
@@ -20,8 +21,8 @@ export const EASE_OUT: Transition["ease"] = [0.16, 1, 0.3, 1];
 export const EASE_IN: Transition["ease"] = [0.7, 0, 0.84, 0];
 
 /** As mesmas curvas para `@keyframes` e estilos inline em CSS. */
-export const EASE_OUT_CSS = "cubic-bezier(0.16, 1, 0.3, 1)";
-export const EASE_IN_CSS = "cubic-bezier(0.7, 0, 0.84, 0)";
+export const EASE_OUT_CSS = `cubic-bezier(${EASE_OUT.join(", ")})`;
+export const EASE_IN_CSS = `cubic-bezier(${EASE_IN.join(", ")})`;
 
 /** Escalonamento entre laminas/blocos, em segundos. */
 export const LAYER_STEP = 0.07;
@@ -44,7 +45,28 @@ export const DURATION = {
   block: 0.55,
   /** Rotulo pequeno / numero de indice. */
   label: 0.4,
+  rise: 0.6,
+  draw: 0.7,
+  trace: 1.1,
+  field: 1.2,
+  settle: 1.4,
 } as const;
+
+/** O CSS e o Motion recebem os mesmos tokens, inclusive antes da hidratacao. */
+export const motionCssVariables: CSSProperties & Record<`--motion-${string}`, string> = {
+  "--motion-ease-out": EASE_OUT_CSS,
+  "--motion-ease-in": EASE_IN_CSS,
+  "--motion-step": `${LAYER_STEP}s`,
+  "--motion-cut": `${DURATION.cut}s`,
+  "--motion-micro": `${DURATION.micro}s`,
+  "--motion-panel": `${DURATION.panel}s`,
+  "--motion-display": `${DURATION.display}s`,
+  "--motion-rise": `${DURATION.rise}s`,
+  "--motion-draw": `${DURATION.draw}s`,
+  "--motion-trace": `${DURATION.trace}s`,
+  "--motion-field": `${DURATION.field}s`,
+  "--motion-settle": `${DURATION.settle}s`,
+};
 
 type SlideOptions = {
   /** Atraso em segundos (ja escalonado pelo chamador). */

@@ -1,6 +1,7 @@
 "use client";
 
 import { Link, usePathname } from "@/i18n/navigation";
+import { LAYER_STEP } from "@/lib/motion";
 import { useActiveSection } from "@/lib/use-active-section";
 
 type NavLinkItem = {
@@ -32,7 +33,7 @@ export function NavLinks({ items }: { items: readonly NavLinkItem[] }) {
           <li
             key={key}
             className="chrome-rise"
-            style={{ animationDelay: `${0.12 + index * 0.07}s` }}
+            style={{ animationDelay: `${0.12 + index * LAYER_STEP}s` }}
           >
             <Link
               href={href}

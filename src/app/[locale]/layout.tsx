@@ -14,6 +14,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { BOOT_INIT_SCRIPT } from "@/lib/boot";
+import { motionCssVariables } from "@/lib/motion";
 import { routing } from "@/i18n/routing";
 
 import "../globals.css";
@@ -104,6 +105,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       // hidratacao; sem isto o React acusaria mismatch de atributos.
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${bigShoulders.variable}`}
+      style={motionCssVariables}
     >
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
         {/* Antes de qualquer conteudo: marca `data-boot` no `<html>` antes do
