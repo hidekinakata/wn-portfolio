@@ -1,10 +1,9 @@
 import { ArrowRight } from "lucide-react";
+import { Bebas_Neue } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 
-import { HeroField } from "@/components/sections/hero/hero-field";
 import { LocalClock } from "@/components/layout/local-clock";
 import { MaskedText } from "@/components/motion/masked-text";
-import { TiltPermission } from "@/components/sections/hero/tilt-permission";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { CHAR_STEP, LAYER_STEP } from "@/lib/motion";
@@ -12,13 +11,18 @@ import { CHAR_STEP, LAYER_STEP } from "@/lib/motion";
 /** Partitura da estreia, em segundos: nome, cargo, depois o corpo. */
 const AT = { name: 0.06, role: 0.3, body: 0.55 } as const;
 
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 /**
  * Hero da landing — primeiro viewport do console. O cargo (`headline`) e as
  * linhas de intro sao strings estaticas de traducao; o nome da marca e fixo.
  * Renderizado no servidor (CSS puro): o momento autoral e o nome subindo
  * letra a letra de dentro da mascara, como o lockup da abertura; o cargo vem
- * palavra a palavra, o corpo assenta, os CTAs varrem como laminas e o campo
- * abre por tras. O marcador SCROLL / EXPLORE vive fora daqui (`ScrollMarker`).
+ * palavra a palavra, o corpo assenta e os CTAs varrem como laminas.
+ * O marcador SCROLL / EXPLORE vive fora daqui (`ScrollMarker`).
  *
  * Composicao: no desktop o nome e escalonado — WILLIAM a esquerda, NAKATA
  * empurrado a direita — e o cargo ocupa o vao ao lado de NAKATA, de modo que
@@ -26,8 +30,7 @@ const AT = { name: 0.06, role: 0.3, body: 0.55 } as const;
  * NAKATA alinhado a direita. Regras em `.hero-stage` (globals.css).
  *
  * Altura: no desktop (lg+) o hero ocupa o viewport inteiro (100svh) e o
- * FeaturedProjects so aparece apos a dobra — a composicao de tela cheia pede
- * o campo de particulas sem cortes. Abaixo de lg o min-h deixa a faixa de
+ * FeaturedProjects so aparece apos a dobra. Abaixo de lg o min-h deixa a faixa de
  * destaque espreitar a dobra de proposito: sem o rail nem o SCROLL marker
  * (ambos lg+), e ela o unico sinal de que ha conteudo abaixo.
  */
@@ -40,9 +43,7 @@ export async function Hero() {
       id="home"
       className="relative isolate scroll-mt-20 overflow-hidden border-b border-border"
     >
-      <HeroField />
-
-      <div className="shell relative z-10 flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-center pt-24 pb-14 lg:min-h-svh lg:pb-24">
+      <div className="shell relative flex min-h-[min(calc(100svh-5rem),52rem)] flex-col justify-center pt-24 pb-14 lg:min-h-svh lg:pb-24">
         <p className="font-mono text-[0.78rem] tracking-[0.34em] text-muted-foreground uppercase">
           <MaskedText
             text={t("eyebrow")}
@@ -53,8 +54,11 @@ export async function Hero() {
           />
         </p>
 
-        <h1 className="hero-stage display mt-5">
-          <span className="hero-name hero-line hero-line-a block whitespace-nowrap leading-[0.86] font-semibold">
+        <h1
+          className="hero-stage display mt-5"
+          style={{ fontFamily: bebasNeue.style.fontFamily }}
+        >
+          <span className="hero-name hero-line hero-line-a block whitespace-nowrap leading-[0.86]">
             <MaskedText
               text="William"
               split="char"
@@ -64,7 +68,7 @@ export async function Hero() {
               timing="animation"
             />
           </span>{" "}
-          <span className="hero-name hero-line hero-line-b block whitespace-nowrap leading-[0.86] font-semibold">
+          <span className="hero-name hero-line hero-line-b block whitespace-nowrap leading-[0.86]">
             <MaskedText
               text="Nakata"
               split="char"
@@ -74,7 +78,7 @@ export async function Hero() {
               timing="animation"
             />
           </span>{" "}
-          <span className="hero-role block max-w-[14em] leading-[0.94] font-semibold text-balance">
+          <span className="hero-role block max-w-[14em] leading-none text-balance">
             <MaskedText
               text={t("headline")}
               split="word"
@@ -88,22 +92,22 @@ export async function Hero() {
 
         <div className="hero-lower">
           <div
-            className="hero-rise max-w-[34rem] font-mono text-[0.72rem] leading-[1.95] tracking-[0.16em] text-foreground/80 uppercase"
+            className="hero-intro hero-rise min-w-0 max-w-[34rem] font-mono text-sm leading-[1.8] tracking-[0.06em] text-foreground/80 uppercase"
             style={{ animationDelay: `${AT.body}s` }}
           >
-            {/* Tres linhas de console no desktop; no mobile viram um paragrafo corrido. */}
-            <p className="inline lg:block">{t("introLine1")} </p>
-            <p className="inline lg:block">{t("introLine2")} </p>
-            <p className="inline lg:block">{t("introLine3")}</p>
+            {/* As tres frases so se separam quando a coluna tem largura suficiente. */}
+            <p>{t("introLine1")} </p>
+            <p>{t("introLine2")} </p>
+            <p>{t("introLine3")}</p>
           </div>
 
           {/* Os CTAs entram como laminas da cortina: varrem da esquerda. */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="hero-actions">
             <Button
               asChild
               variant="console"
               size="console"
-              className="hero-wipe"
+              className="hero-wipe focus-visible:ring-lavender focus-visible:ring-offset-4 focus-visible:ring-offset-background"
               style={{ animationDelay: `${AT.body + LAYER_STEP}s` }}
             >
               <Link href="/#projects">
@@ -115,7 +119,7 @@ export async function Hero() {
               asChild
               variant="keyline"
               size="console"
-              className="hero-wipe"
+              className="hero-wipe focus-visible:ring-lavender focus-visible:ring-offset-4 focus-visible:ring-offset-background"
               style={{ animationDelay: `${AT.body + 2 * LAYER_STEP}s` }}
             >
               <Link href="/#contact">
@@ -127,7 +131,7 @@ export async function Hero() {
         </div>
 
         <div
-          className="hero-foot hero-rise flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between"
+          className="hero-foot hero-rise flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
           style={{ animationDelay: `${AT.body + 3 * LAYER_STEP}s` }}
         >
           <span className="hud-label text-foreground">{status("currently")}</span>
@@ -138,9 +142,6 @@ export async function Hero() {
             <span aria-hidden="true" className="hidden h-px w-6 bg-border-strong sm:block" />
             <LocalClock />
           </span>
-          <div className="lg:hidden">
-            <TiltPermission label={t("tiltEnable")} />
-          </div>
         </div>
       </div>
     </section>
