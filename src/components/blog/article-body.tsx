@@ -18,7 +18,7 @@ export function ArticleBody({ sections }: ArticleBodyProps) {
           aria-labelledby={`${section.id}-title`}
           className="article-section scroll-mt-24 border-t border-border py-12 first:border-t-0 first:pt-0 lg:py-16"
         >
-          <p className="font-mono text-xs tracking-[0.22em] text-flare tabular-nums">
+          <p className="font-mono text-xs tracking-[0.22em] text-foreground tabular-nums">
             {section.number}
           </p>
           <h2

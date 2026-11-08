@@ -182,7 +182,7 @@ truth for it**. Never declare your own easing, duration or stagger — import th
 
 The intro (`src/components/transitions/boot-screen.tsx` — first visit per session, gate in
 `src/lib/boot.ts`) and the route transition (`src/components/transitions/route-transition.tsx`) share one
-curtain (`brand-curtain.tsx`: lavender → violet → panel, as in the mobile menu) carrying the
+curtain (`brand-curtain.tsx`: sapphire → violet → panel, as in the mobile menu) carrying the
 brand lockup (`brand-lockup.tsx`: WN | William Nakata, plus the roles on the intro). Intro: the
 dark screen is on screen at first paint; logo, name and role enter in sequence, hold, leave in
 sequence, and only then the curtain exits to the left. Route transition: the curtain enters from

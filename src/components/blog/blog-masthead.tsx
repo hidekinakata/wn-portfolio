@@ -89,7 +89,7 @@ async function LeadStrip({ lead }: { lead: ArticleCard }) {
           {lead.title}
         </h2>
         <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.68rem] tracking-[0.18em] text-muted-foreground uppercase">
-          <span className="text-flare">{t("latest")}</span>
+          <span className="text-foreground">{t("latest")}</span>
           <span className="tabular-nums">{lead.number}</span>
           {lead.dateLabel ? (
             <time dateTime={lead.publishedAt ?? undefined}>

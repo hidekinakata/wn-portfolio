@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ----------------------------------------------------------------------------
-   Console world (dark-only): ink-navy ground, electric-blue flow, one signal
-   orange flare, bone text. Tokens via CSS variables para reajuste fino sem
+   Console world (dark-only): carbon ground, violet and sapphire accents,
+   linen text. Tokens via CSS variables para reajuste fino sem
    tocar nos componentes. shadcn consome o mesmo conjunto (`@theme inline`).
    Raio 2px: chrome de console, nunca cartao arredondado.
 ---------------------------------------------------------------------------- */
@@ -74,106 +74,55 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Dark-only: `:root` ja e o tema. `.dark` repete os valores para os
-   componentes shadcn que consultam a variante. */
-:root {
+/* Dark-only: the same palette applies to the root and shadcn dark variant. */
+:root, .dark {
   color-scheme: dark;
 
-  --background: #060810;
-  --foreground: #e8e4d7;
-  --card: #0b0f1a;
-  --card-foreground: #e8e4d7;
-  --popover: #0b0f1a;
-  --popover-foreground: #e8e4d7;
-  --primary: #5b7cfa;
-  --primary-foreground: #04060c;
-  --secondary: #10141f;
-  --secondary-foreground: #e8e4d7;
-  --muted: #101623;
-  --muted-foreground: #9aa6bd;
-  --accent: #131a29;
-  --accent-foreground: #e8e4d7;
+  --background: #18181c;
+  --foreground: #f3eee3;
+  --card: color-mix(in srgb, var(--foreground) 5%, var(--background));
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: #723bfa;
+  --primary-foreground: var(--foreground);
+  --secondary: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --muted-foreground: color-mix(in srgb, var(--foreground) 75%, var(--background));
+  --accent: color-mix(in srgb, var(--primary) 12%, var(--background));
+  --accent-foreground: var(--foreground);
   --destructive: #e5484d;
-  --border: #1b2233;
-  --input: #1b2233;
-  --ring: #5b7cfa;
-  --chart-1: #5b7cfa;
-  --chart-2: #ff7a2f;
-  --chart-3: #8da2ff;
-  --chart-4: #3a4a78;
-  --chart-5: #2a3350;
+  --border: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --input: var(--border);
+  --ring: #2f6bff;
+  --chart-1: var(--primary);
+  --chart-2: var(--ring);
+  --chart-3: var(--foreground);
+  --chart-4: var(--primary);
+  --chart-5: var(--ring);
 
-  --subtle-foreground: #7480a0;
-  --border-strong: #2b3550;
-  --ghost: #121a2b;
-  --flow: #5b7cfa;
-  --flow-light: #8da2ff;
-  --flare: #ff7a2f;
-  --flare-light: #ffa26b;
-  /* Violeta do campo de dots do hero e o lavanda do cargo. */
-  --violet: #7b6cff;
-  --lavender: #b9b4ff;
-  /* Sinal de telemetria (ciano): so o ticker do relogio. */
-  --signal: #00ffd1;
+  --subtle-foreground: color-mix(in srgb, var(--foreground) 65%, var(--background));
+  --border-strong: color-mix(in srgb, var(--foreground) 28%, var(--background));
+  --ghost: var(--secondary);
+  --flow: var(--foreground);
+  --flow-light: var(--foreground);
+  --flare: var(--ring);
+  --flare-light: var(--foreground);
+  --violet: var(--primary);
+  --lavender: var(--foreground);
+  --signal: var(--ring);
 
   --radius: 0.125rem;
 
-  --sidebar: #0b0f1a;
-  --sidebar-foreground: #e8e4d7;
-  --sidebar-primary: #5b7cfa;
-  --sidebar-primary-foreground: #04060c;
-  --sidebar-accent: #131a29;
-  --sidebar-accent-foreground: #e8e4d7;
-  --sidebar-border: #1b2233;
-  --sidebar-ring: #5b7cfa;
-}
-
-.dark {
-  --background: #060810;
-  --foreground: #e8e4d7;
-  --card: #0b0f1a;
-  --card-foreground: #e8e4d7;
-  --popover: #0b0f1a;
-  --popover-foreground: #e8e4d7;
-  --primary: #5b7cfa;
-  --primary-foreground: #04060c;
-  --secondary: #10141f;
-  --secondary-foreground: #e8e4d7;
-  --muted: #101623;
-  --muted-foreground: #9aa6bd;
-  --accent: #131a29;
-  --accent-foreground: #e8e4d7;
-  --destructive: #e5484d;
-  --border: #1b2233;
-  --input: #1b2233;
-  --ring: #5b7cfa;
-  --chart-1: #5b7cfa;
-  --chart-2: #ff7a2f;
-  --chart-3: #8da2ff;
-  --chart-4: #3a4a78;
-  --chart-5: #2a3350;
-
-  --subtle-foreground: #7480a0;
-  --border-strong: #2b3550;
-  --ghost: #121a2b;
-  --flow: #5b7cfa;
-  --flow-light: #8da2ff;
-  --flare: #ff7a2f;
-  --flare-light: #ffa26b;
-  --violet: #7b6cff;
-  --lavender: #b9b4ff;
-  --signal: #00ffd1;
-
-  --radius: 0.125rem;
-
-  --sidebar: #0b0f1a;
-  --sidebar-foreground: #e8e4d7;
-  --sidebar-primary: #5b7cfa;
-  --sidebar-primary-foreground: #04060c;
-  --sidebar-accent: #131a29;
-  --sidebar-accent-foreground: #e8e4d7;
-  --sidebar-border: #1b2233;
-  --sidebar-ring: #5b7cfa;
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 @layer base {
@@ -288,9 +237,9 @@
     color: var(--color-foreground);
   }
 
-  /* Cargo: lavanda chapado, um tom abaixo do nome. */
+  /* Cargo: violeta primario. */
   .hero-role {
-    color: var(--color-lavender);
+    color: var(--color-violet);
     letter-spacing: 0;
   }
 
@@ -445,7 +394,7 @@
     animation: chrome-draw-y 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
   }
 
-  /* Filete laranja do item ativo da barra: entra correndo da esquerda
+  /* Filete de destaque do item ativo da barra: entra correndo da esquerda
      (ease-out) e sai em corte curto (ease-in). */
   .nav-line {
     position: absolute;
@@ -961,7 +910,7 @@
   }
 
   .article-row:is(:hover, :focus-visible) .article-num {
-    color: var(--color-flare);
+    color: var(--color-foreground);
   }
 
   .article-row:is(:hover, :focus-visible) .article-title {
@@ -983,7 +932,7 @@
 
   .article-row:is(:hover, :focus-visible) .article-arrow {
     visibility: visible;
-    color: var(--color-flare);
+    color: var(--color-foreground);
   }
 
   /* Com uma linha acesa, as outras apagam. */

@@ -36,7 +36,7 @@ export function ArticleToc({ sections }: ArticleTocProps) {
                 className={`flex gap-3 border-t py-2.5 text-sm leading-snug transition-none ${active ? "border-violet text-foreground" : "border-border text-subtle-foreground hover:text-muted-foreground"}`}
               >
                 <span
-                  className={`font-mono text-[0.68rem] tracking-[0.18em] tabular-nums ${active ? "text-flare" : ""}`}
+                  className={`font-mono text-[0.68rem] tracking-[0.18em] tabular-nums ${active ? "text-foreground" : ""}`}
                 >
                   {section.number}
                 </span>

@@ -30,7 +30,7 @@ type MobileNavProps = {
    no StaggeredMenu de referencia, mas com as cores do campo do hero. Este
    menu e a referencia de movimento do site: os tokens em `@/lib/motion`
    sao exatamente a gramatica dele. */
-const PRE_LAYERS = ["bg-lavender", "bg-violet"] as const;
+const PRE_LAYERS = ["bg-flare", "bg-violet"] as const;
 const PANEL_DELAY = PRE_LAYERS.length * LAYER_STEP;
 /* O rodape comeca quando o ultimo titulo ja esta subindo. */
 const FOOTER_DELAY = PANEL_DELAY + 0.4;
@@ -195,7 +195,7 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                         {label}
                       </motion.span>
                       <motion.span
-                        className="pt-2 font-mono text-[0.7rem] tracking-[0.2em] text-violet tabular-nums group-hover:text-lavender"
+                        className="pt-2 font-mono text-[0.7rem] tracking-[0.2em] text-foreground tabular-nums group-hover:text-lavender"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={slide({
@@ -253,7 +253,7 @@ export function MobileNav({ items, labels }: MobileNavProps) {
                   <Link
                     href="/#contact"
                     onClick={() => close()}
-                    className="flex h-12 items-center justify-between border border-flare px-5 font-mono text-[0.7rem] tracking-[0.22em] text-flare uppercase transition-none hover:bg-flare hover:text-background"
+                    className="flex h-12 items-center justify-between border border-flare px-5 font-mono text-[0.7rem] tracking-[0.22em] text-foreground uppercase transition-none hover:bg-foreground hover:text-background"
                   >
                     {labels.contact}
                     <motion.span

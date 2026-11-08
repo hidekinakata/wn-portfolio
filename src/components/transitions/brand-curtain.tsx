@@ -7,7 +7,7 @@ import { DURATION, LAYER_STEP, leave, slide } from "@/lib/motion";
 
 /* Mesma cortina do menu mobile: lavanda -> violeta correm na frente e o
    painel de fundo chega por ultimo. */
-const BLADES = ["bg-lavender", "bg-violet"] as const;
+const BLADES = ["bg-flare", "bg-violet"] as const;
 const LAYERS = BLADES.length + 1;
 
 export type CurtainPhase = "in" | "out";

@@ -49,7 +49,7 @@ export async function ArticleHeader({ article }: ArticleHeaderProps) {
 
         <div>
           <p
-            className="hero-rise font-mono text-xs tracking-[0.22em] text-flare tabular-nums"
+            className="hero-rise font-mono text-xs tracking-[0.22em] text-foreground tabular-nums"
             style={{ animationDelay: `${AT.back}s` }}
           >
             {article.number}

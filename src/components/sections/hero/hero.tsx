@@ -107,7 +107,7 @@ export async function Hero() {
               asChild
               variant="console"
               size="console"
-              className="hero-wipe focus-visible:ring-lavender focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              className="hero-wipe shadow-none focus-visible:ring-lavender focus-visible:ring-offset-4 focus-visible:ring-offset-background"
               style={{ animationDelay: `${AT.body + LAYER_STEP}s` }}
             >
               <Link href="/#projects">

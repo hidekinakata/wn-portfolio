@@ -17,11 +17,11 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-foreground underline-offset-4 hover:underline",
         console:
-          "rounded-[2px] border-violet bg-[color-mix(in_oklab,var(--color-violet)_24%,var(--color-background))] font-mono text-[0.7rem] uppercase tracking-[0.22em] text-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.14),inset_0_0_18px_rgb(123_108_255/0.35),0_12px_32px_-14px_rgb(123_108_255/0.9)] transition-none hover:border-lavender hover:bg-lavender hover:text-background",
+          "rounded-[2px] border-violet bg-[color-mix(in_oklab,var(--color-violet)_24%,var(--color-background))] font-mono text-[0.7rem] uppercase tracking-[0.22em] text-foreground shadow-[inset_0_1px_0_rgb(243_238_227/0.14),inset_0_0_18px_rgb(114_59_250/0.35),0_12px_32px_-14px_rgb(114_59_250/0.9)] transition-none hover:border-violet hover:bg-violet hover:text-foreground",
         keyline:
-          "rounded-[2px] border border-flare bg-background/40 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-flare transition-none hover:bg-flare hover:text-background",
+          "rounded-[2px] border border-flare bg-background/40 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-foreground transition-none hover:bg-foreground hover:text-background",
       },
       size: {
         default:

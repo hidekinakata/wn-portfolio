@@ -34,7 +34,7 @@ export function HeroField() {
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(123,108,255,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(255,122,47,0.10),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_78%_30%,rgba(114,59,250,0.16),transparent_60%),radial-gradient(60%_50%_at_92%_82%,rgba(47,107,255,0.10),transparent_60%)]" />
 
       {layer ? <HeroDots layer={layer} reducedMotion={reducedMotion} /> : null}
 
@@ -65,9 +65,9 @@ function HeroDots({
         cursorForce={0.11}
         returnSpeed={0.3}
         bulgeOnly
-        gradientFrom="#7b6cff"
-        gradientTo="#b9b4ff"
-        glowColor="#0b0f1a"
+        gradientFrom="#723bfa"
+        gradientTo="#2f6bff"
+        glowColor="#18181c"
       />
     </div>
   );

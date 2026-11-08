@@ -11,20 +11,20 @@ import {
 
 export type CodeToken = { content: string; color: string | null };
 
-/** Paleta do console: lavanda e azul para estrutura, laranja so em literais. */
+/** Paleta do console: texto em linho sobre carbono para manter a leitura. */
 const CONSOLE_THEME: ThemeRegistration = {
   name: "console",
   type: "dark",
-  colors: { "editor.background": "#0b0f1a", "editor.foreground": "#c9c5b8" },
+  colors: { "editor.background": "#18181c", "editor.foreground": "#f3eee3" },
   tokenColors: [
-    { scope: ["comment", "punctuation.definition.comment"], settings: { foreground: "#5d6a8a" } },
-    { scope: ["keyword", "storage", "keyword.control"], settings: { foreground: "#b9b4ff" } },
-    { scope: ["string", "string.quoted"], settings: { foreground: "#ffa26b" } },
-    { scope: ["constant.numeric", "constant.language"], settings: { foreground: "#ff7a2f" } },
-    { scope: ["entity.name.function", "support.function", "meta.function-call"], settings: { foreground: "#8da2ff" } },
-    { scope: ["entity.name.type", "entity.name.class", "support.type", "support.class"], settings: { foreground: "#e8e4d7" } },
-    { scope: ["variable.parameter", "variable.other.property"], settings: { foreground: "#c9c5b8" } },
-    { scope: ["punctuation", "keyword.operator"], settings: { foreground: "#7480a0" } },
+    { scope: ["comment", "punctuation.definition.comment"], settings: { foreground: "#f3eee3", fontStyle: "italic" } },
+    { scope: ["keyword", "storage", "keyword.control"], settings: { foreground: "#f3eee3", fontStyle: "bold" } },
+    { scope: ["string", "string.quoted"], settings: { foreground: "#f3eee3" } },
+    { scope: ["constant.numeric", "constant.language"], settings: { foreground: "#f3eee3" } },
+    { scope: ["entity.name.function", "support.function", "meta.function-call"], settings: { foreground: "#f3eee3" } },
+    { scope: ["entity.name.type", "entity.name.class", "support.type", "support.class"], settings: { foreground: "#f3eee3" } },
+    { scope: ["variable.parameter", "variable.other.property"], settings: { foreground: "#f3eee3" } },
+    { scope: ["punctuation", "keyword.operator"], settings: { foreground: "#f3eee3" } },
   ],
 };
 
