@@ -69,3 +69,21 @@ next-env.d.ts
 /graphify-out/
 /.obsidian/
 /.opencode/
+
+# local AI assistant configuration, caches and session state
+/.codex/
+/.gemini/
+/.claude/
+/.cursor/
+/.windsurf/
+/.continue/
+/.cline/
+/.roo/
+/.agent/
+/.agents/
+/.kiro/
+/.trae/
+/.aider/
+/.aider.chat.history.md
+/.aider.input.history
+/.aider.tags.cache.*
