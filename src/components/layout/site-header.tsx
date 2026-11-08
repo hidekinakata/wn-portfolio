@@ -29,12 +29,11 @@ export async function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      {/* Sem fundo solido nem divisoria: o conteudo dissolve sob a barra num
-          desfoque progressivo que passa da altura dela. */}
+      {/* O desfoque progressivo acompanha a altura da barra, sem fundo solido. */}
       <GradualBlur
         target="parent"
         position="top"
-        height="7rem"
+        height="100%"
         strength={2}
         divCount={5}
         curve="bezier"
