@@ -61,8 +61,8 @@ export function SectionRail() {
             <span
               className={
                 isActive
-                  ? "rail-text hud-label text-[0.6rem] text-foreground"
-                  : "hud-label text-[0.6rem] transition-none group-hover:text-muted-foreground"
+                  ? "rail-text hud-label text-[0.7rem] text-foreground"
+                  : "hud-label text-[0.7rem] transition-none group-hover:text-foreground"
               }
             >
               {t(labelKey)}

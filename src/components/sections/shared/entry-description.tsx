@@ -20,7 +20,7 @@ export function EntryDescription({ text }: EntryDescriptionProps) {
 
       {items.length > 0 ? (
         <ul
-          className={`grid gap-x-10 gap-y-3.5 xl:grid-cols-2 ${lead ? "mt-5" : ""}`}
+          className={`grid gap-x-10 gap-y-4 xl:grid-cols-2 ${lead ? "mt-6" : ""}`}
         >
           {items.map((item) => {
             const { label, body } = splitLabel(item);
@@ -28,7 +28,7 @@ export function EntryDescription({ text }: EntryDescriptionProps) {
             return (
               <li
                 key={item}
-                className="relative pl-4 text-sm leading-6 text-muted-foreground before:absolute before:top-[0.62em] before:left-0 before:size-1 before:bg-flow-light"
+                className="relative max-w-[60ch] pl-4 text-sm leading-7 text-muted-foreground before:absolute before:top-[0.75em] before:left-0 before:size-1 before:bg-flow-light"
               >
                 {label ? (
                   <span className="font-medium text-foreground">{label}: </span>

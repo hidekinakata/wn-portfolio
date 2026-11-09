@@ -61,6 +61,7 @@
   --color-flare: var(--flare);
   --color-flare-light: var(--flare-light);
   --color-violet: var(--violet);
+  --color-violet-text: color-mix(in srgb, var(--violet) 65%, var(--foreground));
   --color-lavender: var(--lavender);
   --color-signal: var(--signal);
 

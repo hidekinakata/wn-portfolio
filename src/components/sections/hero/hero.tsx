@@ -37,6 +37,7 @@ const bebasNeue = Bebas_Neue({
 export async function Hero() {
   const t = await getTranslations("Hero");
   const status = await getTranslations("Status");
+  const nav = await getTranslations("Nav");
 
   return (
     <section
@@ -78,7 +79,7 @@ export async function Hero() {
               timing="animation"
             />
           </span>{" "}
-          <span className="hero-role mt-4 block max-w-[14em] leading-none tracking-normal text-balance text-violet lg:col-start-1 lg:row-start-2 lg:mt-0 lg:pr-8">
+          <span className="hero-role mt-4 block max-w-[14em] leading-none tracking-normal text-balance text-violet-text lg:col-start-1 lg:row-start-2 lg:mt-0 lg:pr-8">
             <MaskedText
               text={t("headline")}
               split="word"
@@ -99,6 +100,9 @@ export async function Hero() {
             <p className="inline @lg/hero-intro:block">{t("introLine1")} </p>
             <p className="inline @lg/hero-intro:block">{t("introLine2")} </p>
             <p className="inline @lg/hero-intro:block">{t("introLine3")}</p>
+            <Link href="/#experience" className="mt-3 block w-fit text-foreground underline underline-offset-4 hover:text-lavender">
+              {nav("experience")} <ArrowRight aria-hidden="true" className="ml-1 inline size-4" />
+            </Link>
           </div>
 
           {/* Os CTAs entram como laminas da cortina: varrem da esquerda. */}
