@@ -1,8 +1,5 @@
-"use client";
-
-import { useState } from "react";
-
 import { LitOnView } from "@/components/motion/lit-on-view";
+import { LAYER_STEP } from "@/lib/motion";
 
 type SkillBenchGroup = {
   key: string;
@@ -17,52 +14,40 @@ type SkillBenchProps = {
   groups: readonly SkillBenchGroup[];
 };
 
-type ActiveSkill = { group: string; item: string };
-
-/** Atraso entre uma tecla e a proxima ao acender o grupo. */
-const CASCADE_MS = 34;
-
-/**
- * Bancada de skills: cada grupo e um canal; cada skill, uma tecla com LED que
- * acende em cascata quando o canal entra na tela. Passar o ponteiro sobre uma
- * tecla escreve a leitura no cabecalho. A leitura e so apoio visual
- * (`aria-hidden`): a lista em si e texto simples, na ordem do curriculo.
- * Cada canal empilha rotulo e teclas, entao a bancada cabe em qualquer coluna.
- */
+/** Partitura: referencia fixa, grupos em sequencia e progresso ligado ao scroll. */
 export function SkillBench({ title, idleReadout, groups }: SkillBenchProps) {
-  const [active, setActive] = useState<ActiveSkill | null>(null);
-
   return (
-    <div onPointerLeave={() => setActive(null)}>
-      <div className="flex items-baseline justify-between gap-4 border-t border-border-strong pt-4 pb-4">
-        <p className="hud-label shrink-0">{title}</p>
-        <p
-          aria-hidden="true"
-          className="hud-label min-h-[1em] min-w-0 truncate text-right text-flow-light"
-        >
-          {active ? `${active.group} / ${active.item}` : idleReadout}
-        </p>
+    <div className="about-score grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <div className="lg:col-span-4">
+        <div className="about-score-reference @container">
+          <h3 className="display text-[clamp(2.75rem,18cqw,6rem)] leading-none text-foreground">
+            {title}
+          </h3>
+          <p className="mt-5 font-mono text-xs leading-relaxed text-muted-foreground">
+            {idleReadout}
+          </p>
+          <span aria-hidden="true" className="about-score-track mt-8 block h-px bg-border-strong" />
+        </div>
       </div>
 
-      <div>
+      <div className="flex min-w-0 flex-col gap-12 lg:col-span-8 lg:gap-0">
         {groups.map((group) => (
-          <LitOnView key={group.key} className="border-t border-border py-5">
+          <LitOnView key={group.key} className="about-skill-group relative min-w-0 pt-6 pb-4 lg:pb-16">
             <div className="flex items-baseline justify-between gap-4">
-              <h3 className="font-mono text-xs tracking-[0.18em] text-flow uppercase">
+              <h4 className="about-reveal display max-w-[20ch] text-[clamp(1.8rem,3vw,2.75rem)] leading-none text-balance text-foreground">
                 {group.label}
-              </h3>
-              <p className="hud-label tabular-nums">
+              </h4>
+              <p className="font-mono text-xs text-subtle-foreground tabular-nums">
                 {String(group.items.length).padStart(2, "0")}
               </p>
             </div>
 
-            <ul className="mt-3.5 flex flex-wrap gap-1.5">
+            <ul className="mt-6 grid gap-x-8 sm:grid-cols-2">
               {group.items.map((item, index) => (
                 <li
                   key={item}
-                  className="lit-chip relative inline-flex items-center gap-2.5 rounded-lg border py-2 pr-3 pl-2.5 font-mono text-[0.8125rem] leading-[1.2] tracking-[0.04em]"
-                  style={{ animationDelay: `${index * CASCADE_MS}ms` }}
-                  onPointerEnter={() => setActive({ group: group.label, item })}
+                  className="about-reveal border-b border-border py-2.5 text-base leading-snug tracking-[-0.01em] text-muted-foreground lg:text-lg"
+                  style={{ transitionDelay: `${Math.min(index, 5) * LAYER_STEP}s` }}
                 >
                   {item}
                 </li>
@@ -70,7 +55,6 @@ export function SkillBench({ title, idleReadout, groups }: SkillBenchProps) {
             </ul>
           </LitOnView>
         ))}
-        <div className="border-t border-border" aria-hidden="true" />
       </div>
     </div>
   );

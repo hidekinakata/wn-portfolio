@@ -137,7 +137,7 @@ function TagKeyButton({ pressed, onPress, children }: TagKeyButtonProps) {
       type="button"
       aria-pressed={pressed}
       onClick={onPress}
-      className="tag-key inline-flex items-center gap-2.5 rounded-lg border py-2 pr-3 pl-2.5 font-mono text-xs leading-[1.2] tracking-[0.08em] uppercase"
+      className="button-feedback tag-key inline-flex items-center gap-2.5 rounded-none border border-transparent py-2 pr-3 pl-2.5 font-mono text-xs leading-[1.2] tracking-[0.08em] uppercase"
     >
       {children}
     </button>

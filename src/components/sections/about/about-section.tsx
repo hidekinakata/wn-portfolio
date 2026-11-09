@@ -5,6 +5,7 @@ import { LitOnView } from "@/components/motion/lit-on-view";
 import { SectionShell } from "@/components/sections/shared/section-shell";
 import { SkillBench } from "@/components/sections/about/skill-bench";
 import type { LanguageLevel } from "@/generated/prisma/enums";
+import { LAYER_STEP } from "@/lib/motion";
 import { getLanguages } from "@/lib/queries/education";
 import { getProfile } from "@/lib/queries/profile";
 import { skillGroups } from "@/lib/skills";
@@ -96,74 +97,76 @@ export async function AboutSection() {
           </div>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
-          <div className="lg:col-span-7">
-            {items.length > 0 ? (
-              <dl className="border-b border-border">
-                {items.map((item) => (
-                  <div
-                    key={item.body}
-                    className="grid gap-2.5 border-t border-border py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-8"
-                  >
-                    {item.label ? (
-                      <dt className="hud-label pt-[0.4em] leading-[1.5] text-foreground">
+        <div className="about-workbench flex flex-col gap-16 lg:gap-24">
+          {items.length > 0 ? (
+            <dl>
+              {items.map((item) => (
+                <LitOnView
+                  key={item.body}
+                  className="about-specialty relative grid gap-6 py-8 lg:grid-cols-12 lg:gap-x-12 lg:py-12"
+                >
+                  {item.label ? (
+                    <dt className="about-specialty-label self-start overflow-hidden lg:col-span-5">
+                      <span className="about-reveal display block text-[clamp(2rem,3.8vw,3.5rem)] leading-[0.98] text-balance text-foreground">
                         {item.label}
-                      </dt>
-                    ) : null}
-                    <dd
-                      className={`text-[0.9375rem] leading-[1.7] text-pretty text-muted-foreground ${
-                        item.label ? "" : "sm:col-start-2"
-                      }`}
-                    >
-                      {item.body}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            ) : null}
-          </div>
-
-          <div className="flex flex-col gap-10 lg:col-span-5">
-            <SkillBench
-              title={tSkills("title")}
-              idleReadout={tSkills("readoutIdle", {
-                count: skillCount,
-                groups: groups.length,
-              })}
-              groups={groups}
-            />
-
-            <LitOnView>
-              <p className="hud-label border-t border-border-strong pt-4">
-                {tSections("languages")}
-              </p>
-              <ul className="mt-4 flex flex-col">
-                {languages.map((language) => (
-                  <li
-                    key={language.id}
-                    className="grid grid-cols-[minmax(0,1fr)_auto_7.5rem] items-center gap-5 border-t border-border py-3.5 last:border-b"
+                      </span>
+                    </dt>
+                  ) : null}
+                  <dd
+                    className={`about-reveal text-pretty ${
+                      item.label
+                        ? "max-w-[52ch] text-base leading-[1.8] text-muted-foreground lg:col-span-7 lg:pt-1 lg:text-lg"
+                        : "max-w-[56ch] text-[clamp(1.25rem,2vw,1.65rem)] leading-[1.55] tracking-[-0.02em] text-foreground lg:col-span-10"
+                    }`}
+                    style={{ transitionDelay: `${LAYER_STEP}s` }}
                   >
-                    <span className="font-mono text-sm tracking-[0.12em] text-foreground uppercase">
-                      {language.name}
-                    </span>
-                    <span aria-hidden="true" className="flex gap-1">
-                      {Array.from({ length: METER_SEGMENTS }, (_, index) => (
-                        <span
-                          key={index}
-                          className="lit-seg"
-                          data-filled={index < levelSegments[language.levelKey]}
-                          style={{ animationDelay: `${index * 110}ms` }}
-                        />
-                      ))}
-                    </span>
-                    <span className="hud-label text-right text-subtle-foreground">
-                      {tLevels(language.levelKey)}
-                    </span>
+                    {item.body}
+                  </dd>
+                </LitOnView>
+              ))}
+            </dl>
+          ) : null}
+
+          <SkillBench
+            title={tSkills("title")}
+            idleReadout={tSkills("readoutIdle", {
+              count: skillCount,
+              groups: groups.length,
+            })}
+            groups={groups}
+          />
+
+          {languages.length > 0 ? (
+            <div className="grid gap-8 border-t border-border-strong pt-8 lg:grid-cols-12 lg:gap-12">
+              <h3 className="display text-[clamp(2.25rem,3.5vw,3rem)] leading-none text-foreground lg:col-span-4">
+                {tSections("languages")}
+              </h3>
+              <ul className="grid gap-8 sm:grid-cols-2 lg:col-span-8">
+                {languages.map((language) => (
+                  <li key={language.id} className="min-w-0">
+                    <LitOnView className="about-language">
+                      <p className="about-reveal text-2xl leading-tight tracking-[-0.025em] text-foreground lg:text-3xl">
+                        {language.name}
+                      </p>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        {tLevels(language.levelKey)}
+                      </p>
+                      <span aria-hidden="true" className="about-language-meter mt-5 flex gap-1.5">
+                        {Array.from({ length: METER_SEGMENTS }, (_, index) => (
+                          <span
+                            key={index}
+                            className="lit-seg"
+                            data-filled={index < levelSegments[language.levelKey]}
+                            style={{ animationDelay: `${index * LAYER_STEP}s` }}
+                          />
+                        ))}
+                      </span>
+                    </LitOnView>
                   </li>
                 ))}
               </ul>
-            </LitOnView>
-          </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </SectionShell>

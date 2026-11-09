@@ -111,7 +111,7 @@ async function LeadStrip({ lead }: { lead: ArticleCard }) {
 
       <span
         aria-hidden="true"
-        className={`${buttonVariants({ variant: "console", size: "console" })} group-hover:border-lavender group-hover:bg-lavender group-hover:text-background`}
+        className={buttonVariants({ variant: "console", size: "console" })}
       >
         {t("readArticle")}
         <ArrowRight aria-hidden="true" />

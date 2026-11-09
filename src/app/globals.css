@@ -59,6 +59,7 @@
   --color-flow: var(--flow);
   --color-flow-light: var(--flow-light);
   --color-flare: var(--flare);
+  --color-button-sapphire: color-mix(in srgb, var(--ring) 80%, var(--foreground));
   --color-flare-light: var(--flare-light);
   --color-violet: var(--violet);
   --color-violet-text: color-mix(in srgb, var(--violet) 65%, var(--foreground));
@@ -356,62 +357,114 @@
     background-size: 6rem 6rem;
   }
 
-  /* ---- Sobre: estados apagado/aceso (cortes secos, nunca fade) ----------
-     O markup nasce aceso. `LitOnView` arma o painel (`data-lit="armed"`:
-     apagado, legivel) e, ao entrar na tela, liga (`data-lit="on"`): cada
-     tecla assenta, em cascata, via `animation-delay` inline. */
-
-  /* Tecla de skill: LED + nome em mono. */
-  .lit-chip {
-    border-color: var(--color-border-strong);
-    color: var(--color-foreground);
-    animation-fill-mode: backwards;
+  /* ---- Sobre: filetes abrem a bancada, texto assenta em cascata. -------- */
+  .about-specialty::before,
+  .about-skill-group::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: var(--color-border-strong);
+    transform-origin: left;
   }
 
-  .lit-chip::before,
+  .about-skill-group::before {
+    background: var(--color-violet);
+  }
+
+  .about-skill-group:nth-child(2)::before {
+    background: var(--color-flare);
+  }
+
+  .about-skill-group:nth-child(3)::before {
+    background: var(--color-foreground);
+  }
+
+  .about-language-meter .lit-seg {
+    flex: 1;
+    width: auto;
+    height: 0.5rem;
+  }
+
+  .about-language-meter .lit-seg[data-filled="true"] {
+    background: var(--color-button-sapphire);
+  }
+
+  .about-score-track {
+    display: none;
+  }
+
+  @media (width >= 64rem) and (height >= 40rem) and (prefers-reduced-motion: no-preference) {
+    .about-score-reference,
+    .about-specialty-label {
+      position: sticky;
+      top: 8rem;
+    }
+
+    .about-specialty:has(.about-specialty-label) {
+      min-height: 46svh;
+    }
+
+    .about-specialty-label + dd {
+      padding-top: 10svh;
+    }
+
+    .about-skill-group {
+      min-height: 52svh;
+    }
+
+    @supports (animation-timeline: view()) {
+      .about-score {
+        view-timeline: --about-score block;
+      }
+
+      .about-score-track {
+        display: block;
+        position: relative;
+      }
+
+      .about-score-track::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--color-violet);
+        transform-origin: left;
+        /* Linear aqui e posicao de leitura, nao easing de coreografia. */
+        animation: about-score-fill linear both;
+        animation-timeline: --about-score;
+        animation-range: contain;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .about-workbench .about-reveal {
+      transition: transform var(--motion-panel) var(--motion-ease-out),
+        opacity var(--motion-panel) var(--motion-ease-out);
+    }
+
+    .about-specialty::before,
+    .about-skill-group::before {
+      transition: transform var(--motion-draw) var(--motion-ease-out);
+    }
+
+    .about-workbench [data-lit="armed"] .about-reveal {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+
+    .about-specialty[data-lit="armed"]::before,
+    .about-skill-group[data-lit="armed"]::before {
+      transform: scaleX(0);
+    }
+  }
+
   .tag-key::before {
     content: "";
     flex: none;
     width: 0.375rem;
     height: 0.375rem;
-  }
-
-  .lit-chip::before {
-    background-color: var(--color-flow-light);
-    animation-delay: inherit;
-    animation-fill-mode: backwards;
-  }
-
-  [data-lit="armed"] .lit-chip {
-    border-color: var(--color-border);
-    color: var(--color-subtle-foreground);
-  }
-
-  [data-lit="armed"] .lit-chip::before {
-    background-color: var(--color-ghost);
-    box-shadow: inset 0 0 0 1px var(--color-border-strong);
-  }
-
-  /* O atraso de cada tecla vem inline (`animationDelay`); a shorthand zera
-     fill-mode e delay, entao ambos sao reescritos depois dela. */
-  [data-lit="on"] .lit-chip {
-    animation: chip-on var(--motion-draw) var(--motion-ease-out) backwards;
-  }
-
-  [data-lit="on"] .lit-chip::before {
-    animation: led-on var(--motion-draw) var(--motion-ease-out) backwards;
-    animation-delay: inherit;
-  }
-
-  @media (hover: hover) {
-    .lit-chip:hover {
-      border-color: var(--color-flow-light);
-      background-color: color-mix(in oklab, var(--color-flow) 16%, transparent);
-    }
-
-    .lit-chip:hover::before {
-      background-color: var(--color-flare);
-    }
   }
 
   /* Segmento do medidor de nivel de idioma. */
@@ -722,8 +775,8 @@
 
   /* Chave de tag: o LED apagado/aceso do console, em botao. Corte seco. */
   .tag-key {
-    border-color: var(--color-border-strong);
-    color: var(--color-muted-foreground);
+    background-color: var(--color-secondary);
+    color: var(--color-foreground);
   }
 
   .tag-key::before {
@@ -732,20 +785,29 @@
   }
 
   .tag-key[aria-pressed="true"] {
-    border-color: var(--color-flow-light);
-    background-color: color-mix(in oklab, var(--color-flow) 16%, transparent);
+    background-color: var(--color-violet);
     color: var(--color-foreground);
   }
 
   .tag-key[aria-pressed="true"]::before {
-    background-color: var(--color-flare);
+    background-color: var(--color-foreground);
     box-shadow: none;
   }
 
-  @media (hover: hover) {
-    .tag-key:hover {
-      border-color: var(--color-flow-light);
-      color: var(--color-foreground);
+  @media (hover: hover) and (pointer: fine) {
+    .button-feedback:hover:not(:disabled):not([aria-disabled="true"]),
+    .group:hover > .button-feedback,
+    .admin-button:hover:not(:disabled):not([aria-disabled="true"]) {
+      outline: 1px solid var(--color-foreground);
+      outline-offset: 3px;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .button-feedback:hover:not(:disabled):not([aria-disabled="true"]),
+    .group:hover > .button-feedback,
+    .admin-button:hover:not(:disabled):not([aria-disabled="true"]) {
+      translate: 0 -2px;
     }
   }
 
@@ -785,17 +847,15 @@
 }
 
 /* Liga: do apagado ao estado final, assentando em ease-out (sem flash). */
-@keyframes chip-on {
-  from {
-    border-color: var(--color-border);
-    color: var(--color-subtle-foreground);
-  }
-}
-
 @keyframes led-on {
   from {
     background-color: var(--color-ghost);
   }
+}
+
+@keyframes about-score-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 @keyframes hero-rise {
