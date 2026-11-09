@@ -154,6 +154,18 @@
 .admin-login-footer > a { display: inline-flex; align-items: center; gap: .5rem; }
 .admin-login-footer > div { display: flex; gap: 1.25rem; }
 .admin-login-footer [aria-current="page"] { color: var(--foreground); }
+.admin-cv-drop { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px dashed var(--border-strong); border-radius: var(--radius); background: var(--card); }
+.admin-cv-drop > svg { flex-shrink: 0; color: var(--subtle-foreground); }
+.admin-cv-drop > div { flex: 1; min-width: 0; }
+.admin-cv-drop > div > p:first-child { font-size: .8125rem; font-weight: 500; }
+.admin-cv-drop[data-dragging="true"] { border-color: var(--primary); background: var(--accent); }
+.admin-cv-drop:focus-within { outline: 2px solid var(--ring); outline-offset: 2px; }
+.admin-cv-select { cursor: pointer; }
+.admin-cv-select[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.admin-cv-status { display: flex; align-items: flex-start; gap: .5rem; overflow-wrap: anywhere; }
+.admin-cv-status > svg { flex-shrink: 0; margin-top: .2rem; }
+.admin-cv-upload > .admin-error { margin-top: .75rem; margin-bottom: 0; }
+@media (max-width: 639px) { .admin-cv-drop { flex-wrap: wrap; } .admin-cv-select { width: 100%; } }
 @media (min-width: 960px) {
   .admin-topbar { position: sticky; top: 0; z-index: 10; background: var(--background); }
   .admin-entry-panel { position: sticky; top: 6.25rem; max-height: calc(100dvh - 6.25rem); overflow-y: auto; align-self: start; }

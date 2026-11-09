@@ -1,4 +1,5 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
 import GradualBlur from "@/components/effects/gradual-blur";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
@@ -6,6 +7,7 @@ import { MobileNav } from "@/components/navigation/mobile-nav";
 import { NavLinks } from "@/components/navigation/nav-links";
 import { Link } from "@/i18n/navigation";
 import { LAYER_STEP } from "@/lib/motion";
+import { getProfile } from "@/lib/queries/profile";
 
 const navItems = [
   { key: "about", href: "/#about" },
@@ -83,6 +85,9 @@ export async function SiteHeader() {
               label: t(key),
             }))}
           />
+          <Suspense fallback={null}>
+            <CvLink />
+          </Suspense>
           <div
             className="chrome-rise"
             style={{ animationDelay: `${0.12 + navItems.length * LAYER_STEP}s` }}
@@ -114,5 +119,17 @@ export async function SiteHeader() {
         </div>
       </div>
     </header>
+  );
+}
+
+async function CvLink() {
+  const locale = await getLocale();
+  const [profile, t] = await Promise.all([getProfile(locale), getTranslations("Nav")]);
+  if (!profile?.cvUrl) return null;
+
+  return (
+    <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="px-2 py-2 font-mono text-xs tracking-[0.12em] text-foreground uppercase underline underline-offset-4 hover:text-lavender">
+      {t("cv")}
+    </a>
   );
 }
