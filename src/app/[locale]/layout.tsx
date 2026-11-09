@@ -8,12 +8,6 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { BootScreen } from "@/components/transitions/boot-screen";
-import { RouteTransition } from "@/components/transitions/route-transition";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SmoothScroll } from "@/components/motion/smooth-scroll";
-import { BOOT_INIT_SCRIPT } from "@/lib/boot";
 import { motionCssVariables } from "@/lib/motion";
 import { routing } from "@/i18n/routing";
 
@@ -96,7 +90,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const hero = await getTranslations({ locale, namespace: "Hero" });
 
   return (
     <html
@@ -108,18 +101,8 @@ export default async function LocaleLayout({ children, params }: Props) {
       style={motionCssVariables}
     >
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
-        {/* Antes de qualquer conteudo: marca `data-boot` no `<html>` antes do
-            overlay de loading pintar (ver `src/lib/boot.ts`). */}
-        <script dangerouslySetInnerHTML={{ __html: BOOT_INIT_SCRIPT }} />
         <NextIntlClientProvider messages={messages}>
-          <BootScreen role={hero("headline")} />
-          <RouteTransition />
-          <SmoothScroll />
-          <SiteHeader />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
