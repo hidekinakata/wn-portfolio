@@ -3,7 +3,7 @@ import { z } from "zod";
 const text = z.string().min(1);
 
 /** Blocos tipados do artigo: o corpo e renderizado sem HTML cru. */
-const blockSchema = z.discriminatedUnion("type", [
+export const blockSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("heading"), text }),
   z.object({ type: z.literal("paragraph"), text, id: z.string().optional() }),
   z.object({
