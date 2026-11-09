@@ -45,13 +45,9 @@ export function ProjectCard({ project, variant, index = 0 }: ProjectCardProps) {
         />
       </div>
 
-      {project.description ? (
+      {project.description && variant === "full" ? (
         <p
-          className={`max-w-[72ch] text-sm text-muted-foreground ${
-            variant === "full"
-              ? "mt-4 line-clamp-4 leading-7"
-              : "mt-3 line-clamp-2 leading-6"
-          }`}
+          className="mt-4 max-w-[72ch] text-sm leading-7 text-muted-foreground"
         >
           {project.description}
         </p>

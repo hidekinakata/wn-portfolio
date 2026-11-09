@@ -7,18 +7,18 @@ import { getProjects } from "@/lib/queries/projects";
 
 /**
  * Faixa de projetos em destaque logo apos o hero. No desktop o hero ocupa o
- * viewport inteiro e ela vive apos a dobra; abaixo de lg espreita a dobra
- * como pista de scroll. Sem campo `featured` no banco, destaque = os quatro
- * mais recentes.
+ * viewport inteiro e ela vive apos a dobra. Sem campo `featured` no banco,
+ * destaque = os quatro mais recentes; com menos de dois, evita repeticao.
  */
 export async function FeaturedProjects() {
   const locale = await getLocale();
-  const [tFeatured, tProjects, projects] = await Promise.all([
+  const [tFeatured, projects] = await Promise.all([
     getTranslations("Featured"),
-    getTranslations("Projects"),
     getProjects(locale),
   ]);
   const featured = projects.slice(0, 4);
+
+  if (projects.length < 2) return null;
 
   return (
     <section className="border-b border-border">
@@ -33,22 +33,16 @@ export async function FeaturedProjects() {
           </Link>
         </div>
 
-        {featured.length === 0 ? (
-          <p className="mt-6 font-mono text-sm text-subtle-foreground">
-            {tProjects("empty")}
-          </p>
-        ) : (
-          <LitOnView className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
-            {featured.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                variant="compact"
-                index={index}
-              />
-            ))}
-          </LitOnView>
-        )}
+        <LitOnView className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
+          {featured.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              variant="compact"
+              index={index}
+            />
+          ))}
+        </LitOnView>
       </div>
     </section>
   );
